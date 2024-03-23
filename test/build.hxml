@@ -1,0 +1,4 @@
+-lib linc_sdl
+-cp ../
+-cpp cpp
+-main Test
