@@ -4,9 +4,12 @@
         <compilerflag value="-I${LINC_BGFX_PATH}/lib/bimg/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}/lib/bgfx/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}/lib/bgfx/include/bgfx"/>
+        <compilerflag value='-I${LINC_BGFX_PATH}/linc'/>
 
         <compilerflag if="windows" value="-I${LINC_BGFX_PATH}/lib/bx/include/compat/msvc"/>
         <compilerflag if="mac" value="-I${LINC_BGFX_PATH}/lib/bx/include/compat/osx"/>
+
+        <file name='${LINC_BGFX_PATH}/linc/linc_bgfx.cpp'/>
     </files>
     <section if="windows">
         <compiler exe="cl.exe" id="MSVC">
@@ -22,14 +25,14 @@
             <lib name="kernel32.lib"/>
             <lib name="psapi.lib"/>
             <section unless="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bgfxRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bimgRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bxRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxRelease.lib"/>
             </section>
             <section if="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bgfxDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bimgDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2019/bin/bxDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
             </section>
         </section>
     </target>

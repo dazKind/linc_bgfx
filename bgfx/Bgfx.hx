@@ -13,6 +13,7 @@ package bgfx;
 
 typedef ViewId = cpp.UInt16;
 
+
 class StateFlags
 {
 	/// <summary>
@@ -1331,7 +1332,7 @@ class CubeMapFlags
 	public static var NegativeZ : Int              = 0x00000005;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract Fatal(FatalImpl) {
 	@:native("bgfx_fatal_t::BGFX_FATAL_DEBUG_CHECK")
 	var DebugCheck;
@@ -1350,7 +1351,7 @@ extern enum abstract Fatal(FatalImpl) {
 @:native("cpp::Struct<bgfx_fatal_t, cpp::EnumHandler>")
 extern class FatalImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract RendererType(RendererTypeImpl) {
 	/// <summary>
 	/// No rendering.
@@ -1418,7 +1419,7 @@ extern enum abstract RendererType(RendererTypeImpl) {
 @:native("cpp::Struct<bgfx_renderer_type_t, cpp::EnumHandler>")
 extern class RendererTypeImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract Access(AccessImpl) {
 	/// <summary>
 	/// Read.
@@ -1444,7 +1445,7 @@ extern enum abstract Access(AccessImpl) {
 @:native("cpp::Struct<bgfx_access_t, cpp::EnumHandler>")
 extern class AccessImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract Attrib(AttribImpl) {
 	/// <summary>
 	/// a_position
@@ -1560,7 +1561,7 @@ extern enum abstract Attrib(AttribImpl) {
 @:native("cpp::Struct<bgfx_attrib_t, cpp::EnumHandler>")
 extern class AttribImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract AttribType(AttribTypeImpl) {
 	/// <summary>
 	/// Uint8
@@ -1598,7 +1599,7 @@ extern enum abstract AttribType(AttribTypeImpl) {
 @:native("cpp::Struct<bgfx_attrib_type_t, cpp::EnumHandler>")
 extern class AttribTypeImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract TextureFormat(TextureFormatImpl) {
 	/// <summary>
 	/// DXT1 R5G6B5A1
@@ -1942,7 +1943,7 @@ extern enum abstract TextureFormat(TextureFormatImpl) {
 @:native("cpp::Struct<bgfx_texture_format_t, cpp::EnumHandler>")
 extern class TextureFormatImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract UniformType(UniformTypeImpl) {
 	/// <summary>
 	/// Sampler.
@@ -1980,7 +1981,7 @@ extern enum abstract UniformType(UniformTypeImpl) {
 @:native("cpp::Struct<bgfx_uniform_type_t, cpp::EnumHandler>")
 extern class UniformTypeImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract BackbufferRatio(BackbufferRatioImpl) {
 	/// <summary>
 	/// Equal to backbuffer.
@@ -2024,7 +2025,7 @@ extern enum abstract BackbufferRatio(BackbufferRatioImpl) {
 @:native("cpp::Struct<bgfx_backbuffer_ratio_t, cpp::EnumHandler>")
 extern class BackbufferRatioImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract OcclusionQueryResult(OcclusionQueryResultImpl) {
 	/// <summary>
 	/// Query failed test.
@@ -2050,7 +2051,7 @@ extern enum abstract OcclusionQueryResult(OcclusionQueryResultImpl) {
 @:native("cpp::Struct<bgfx_occlusion_query_result_t, cpp::EnumHandler>")
 extern class OcclusionQueryResultImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract Topology(TopologyImpl) {
 	/// <summary>
 	/// Triangle list.
@@ -2088,7 +2089,7 @@ extern enum abstract Topology(TopologyImpl) {
 @:native("cpp::Struct<bgfx_topology_t, cpp::EnumHandler>")
 extern class TopologyImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract TopologyConvert(TopologyConvertImpl) {
 	/// <summary>
 	/// Flip winding order of triangle list.
@@ -2126,7 +2127,7 @@ extern enum abstract TopologyConvert(TopologyConvertImpl) {
 @:native("cpp::Struct<bgfx_topology_convert_t, cpp::EnumHandler>")
 extern class TopologyConvertImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract TopologySort(TopologySortImpl) {
 	@:native("bgfx_topology_sort_t::BGFX_TOPOLOGY_SORT_DIRECTION_FRONT_TO_BACK_MIN")
 	var DirectionFrontToBackMin;
@@ -2159,7 +2160,7 @@ extern enum abstract TopologySort(TopologySortImpl) {
 @:native("cpp::Struct<bgfx_topology_sort_t, cpp::EnumHandler>")
 extern class TopologySortImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract ViewMode(ViewModeImpl) {
 	/// <summary>
 	/// Default sort order.
@@ -2191,7 +2192,7 @@ extern enum abstract ViewMode(ViewModeImpl) {
 @:native("cpp::Struct<bgfx_view_mode_t, cpp::EnumHandler>")
 extern class ViewModeImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract NativeWindowHandleType(NativeWindowHandleTypeImpl) {
 	/// <summary>
 	/// Platform default handle type (X11 on Linux).
@@ -2211,7 +2212,7 @@ extern enum abstract NativeWindowHandleType(NativeWindowHandleTypeImpl) {
 @:native("cpp::Struct<bgfx_native_window_handle_type_t, cpp::EnumHandler>")
 extern class NativeWindowHandleTypeImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 extern enum abstract RenderFrame(RenderFrameImpl) {
 	/// <summary>
 	/// Renderer context is not created yet.
@@ -2243,7 +2244,7 @@ extern enum abstract RenderFrame(RenderFrameImpl) {
 @:native("cpp::Struct<bgfx_render_frame_t, cpp::EnumHandler>")
 extern class RenderFrameImpl { }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_caps_gpu_t")
@@ -2253,7 +2254,7 @@ extern class CapsGPU {
     public var deviceId: cpp.UInt16;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_caps_limits_t")
@@ -2285,7 +2286,7 @@ extern class CapsLimits {
     public var transientIbSize: cpp.UInt32;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_caps_t")
@@ -2303,7 +2304,7 @@ extern class Caps {
     public var formats: Array<cpp.UInt16>; // [96]cpp.UInt16;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_internal_data_t")
@@ -2313,7 +2314,7 @@ extern class InternalData {
     public var context: cpp.Star<cpp.Void>;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_platform_data_t")
@@ -2327,7 +2328,7 @@ extern class PlatformData {
     public var type: NativeWindowHandleType;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_resolution_t")
@@ -2342,7 +2343,7 @@ extern class Resolution {
     public var debugTextScale: cpp.UInt8;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_init_limits_t")
@@ -2354,7 +2355,7 @@ extern class InitLimits {
     public var transientIbSize: cpp.UInt32;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_init_t")
@@ -2373,17 +2374,17 @@ extern class Init {
     public var allocator: cpp.Star<cpp.Void>;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_memory_t")
 extern class Memory {
     public function new();
-    public var data: cpp.Star<cpp.UInt8>;
+    public var data: cpp.RawPointer<cpp.UInt8>;
     public var size: cpp.UInt32;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_transient_index_buffer_t")
@@ -2396,7 +2397,7 @@ extern class TransientIndexBuffer {
     public var isIndex16: Bool;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_transient_vertex_buffer_t")
@@ -2410,7 +2411,7 @@ extern class TransientVertexBuffer {
     public var layoutHandle: VertexLayoutHandle;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_instance_data_buffer_t")
@@ -2424,7 +2425,7 @@ extern class InstanceDataBuffer {
     public var handle: VertexBufferHandle;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_texture_info_t")
@@ -2441,7 +2442,7 @@ extern class TextureInfo {
     public var cubeMap: Bool;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_uniform_info_t")
@@ -2452,7 +2453,7 @@ extern class UniformInfo {
     public var num: cpp.UInt16;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_attachment_t")
@@ -2477,7 +2478,7 @@ extern class Attachment {
     }
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_transform_t")
@@ -2487,7 +2488,7 @@ extern class Transform {
     public var num: cpp.UInt16;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_view_stats_t")
@@ -2502,7 +2503,7 @@ extern class ViewStats {
     public var gpuFrameNum: cpp.UInt32;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_encoder_stats_t")
@@ -2512,7 +2513,7 @@ extern class EncoderStats {
     public var cpuTimeEnd: cpp.Int64;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_stats_t")
@@ -2560,7 +2561,7 @@ extern class Stats {
     public var encoderStats: cpp.Star<EncoderStats>;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_vertex_layout_t")
@@ -2616,7 +2617,7 @@ extern class VertexLayout {
     }
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_encoder_t")
@@ -2993,7 +2994,7 @@ extern class Encoder {
     }
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_dynamic_index_buffer_handle_t")
@@ -3003,7 +3004,7 @@ extern class DynamicIndexBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_dynamic_vertex_buffer_handle_t")
@@ -3013,7 +3014,7 @@ extern class DynamicVertexBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_frame_buffer_handle_t")
@@ -3023,7 +3024,7 @@ extern class FrameBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_index_buffer_handle_t")
@@ -3033,7 +3034,7 @@ extern class IndexBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_indirect_buffer_handle_t")
@@ -3043,7 +3044,7 @@ extern class IndirectBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_occlusion_query_handle_t")
@@ -3053,7 +3054,7 @@ extern class OcclusionQueryHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_program_handle_t")
@@ -3063,7 +3064,7 @@ extern class ProgramHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_shader_handle_t")
@@ -3073,7 +3074,7 @@ extern class ShaderHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_texture_handle_t")
@@ -3083,7 +3084,7 @@ extern class TextureHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_uniform_handle_t")
@@ -3093,7 +3094,7 @@ extern class UniformHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_vertex_buffer_handle_t")
@@ -3103,7 +3104,7 @@ extern class VertexBufferHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+@:include("linc_bgfx.h")
 @:structAccess
 @:unreflective
 @:native("bgfx_vertex_layout_handle_t")
@@ -3113,10 +3114,23 @@ extern class VertexLayoutHandle {
     inline public function valid():Bool return idx != 0xffff;
 }
 
-@:include("bgfx/c99/bgfx.h")
+// @:include("linc_bgfx.h")
+// // @:native("(bgfx_callback_interface_t*)&linc_bgfx::s_callback")
+// @:native("bgfx_callback_interface_t")
+// extern class CallbackInterface {}
+
+// @:include("linc_bgfx.h")
+@:include("linc_bgfx.h")
 @:build(linc.Linc.touch())
 @:build(linc.Linc.xml("bgfx"))
 class Bgfx {
+
+	@:native('BGFX_INVALID_HANDLE')
+	extern public static var InvalidHandle:ShaderHandle;
+
+	@:include("linc_bgfx.h")
+	@:native('linc_bgfx::getBgfxCallback')
+	extern public static function getCallback():cpp.Star<cpp.Void>;
 
     /// Init attachment.
     /// <param name="_handle">Render target texture handle.</param>
@@ -3360,10 +3374,10 @@ class Bgfx {
     /// Allocate buffer and copy data into it. Data will be freed inside bgfx.
     /// <param name="_data">Pointer to data to be copied.</param>
     /// <param name="_size">Size of data to be copied.</param>
-    @:native("bgfx_copy") extern public static function copy(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.Star<Memory>;
+    @:native("bgfx_copy") extern public static function copy(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.ConstStar<Memory>;
     @:nocompletion
     @:native("bgfx_copy")
-    extern public static function bgfx_copy(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.Star<Memory>;
+    extern public static function bgfx_copy(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.ConstStar<Memory>;
 
 
     /// Make reference to data to pass to bgfx. Unlike `bgfx::alloc`, this call
@@ -3375,10 +3389,10 @@ class Bgfx {
     /// @attention Data passed must be available for at least 2 `bgfx::frame` calls.
     /// <param name="_data">Pointer to data.</param>
     /// <param name="_size">Size of data.</param>
-    @:native("bgfx_make_ref") extern public static function makeRef(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.Star<Memory>;
+    @:native("bgfx_make_ref") extern public static function makeRef(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.ConstStar<Memory>;
     @:nocompletion
     @:native("bgfx_make_ref")
-    extern public static function bgfx_make_ref(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.Star<Memory>;
+    extern public static function bgfx_make_ref(_data: cpp.Star<cpp.Void>, _size: cpp.UInt32):cpp.ConstStar<Memory>;
 
 
     /// Make reference to data to pass to bgfx. Unlike `bgfx::alloc`, this call
