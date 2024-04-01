@@ -1,6 +1,7 @@
 #include <hxcpp.h>
 
 #include "linc_bgfx.h"
+#include "nanovg.h"
 
 namespace linc_bgfx {
 
@@ -61,6 +62,44 @@ namespace linc_bgfx {
 
     bgfx_callback_interface_t * getBgfxCallback() {
         return &s_callback;
+    }
+}
+
+namespace linc_nanovg {
+
+    Array<Dynamic> nvgTextBreakLinesHelper(NVGcontext* ctx, String string, float breakRowWidth){
+        Array<Dynamic> outArray = Array_obj<Dynamic>::__new(0, 1);
+        NVGtextRow rows[3];
+        const char* text = string.c_str();
+        const char* start = text;
+        const char* end = text + strlen(text);
+        int nrows;
+        int i;
+        while ((nrows = nvgTextBreakLines(ctx, start, end, breakRowWidth, rows, 3))) {
+            for (i = 0; i < nrows; i++) {
+                NVGtextRow row = rows[i];
+                hx::Anon result = hx::Anon_obj::Create();
+                result->Add(HX_CSTRING("start"), row.start);
+                result->Add(HX_CSTRING("end"), row.end);
+                result->Add(HX_CSTRING("next"), row.next);
+                result->Add(HX_CSTRING("width"), row.width);
+                result->Add(HX_CSTRING("minx"), row.minx);
+                result->Add(HX_CSTRING("maxx"), row.maxx);
+                outArray->push(result);
+
+            }
+            // Keep going...
+            start = rows[nrows-1].next;
+        }
+        return outArray;
+    }
+
+    float nvgTextBoundsHelper(NVGcontext* _ctx, float _x, float _y, String _string, String _end, float* _outArray) {
+        return nvgTextBounds(_ctx, _x, _y, _string, _end, _outArray);
+    }
+
+    void nvgTextBoxBoundsHelper(NVGcontext* _ctx, float _x, float _y, float _breakRowWidth, String _string, String _end, float* _outArray) {
+        nvgTextBoxBounds(_ctx, _x, _y, _breakRowWidth, _string.c_str(), _end.c_str(), _outArray);
     }
     
 }

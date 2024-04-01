@@ -2246,7 +2246,6 @@ extern class RenderFrameImpl { }
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_caps_gpu_t")
 extern class CapsGPU {
     public function new();
@@ -2256,7 +2255,6 @@ extern class CapsGPU {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_caps_limits_t")
 extern class CapsLimits {
     public function new();
@@ -2288,7 +2286,6 @@ extern class CapsLimits {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_caps_t")
 extern class Caps {
     public function new();
@@ -2306,7 +2303,6 @@ extern class Caps {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_internal_data_t")
 extern class InternalData {
     public function new();
@@ -2316,7 +2312,6 @@ extern class InternalData {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_platform_data_t")
 extern class PlatformData {
     public function new();
@@ -2330,7 +2325,6 @@ extern class PlatformData {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_resolution_t")
 extern class Resolution {
     public function new();
@@ -2345,7 +2339,6 @@ extern class Resolution {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_init_limits_t")
 extern class InitLimits {
     public function new();
@@ -2357,10 +2350,14 @@ extern class InitLimits {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_init_t")
 extern class Init {
     public function new();
+
+    inline function init() {
+    	untyped __cpp__('bgfx_init_ctor(&{0})', this);
+    }
+
     public var type: RendererType;
     public var vendorId: cpp.UInt16;
     public var deviceId: cpp.UInt16;
@@ -2376,7 +2373,6 @@ extern class Init {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_memory_t")
 extern class Memory {
     public function new();
@@ -2386,7 +2382,6 @@ extern class Memory {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_transient_index_buffer_t")
 extern class TransientIndexBuffer {
     public function new();
@@ -2399,7 +2394,6 @@ extern class TransientIndexBuffer {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_transient_vertex_buffer_t")
 extern class TransientVertexBuffer {
     public function new();
@@ -2413,7 +2407,6 @@ extern class TransientVertexBuffer {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_instance_data_buffer_t")
 extern class InstanceDataBuffer {
     public function new();
@@ -2427,7 +2420,6 @@ extern class InstanceDataBuffer {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_texture_info_t")
 extern class TextureInfo {
     public function new();
@@ -2444,7 +2436,6 @@ extern class TextureInfo {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_uniform_info_t")
 extern class UniformInfo {
     public function new();
@@ -2455,10 +2446,8 @@ extern class UniformInfo {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_attachment_t")
-extern class Attachment {
-    public function new();
+extern class __Attachment {
     public var access: Access;
     public var handle: TextureHandle;
     public var mip: cpp.UInt16;
@@ -2474,13 +2463,18 @@ extern class Attachment {
     /// <param name="_mip">Mip level.</param>
     /// <param name="_resolve">Resolve flags. See: `BGFX_RESOLVE_*`</param>
     inline public function init(_handle: TextureHandle, _access: Access, _layer: cpp.UInt16, _numLayers: cpp.UInt16, _mip: cpp.UInt16, _resolve: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_attachment_init(this, _handle, _access, _layer, _numLayers, _mip, _resolve);
+        return Bgfx.bgfx_attachment_init(cast cpp.Pointer.addressOf(this), _handle, _access, _layer, _numLayers, _mip, _resolve);
     }
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_attachment_t>")
+extern class AttachmentRef extends __Attachment {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_attachment_t>")
+extern class Attachment extends AttachmentRef {}
+
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_transform_t")
 extern class Transform {
     public function new();
@@ -2490,7 +2484,6 @@ extern class Transform {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_view_stats_t")
 extern class ViewStats {
     public function new();
@@ -2505,7 +2498,6 @@ extern class ViewStats {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_encoder_stats_t")
 extern class EncoderStats {
     public function new();
@@ -2515,7 +2507,6 @@ extern class EncoderStats {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_stats_t")
 extern class Stats {
     public function new();
@@ -2563,7 +2554,6 @@ extern class Stats {
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_vertex_layout_t")
 extern class VertexLayout {
     public function new();
@@ -2575,7 +2565,7 @@ extern class VertexLayout {
     /// Start VertexLayout.
     /// <param name="_rendererType">Renderer backend type. See: `bgfx::RendererType`</param>
     inline public function begin(_rendererType: RendererType):cpp.Star<VertexLayout> {
-        return Bgfx.bgfx_vertex_layout_begin(this, _rendererType);
+        return Bgfx.bgfx_vertex_layout_begin(cast this, _rendererType);
     }
 
     /// Add attribute to VertexLayout.
@@ -2586,7 +2576,7 @@ extern class VertexLayout {
     /// <param name="_normalized">When using fixed point AttribType (f.e. Uint8) value will be normalized for vertex shader usage. When normalized is set to true, AttribType::Uint8 value in range 0-255 will be in range 0.0-1.0 in vertex shader.</param>
     /// <param name="_asInt">Packaging rule for vertexPack, vertexUnpack, and vertexConvert for AttribType::Uint8 and AttribType::Int16. Unpacking code must be implemented inside vertex shader.</param>
     inline public function add(_attrib: Attrib, _num: cpp.UInt8, _type: AttribType, _normalized: Bool, _asInt: Bool):cpp.Star<VertexLayout> {
-        return Bgfx.bgfx_vertex_layout_add(this, _attrib, _num, _type, _normalized, _asInt);
+        return Bgfx.bgfx_vertex_layout_add(cast this, _attrib, _num, _type, _normalized, _asInt);
     }
 
     /// Decode attribute.
@@ -2596,30 +2586,29 @@ extern class VertexLayout {
     /// <param name="_normalized">Attribute is normalized.</param>
     /// <param name="_asInt">Attribute is packed as int.</param>
     inline public function decode(_attrib: Attrib, _num: cpp.Star<cpp.UInt8 >, _type: cpp.Star<AttribType>, _normalized: cpp.Star<Bool >, _asInt: cpp.Star<Bool >):cpp.Void {
-        return Bgfx.bgfx_vertex_layout_decode(this, _attrib, _num, _type, _normalized, _asInt);
+        return Bgfx.bgfx_vertex_layout_decode(cast this, _attrib, _num, _type, _normalized, _asInt);
     }
 
     /// Returns `true` if VertexLayout contains attribute.
     /// <param name="_attrib">Attribute semantics. See: `bgfx::Attrib`</param>
     inline public function has(_attrib: Attrib):Bool {
-        return Bgfx.bgfx_vertex_layout_has(this, _attrib);
+        return Bgfx.bgfx_vertex_layout_has(cast this, _attrib);
     }
 
     /// Skip `_num` bytes in vertex stream.
     /// <param name="_num">Number of bytes to skip.</param>
     inline public function skip(_num: cpp.UInt8):cpp.Star<VertexLayout> {
-        return Bgfx.bgfx_vertex_layout_skip(this, _num);
+        return Bgfx.bgfx_vertex_layout_skip(cast this, _num);
     }
 
     /// End VertexLayout.
     inline public function end():cpp.Void {
-        return Bgfx.bgfx_vertex_layout_end(this);
+        return Bgfx.bgfx_vertex_layout_end(cast this);
     }
 }
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_encoder_t")
 extern class Encoder {
     public function new();
@@ -2628,7 +2617,7 @@ extern class Encoder {
     /// graphics debugging tools.
     /// <param name="_marker">Marker string.</param>
     inline public function setMarker(_marker: cpp.ConstCharStar):cpp.Void {
-        return Bgfx.bgfx_encoder_set_marker(this, _marker);
+        return Bgfx.bgfx_encoder_set_marker(cast this, _marker);
     }
 
     /// Set render states for draw primitive.
@@ -2645,21 +2634,21 @@ extern class Encoder {
     /// <param name="_state">State flags. Default state for primitive type is   triangles. See: `BGFX_STATE_DEFAULT`.   - `BGFX_STATE_DEPTH_TEST_*` - Depth test function.   - `BGFX_STATE_BLEND_*` - See remark 1 about BGFX_STATE_BLEND_FUNC.   - `BGFX_STATE_BLEND_EQUATION_*` - See remark 2.   - `BGFX_STATE_CULL_*` - Backface culling mode.   - `BGFX_STATE_WRITE_*` - Enable R, G, B, A or Z write.   - `BGFX_STATE_MSAA` - Enable hardware multisample antialiasing.   - `BGFX_STATE_PT_[TRISTRIP/LINES/POINTS]` - Primitive type.</param>
     /// <param name="_rgba">Sets blend factor used by `BGFX_STATE_BLEND_FACTOR` and   `BGFX_STATE_BLEND_INV_FACTOR` blend modes.</param>
     inline public function setState(_state: cpp.UInt64, _rgba: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_state(this, _state, _rgba);
+        return Bgfx.bgfx_encoder_set_state(cast this, _state, _rgba);
     }
 
     /// Set condition for rendering.
     /// <param name="_handle">Occlusion query handle.</param>
     /// <param name="_visible">Render if occlusion query is visible.</param>
     inline public function setCondition(_handle: OcclusionQueryHandle, _visible: Bool):cpp.Void {
-        return Bgfx.bgfx_encoder_set_condition(this, _handle, _visible);
+        return Bgfx.bgfx_encoder_set_condition(cast this, _handle, _visible);
     }
 
     /// Set stencil test state.
     /// <param name="_fstencil">Front stencil state.</param>
     /// <param name="_bstencil">Back stencil state. If back is set to `BGFX_STENCIL_NONE` _fstencil is applied to both front and back facing primitives.</param>
     inline public function setStencil(_fstencil: cpp.UInt32, _bstencil: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_stencil(this, _fstencil, _bstencil);
+        return Bgfx.bgfx_encoder_set_stencil(cast this, _fstencil, _bstencil);
     }
 
     /// Set scissor for draw primitive.
@@ -2670,7 +2659,7 @@ extern class Encoder {
     /// <param name="_width">Width of view scissor region.</param>
     /// <param name="_height">Height of view scissor region.</param>
     inline public function setScissor(_x: cpp.UInt16, _y: cpp.UInt16, _width: cpp.UInt16, _height: cpp.UInt16):cpp.UInt16 {
-        return Bgfx.bgfx_encoder_set_scissor(this, _x, _y, _width, _height);
+        return Bgfx.bgfx_encoder_set_scissor(cast this, _x, _y, _width, _height);
     }
 
     /// Set scissor from cache for draw primitive.
@@ -2678,7 +2667,7 @@ extern class Encoder {
     ///   To scissor for all primitives in view see `bgfx::setViewScissor`.
     /// <param name="_cache">Index in scissor cache.</param>
     inline public function setScissorCached(_cache: cpp.UInt16):cpp.Void {
-        return Bgfx.bgfx_encoder_set_scissor_cached(this, _cache);
+        return Bgfx.bgfx_encoder_set_scissor_cached(cast this, _cache);
     }
 
     /// Set model matrix for draw primitive. If it is not called,
@@ -2686,14 +2675,14 @@ extern class Encoder {
     /// <param name="_mtx">Pointer to first matrix in array.</param>
     /// <param name="_num">Number of matrices in array.</param>
     inline public function setTransform(_mtx: cpp.Star<cpp.Void>, _num: cpp.UInt16):cpp.UInt32 {
-        return Bgfx.bgfx_encoder_set_transform(this, _mtx, _num);
+        return Bgfx.bgfx_encoder_set_transform(cast this, _mtx, _num);
     }
 
     ///  Set model matrix from matrix cache for draw primitive.
     /// <param name="_cache">Index in matrix cache.</param>
     /// <param name="_num">Number of matrices from cache.</param>
     inline public function setTransformCached(_cache: cpp.UInt32, _num: cpp.UInt16):cpp.Void {
-        return Bgfx.bgfx_encoder_set_transform_cached(this, _cache, _num);
+        return Bgfx.bgfx_encoder_set_transform_cached(cast this, _cache, _num);
     }
 
     /// Reserve matrices in internal matrix cache.
@@ -2701,7 +2690,7 @@ extern class Encoder {
     /// <param name="_transform">Pointer to `Transform` structure.</param>
     /// <param name="_num">Number of matrices.</param>
     inline public function allocTransform(_transform: cpp.Star<Transform>, _num: cpp.UInt16):cpp.UInt32 {
-        return Bgfx.bgfx_encoder_alloc_transform(this, _transform, _num);
+        return Bgfx.bgfx_encoder_alloc_transform(cast this, _transform, _num);
     }
 
     /// Set shader uniform parameter for draw primitive.
@@ -2709,7 +2698,7 @@ extern class Encoder {
     /// <param name="_value">Pointer to uniform data.</param>
     /// <param name="_num">Number of elements. Passing `UINT16_MAX` will use the _num passed on uniform creation.</param>
     inline public function setUniform(_handle: UniformHandle, _value: cpp.Star<cpp.Void>, _num: cpp.UInt16):cpp.Void {
-        return Bgfx.bgfx_encoder_set_uniform(this, _handle, _value, _num);
+        return Bgfx.bgfx_encoder_set_uniform(cast this, _handle, _value, _num);
     }
 
     /// Set index buffer for draw primitive.
@@ -2717,7 +2706,7 @@ extern class Encoder {
     /// <param name="_firstIndex">First index to render.</param>
     /// <param name="_numIndices">Number of indices to render.</param>
     inline public function setIndexBuffer(_handle: IndexBufferHandle, _firstIndex: cpp.UInt32, _numIndices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_index_buffer(this, _handle, _firstIndex, _numIndices);
+        return Bgfx.bgfx_encoder_set_index_buffer(cast this, _handle, _firstIndex, _numIndices);
     }
 
     /// Set index buffer for draw primitive.
@@ -2725,7 +2714,7 @@ extern class Encoder {
     /// <param name="_firstIndex">First index to render.</param>
     /// <param name="_numIndices">Number of indices to render.</param>
     inline public function setDynamicIndexBuffer(_handle: DynamicIndexBufferHandle, _firstIndex: cpp.UInt32, _numIndices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_dynamic_index_buffer(this, _handle, _firstIndex, _numIndices);
+        return Bgfx.bgfx_encoder_set_dynamic_index_buffer(cast this, _handle, _firstIndex, _numIndices);
     }
 
     /// Set index buffer for draw primitive.
@@ -2733,7 +2722,7 @@ extern class Encoder {
     /// <param name="_firstIndex">First index to render.</param>
     /// <param name="_numIndices">Number of indices to render.</param>
     inline public function setTransientIndexBuffer(_tib: cpp.Star<TransientIndexBuffer>, _firstIndex: cpp.UInt32, _numIndices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_transient_index_buffer(this, _tib, _firstIndex, _numIndices);
+        return Bgfx.bgfx_encoder_set_transient_index_buffer(cast this, _tib, _firstIndex, _numIndices);
     }
 
     /// Set vertex buffer for draw primitive.
@@ -2742,7 +2731,7 @@ extern class Encoder {
     /// <param name="_startVertex">First vertex to render.</param>
     /// <param name="_numVertices">Number of vertices to render.</param>
     inline public function setVertexBuffer(_stream: cpp.UInt8, _handle: VertexBufferHandle, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_vertex_buffer(this, _stream, _handle, _startVertex, _numVertices);
+        return Bgfx.bgfx_encoder_set_vertex_buffer(cast this, _stream, _handle, _startVertex, _numVertices);
     }
 
     /// Set vertex buffer for draw primitive.
@@ -2752,7 +2741,7 @@ extern class Encoder {
     /// <param name="_numVertices">Number of vertices to render.</param>
     /// <param name="_layoutHandle">Vertex layout for aliasing vertex buffer. If invalid handle is used, vertex layout used for creation of vertex buffer will be used.</param>
     inline public function setVertexBufferWithLayout(_stream: cpp.UInt8, _handle: VertexBufferHandle, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32, _layoutHandle: VertexLayoutHandle):cpp.Void {
-        return Bgfx.bgfx_encoder_set_vertex_buffer_with_layout(this, _stream, _handle, _startVertex, _numVertices, _layoutHandle);
+        return Bgfx.bgfx_encoder_set_vertex_buffer_with_layout(cast this, _stream, _handle, _startVertex, _numVertices, _layoutHandle);
     }
 
     /// Set vertex buffer for draw primitive.
@@ -2761,10 +2750,10 @@ extern class Encoder {
     /// <param name="_startVertex">First vertex to render.</param>
     /// <param name="_numVertices">Number of vertices to render.</param>
     inline public function setDynamicVertexBuffer(_stream: cpp.UInt8, _handle: DynamicVertexBufferHandle, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_dynamic_vertex_buffer(this, _stream, _handle, _startVertex, _numVertices);
+        return Bgfx.bgfx_encoder_set_dynamic_vertex_buffer(cast this, _stream, _handle, _startVertex, _numVertices);
     }
     inline public function setDynamicVertexBufferWithLayout(_stream: cpp.UInt8, _handle: DynamicVertexBufferHandle, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32, _layoutHandle: VertexLayoutHandle):cpp.Void {
-        return Bgfx.bgfx_encoder_set_dynamic_vertex_buffer_with_layout(this, _stream, _handle, _startVertex, _numVertices, _layoutHandle);
+        return Bgfx.bgfx_encoder_set_dynamic_vertex_buffer_with_layout(cast this, _stream, _handle, _startVertex, _numVertices, _layoutHandle);
     }
 
     /// Set vertex buffer for draw primitive.
@@ -2773,7 +2762,7 @@ extern class Encoder {
     /// <param name="_startVertex">First vertex to render.</param>
     /// <param name="_numVertices">Number of vertices to render.</param>
     inline public function setTransientVertexBuffer(_stream: cpp.UInt8, _tvb: cpp.Star<TransientVertexBuffer>, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_transient_vertex_buffer(this, _stream, _tvb, _startVertex, _numVertices);
+        return Bgfx.bgfx_encoder_set_transient_vertex_buffer(cast this, _stream, _tvb, _startVertex, _numVertices);
     }
 
     /// Set vertex buffer for draw primitive.
@@ -2783,7 +2772,7 @@ extern class Encoder {
     /// <param name="_numVertices">Number of vertices to render.</param>
     /// <param name="_layoutHandle">Vertex layout for aliasing vertex buffer. If invalid handle is used, vertex layout used for creation of vertex buffer will be used.</param>
     inline public function setTransientVertexBufferWithLayout(_stream: cpp.UInt8, _tvb: cpp.Star<TransientVertexBuffer>, _startVertex: cpp.UInt32, _numVertices: cpp.UInt32, _layoutHandle: VertexLayoutHandle):cpp.Void {
-        return Bgfx.bgfx_encoder_set_transient_vertex_buffer_with_layout(this, _stream, _tvb, _startVertex, _numVertices, _layoutHandle);
+        return Bgfx.bgfx_encoder_set_transient_vertex_buffer_with_layout(cast this, _stream, _tvb, _startVertex, _numVertices, _layoutHandle);
     }
 
     /// Set number of vertices for auto generated vertices use in conjunction
@@ -2791,7 +2780,7 @@ extern class Encoder {
     /// @attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.
     /// <param name="_numVertices">Number of vertices.</param>
     inline public function setVertexCount(_numVertices: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_vertex_count(this, _numVertices);
+        return Bgfx.bgfx_encoder_set_vertex_count(cast this, _numVertices);
     }
 
     /// Set instance data buffer for draw primitive.
@@ -2799,7 +2788,7 @@ extern class Encoder {
     /// <param name="_start">First instance data.</param>
     /// <param name="_num">Number of data instances.</param>
     inline public function setInstanceDataBuffer(_idb: cpp.Star<InstanceDataBuffer>, _start: cpp.UInt32, _num: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_instance_data_buffer(this, _idb, _start, _num);
+        return Bgfx.bgfx_encoder_set_instance_data_buffer(cast this, _idb, _start, _num);
     }
 
     /// Set instance data buffer for draw primitive.
@@ -2807,7 +2796,7 @@ extern class Encoder {
     /// <param name="_startVertex">First instance data.</param>
     /// <param name="_num">Number of data instances.</param>
     inline public function setInstanceDataFromVertexBuffer(_handle: VertexBufferHandle, _startVertex: cpp.UInt32, _num: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_instance_data_from_vertex_buffer(this, _handle, _startVertex, _num);
+        return Bgfx.bgfx_encoder_set_instance_data_from_vertex_buffer(cast this, _handle, _startVertex, _num);
     }
 
     /// Set instance data buffer for draw primitive.
@@ -2815,14 +2804,14 @@ extern class Encoder {
     /// <param name="_startVertex">First instance data.</param>
     /// <param name="_num">Number of data instances.</param>
     inline public function setInstanceDataFromDynamicVertexBuffer(_handle: DynamicVertexBufferHandle, _startVertex: cpp.UInt32, _num: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_instance_data_from_dynamic_vertex_buffer(this, _handle, _startVertex, _num);
+        return Bgfx.bgfx_encoder_set_instance_data_from_dynamic_vertex_buffer(cast this, _handle, _startVertex, _num);
     }
 
     /// Set number of instances for auto generated instances use in conjunction
     /// with gl_InstanceID.
     /// @attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.
     inline public function setInstanceCount(_numInstances: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_instance_count(this, _numInstances);
+        return Bgfx.bgfx_encoder_set_instance_count(cast this, _numInstances);
     }
 
     /// Set texture stage for draw primitive.
@@ -2831,7 +2820,7 @@ extern class Encoder {
     /// <param name="_handle">Texture handle.</param>
     /// <param name="_flags">Texture sampling mode. Default value UINT32_MAX uses   texture sampling settings from the texture.   - `BGFX_SAMPLER_[U/V/W]_[MIRROR/CLAMP]` - Mirror or clamp to edge wrap     mode.   - `BGFX_SAMPLER_[MIN/MAG/MIP]_[POINT/ANISOTROPIC]` - Point or anisotropic     sampling.</param>
     inline public function setTexture(_stage: cpp.UInt8, _sampler: UniformHandle, _handle: TextureHandle, _flags: cpp.UInt32):cpp.Void {
-        return Bgfx.bgfx_encoder_set_texture(this, _stage, _sampler, _handle, _flags);
+        return Bgfx.bgfx_encoder_set_texture(cast this, _stage, _sampler, _handle, _flags);
     }
 
     /// Submit an empty primitive for rendering. Uniforms and draw state
@@ -2842,7 +2831,7 @@ extern class Encoder {
     ///   These empty draw calls will sort before ordinary draw calls.
     /// <param name="_id">View id.</param>
     inline public function touch(_id: ViewId):cpp.Void {
-        return Bgfx.bgfx_encoder_touch(this, _id);
+        return Bgfx.bgfx_encoder_touch(cast this, _id);
     }
 
     /// Submit primitive for rendering.
@@ -2851,7 +2840,7 @@ extern class Encoder {
     /// <param name="_depth">Depth for sorting.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function submit(_id: ViewId, _program: ProgramHandle, _depth: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_submit(this, _id, _program, _depth, _flags);
+        return Bgfx.bgfx_encoder_submit(cast this, _id, _program, _depth, _flags);
     }
 
     /// Submit primitive with occlusion query for rendering.
@@ -2861,7 +2850,7 @@ extern class Encoder {
     /// <param name="_depth">Depth for sorting.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function submitOcclusionQuery(_id: ViewId, _program: ProgramHandle, _occlusionQuery: OcclusionQueryHandle, _depth: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_submit_occlusion_query(this, _id, _program, _occlusionQuery, _depth, _flags);
+        return Bgfx.bgfx_encoder_submit_occlusion_query(cast this, _id, _program, _occlusionQuery, _depth, _flags);
     }
 
     /// Submit primitive for rendering with index and instance data info from
@@ -2875,7 +2864,7 @@ extern class Encoder {
     /// <param name="_depth">Depth for sorting.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function submitIndirect(_id: ViewId, _program: ProgramHandle, _indirectHandle: IndirectBufferHandle, _start: cpp.UInt32, _num: cpp.UInt32, _depth: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_submit_indirect(this, _id, _program, _indirectHandle, _start, _num, _depth, _flags);
+        return Bgfx.bgfx_encoder_submit_indirect(cast this, _id, _program, _indirectHandle, _start, _num, _depth, _flags);
     }
 
     /// Submit primitive for rendering with index and instance data info and
@@ -2891,7 +2880,7 @@ extern class Encoder {
     /// <param name="_depth">Depth for sorting.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function submitIndirectCount(_id: ViewId, _program: ProgramHandle, _indirectHandle: IndirectBufferHandle, _start: cpp.UInt32, _numHandle: IndexBufferHandle, _numIndex: cpp.UInt32, _numMax: cpp.UInt32, _depth: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_submit_indirect_count(this, _id, _program, _indirectHandle, _start, _numHandle, _numIndex, _numMax, _depth, _flags);
+        return Bgfx.bgfx_encoder_submit_indirect_count(cast this, _id, _program, _indirectHandle, _start, _numHandle, _numIndex, _numMax, _depth, _flags);
     }
 
     /// Set compute index buffer.
@@ -2899,7 +2888,7 @@ extern class Encoder {
     /// <param name="_handle">Index buffer handle.</param>
     /// <param name="_access">Buffer access. See `Access::Enum`.</param>
     inline public function setComputeIndexBuffer(_stage: cpp.UInt8, _handle: IndexBufferHandle, _access: Access):cpp.Void {
-        return Bgfx.bgfx_encoder_set_compute_index_buffer(this, _stage, _handle, _access);
+        return Bgfx.bgfx_encoder_set_compute_index_buffer(cast this, _stage, _handle, _access);
     }
 
     /// Set compute vertex buffer.
@@ -2907,7 +2896,7 @@ extern class Encoder {
     /// <param name="_handle">Vertex buffer handle.</param>
     /// <param name="_access">Buffer access. See `Access::Enum`.</param>
     inline public function setComputeVertexBuffer(_stage: cpp.UInt8, _handle: VertexBufferHandle, _access: Access):cpp.Void {
-        return Bgfx.bgfx_encoder_set_compute_vertex_buffer(this, _stage, _handle, _access);
+        return Bgfx.bgfx_encoder_set_compute_vertex_buffer(cast this, _stage, _handle, _access);
     }
 
     /// Set compute dynamic index buffer.
@@ -2915,7 +2904,7 @@ extern class Encoder {
     /// <param name="_handle">Dynamic index buffer handle.</param>
     /// <param name="_access">Buffer access. See `Access::Enum`.</param>
     inline public function setComputeDynamicIndexBuffer(_stage: cpp.UInt8, _handle: DynamicIndexBufferHandle, _access: Access):cpp.Void {
-        return Bgfx.bgfx_encoder_set_compute_dynamic_index_buffer(this, _stage, _handle, _access);
+        return Bgfx.bgfx_encoder_set_compute_dynamic_index_buffer(cast this, _stage, _handle, _access);
     }
 
     /// Set compute dynamic vertex buffer.
@@ -2923,7 +2912,7 @@ extern class Encoder {
     /// <param name="_handle">Dynamic vertex buffer handle.</param>
     /// <param name="_access">Buffer access. See `Access::Enum`.</param>
     inline public function setComputeDynamicVertexBuffer(_stage: cpp.UInt8, _handle: DynamicVertexBufferHandle, _access: Access):cpp.Void {
-        return Bgfx.bgfx_encoder_set_compute_dynamic_vertex_buffer(this, _stage, _handle, _access);
+        return Bgfx.bgfx_encoder_set_compute_dynamic_vertex_buffer(cast this, _stage, _handle, _access);
     }
 
     /// Set compute indirect buffer.
@@ -2931,7 +2920,7 @@ extern class Encoder {
     /// <param name="_handle">Indirect buffer handle.</param>
     /// <param name="_access">Buffer access. See `Access::Enum`.</param>
     inline public function setComputeIndirectBuffer(_stage: cpp.UInt8, _handle: IndirectBufferHandle, _access: Access):cpp.Void {
-        return Bgfx.bgfx_encoder_set_compute_indirect_buffer(this, _stage, _handle, _access);
+        return Bgfx.bgfx_encoder_set_compute_indirect_buffer(cast this, _stage, _handle, _access);
     }
 
     /// Set compute image from texture.
@@ -2941,7 +2930,7 @@ extern class Encoder {
     /// <param name="_access">Image access. See `Access::Enum`.</param>
     /// <param name="_format">Texture format. See: `TextureFormat::Enum`.</param>
     inline public function setImage(_stage: cpp.UInt8, _handle: TextureHandle, _mip: cpp.UInt8, _access: Access, _format: TextureFormat):cpp.Void {
-        return Bgfx.bgfx_encoder_set_image(this, _stage, _handle, _mip, _access, _format);
+        return Bgfx.bgfx_encoder_set_image(cast this, _stage, _handle, _mip, _access, _format);
     }
 
     /// Dispatch compute.
@@ -2952,7 +2941,7 @@ extern class Encoder {
     /// <param name="_numZ">Number of groups Z.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function dispatch(_id: ViewId, _program: ProgramHandle, _numX: cpp.UInt32, _numY: cpp.UInt32, _numZ: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_dispatch(this, _id, _program, _numX, _numY, _numZ, _flags);
+        return Bgfx.bgfx_encoder_dispatch(cast this, _id, _program, _numX, _numY, _numZ, _flags);
     }
 
     /// Dispatch compute indirect.
@@ -2963,13 +2952,13 @@ extern class Encoder {
     /// <param name="_num">Number of dispatches.</param>
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function dispatchIndirect(_id: ViewId, _program: ProgramHandle, _indirectHandle: IndirectBufferHandle, _start: cpp.UInt32, _num: cpp.UInt32, _flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_dispatch_indirect(this, _id, _program, _indirectHandle, _start, _num, _flags);
+        return Bgfx.bgfx_encoder_dispatch_indirect(cast this, _id, _program, _indirectHandle, _start, _num, _flags);
     }
 
     /// Discard previously set state for draw or compute call.
     /// <param name="_flags">Discard or preserve states. See `BGFX_DISCARD_*`.</param>
     inline public function discard(_flags: cpp.UInt8):cpp.Void {
-        return Bgfx.bgfx_encoder_discard(this, _flags);
+        return Bgfx.bgfx_encoder_discard(cast this, _flags);
     }
 
     /// Blit 2D texture region between two 2D textures.
@@ -2990,140 +2979,183 @@ extern class Encoder {
     /// <param name="_height">Height of region.</param>
     /// <param name="_depth">If texture is 3D this argument represents depth of region, otherwise it's unused.</param>
     inline public function blit(_id: ViewId, _dst: TextureHandle, _dstMip: cpp.UInt8, _dstX: cpp.UInt16, _dstY: cpp.UInt16, _dstZ: cpp.UInt16, _src: TextureHandle, _srcMip: cpp.UInt8, _srcX: cpp.UInt16, _srcY: cpp.UInt16, _srcZ: cpp.UInt16, _width: cpp.UInt16, _height: cpp.UInt16, _depth: cpp.UInt16):cpp.Void {
-        return Bgfx.bgfx_encoder_blit(this, _id, _dst, _dstMip, _dstX, _dstY, _dstZ, _src, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
+        return Bgfx.bgfx_encoder_blit(cast this, _id, _dst, _dstMip, _dstX, _dstY, _dstZ, _src, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
     }
 }
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_dynamic_index_buffer_handle_t")
-extern class DynamicIndexBufferHandle {
+extern class __DynamicIndexBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_dynamic_index_buffer_handle_t>")
+extern class DynamicIndexBufferHandleRef extends __DynamicIndexBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_dynamic_index_buffer_handle_t>")
+extern class DynamicIndexBufferHandle extends DynamicIndexBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_dynamic_vertex_buffer_handle_t")
-extern class DynamicVertexBufferHandle {
+extern class __DynamicVertexBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_dynamic_vertex_buffer_handle_t>")
+extern class DynamicVertexBufferHandleRef extends __DynamicVertexBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_dynamic_vertex_buffer_handle_t>")
+extern class DynamicVertexBufferHandle extends DynamicVertexBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_frame_buffer_handle_t")
-extern class FrameBufferHandle {
+extern class __FrameBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_frame_buffer_handle_t>")
+extern class FrameBufferHandleRef extends __FrameBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_frame_buffer_handle_t>")
+extern class FrameBufferHandle extends FrameBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_index_buffer_handle_t")
-extern class IndexBufferHandle {
+extern class __IndexBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_index_buffer_handle_t>")
+extern class IndexBufferHandleRef extends __IndexBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_index_buffer_handle_t>")
+extern class IndexBufferHandle extends IndexBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_indirect_buffer_handle_t")
-extern class IndirectBufferHandle {
+extern class __IndirectBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_indirect_buffer_handle_t>")
+extern class IndirectBufferHandleRef extends __IndirectBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_indirect_buffer_handle_t>")
+extern class IndirectBufferHandle extends IndirectBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_occlusion_query_handle_t")
-extern class OcclusionQueryHandle {
+extern class __OcclusionQueryHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_occlusion_query_handle_t>")
+extern class OcclusionQueryHandleRef extends __OcclusionQueryHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_occlusion_query_handle_t>")
+extern class OcclusionQueryHandle extends OcclusionQueryHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_program_handle_t")
-extern class ProgramHandle {
+extern class __ProgramHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_program_handle_t>")
+extern class ProgramHandleRef extends __ProgramHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_program_handle_t>")
+extern class ProgramHandle extends ProgramHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_shader_handle_t")
-extern class ShaderHandle {
+extern class __ShaderHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_shader_handle_t>")
+extern class ShaderHandleRef extends __ShaderHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_shader_handle_t>")
+extern class ShaderHandle extends ShaderHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_texture_handle_t")
-extern class TextureHandle {
+extern class __TextureHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_texture_handle_t>")
+extern class TextureHandleRef extends __TextureHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_texture_handle_t>")
+extern class TextureHandle extends TextureHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_uniform_handle_t")
-extern class UniformHandle {
+extern class __UniformHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_uniform_handle_t>")
+extern class UniformHandleRef extends __UniformHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_uniform_handle_t>")
+extern class UniformHandle extends UniformHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_vertex_buffer_handle_t")
-extern class VertexBufferHandle {
+extern class __VertexBufferHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_vertex_buffer_handle_t>")
+extern class VertexBufferHandleRef extends __VertexBufferHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_vertex_buffer_handle_t>")
+extern class VertexBufferHandle extends VertexBufferHandleRef {}
+
 
 @:include("linc_bgfx.h")
 @:structAccess
-@:unreflective
 @:native("bgfx_vertex_layout_handle_t")
-extern class VertexLayoutHandle {
+extern class __VertexLayoutHandle {
     public function new();
     public var idx:cpp.UInt16;
     inline public function valid():Bool return idx != 0xffff;
 }
+@:include("linc_bgfx.h") @:native("::cpp::Reference<bgfx_vertex_layout_handle_t>")
+extern class VertexLayoutHandleRef extends __VertexLayoutHandle {}
+@:include("linc_bgfx.h") @:native("::cpp::Struct<bgfx_vertex_layout_handle_t>")
+extern class VertexLayoutHandle extends VertexLayoutHandleRef {}
 
-// @:include("linc_bgfx.h")
-// // @:native("(bgfx_callback_interface_t*)&linc_bgfx::s_callback")
-// @:native("bgfx_callback_interface_t")
-// extern class CallbackInterface {}
 
-// @:include("linc_bgfx.h")
+@:headerCode('#include <Dynamic2.h>')
 @:include("linc_bgfx.h")
 @:build(linc.Linc.touch())
 @:build(linc.Linc.xml("bgfx"))
-class Bgfx {
+class __Bgfx {
 
 	@:native('BGFX_INVALID_HANDLE')
 	extern public static var InvalidHandle:ShaderHandle;
@@ -5203,6 +5235,18 @@ class Bgfx {
     @:native("bgfx_blit")
     extern public static function bgfx_blit(_id: ViewId, _dst: TextureHandle, _dstMip: cpp.UInt8, _dstX: cpp.UInt16, _dstY: cpp.UInt16, _dstZ: cpp.UInt16, _src: TextureHandle, _srcMip: cpp.UInt8, _srcX: cpp.UInt16, _srcY: cpp.UInt16, _srcZ: cpp.UInt16, _width: cpp.UInt16, _height: cpp.UInt16, _depth: cpp.UInt16):cpp.Void;
 
+    @:nocompletion
+    @:allow(bgfx.Bgfx)
+    private function new() {}
 }
 
+
+// #if (scriptable || cppia)
+// 	@:build(linc.LincCppia.wrapMainExtern('__Bgfx'))
+// 	class Bgfx {}
+// #else
+// 	typedef Bgfx = __Bgfx;
+// #end
+
+typedef Bgfx = __Bgfx;
 
