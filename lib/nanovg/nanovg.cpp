@@ -29,6 +29,7 @@
 
 #include <bx/bx.h>
 
+
 BX_PRAGMA_DIAGNOSTIC_IGNORED_MSVC(4701) // error C4701: potentially uninitialized local variable 'cint' used
 // -Wunused-function and 4505 must be file scope, can't be disabled between push/pop.
 BX_PRAGMA_DIAGNOSTIC_IGNORED_CLANG_GCC("-Wunused-function");

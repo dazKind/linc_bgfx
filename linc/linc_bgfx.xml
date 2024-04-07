@@ -32,11 +32,15 @@
             <section unless="debug">
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxRelease.lib"/>
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_decodeRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_encodeRelease.lib"/>
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxRelease.lib"/>
             </section>
             <section if="debug">
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxDebug.lib"/>
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_decodeDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_encodeDebug.lib"/>
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
             </section>
         </section>

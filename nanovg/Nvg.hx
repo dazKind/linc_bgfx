@@ -53,6 +53,7 @@ class NvgImageFlags {
     inline public static var IMAGE_REPEATY:Int          = 1<<2;
     inline public static var IMAGE_FLIPY:Int            = 1<<3;
     inline public static var IMAGE_PREMULTIPLIED:Int    = 1<<4;
+    inline public static var NVG_IMAGE_NEAREST:Int      = 1<<5;
     inline public static var IMAGE_NODELETE:Int         = 1<<16;
 }
 
@@ -178,7 +179,7 @@ extern class Native_Nvg {
     public static function beginFrame(_ctx:cpp.Star<Native_NvgContext>, _windowWidth:Int, _windowHeight:Int, _devicePixelRatio:cpp.Float32):Void;
 
     @:native("nvgCancelFrame")
-    public static function cancelFrame(_ctx:cpp.Star<Native_NvgContext>):Void; 
+    public static function cancelFrame(_ctx:cpp.Star<Native_NvgContext>):Void;
 
     @:native("nvgEndFrame")
     public static function endFrame(_ctx:cpp.Star<Native_NvgContext>):Void;
@@ -307,43 +308,39 @@ extern class Native_Nvg {
     @:native("nvgRadToDeg")
     public static function radToDeg(_rad:cpp.Float32):cpp.Float32;
 
-    // TODO: 
-    // @:native("nvgCreateImageMem")
-    // private static function _createImageMem(_ctx:cpp.Star<Native_NvgContext>, _imageFlags:cpp.Int32, _data:cpp.RawPointer<cpp.UInt8>, _ndata:cpp.Int32):Int;
-    // inline public static function createImageMem(_ctx:cpp.Star<Native_NvgContext>, _imageFlags:cpp.Int32, _data:haxe.io.BytesData, _dataLength:cpp.Int32):Int {
-    //     var ab = cpp.NativeArray.getBase(_data);
-    //     var ptr:cpp.RawPointer<cpp.UInt8> = untyped Native_cppNative_('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
-    //     return _createImageMem(_ctx, _imageFlags, cast ptr, _dataLength);
-    // }
+    @:native("linc_nanovg::nvgCreateImageMem")
+    private static function _createImageMem(_ctx:cpp.Star<Native_NvgContext>, _imageFlags:cpp.Int32, _data:cpp.RawPointer<cpp.UInt8>, _ndata:cpp.Int32):Int;
+    inline public static function createImageMem(_ctx:cpp.Star<Native_NvgContext>, _imageFlags:cpp.Int32, _data:haxe.io.BytesData, _dataLength:cpp.Int32):Int {
+        var ab = cpp.NativeArray.getBase(_data);
+        var ptr:cpp.RawPointer<cpp.UInt8> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
+        return _createImageMem(_ctx, _imageFlags, cast ptr, _dataLength);
+    }
 
-    // @:native("nvgCreateImageRGBA")
-    // private static function _createImageRGBA(_ctx:cpp.Star<Native_NvgContext>, _w:Int, _h:Int, _imageFlags:cpp.Int32, _data:cpp.RawPointer<cpp.UInt8>):Int;
-    // inline public static function createImageRGBA(_ctx:cpp.Star<Native_NvgContext>, _w:Int, _h:Int, _imageFlags:cpp.Int32, _data:haxe.io.BytesData):Int {
-    //     var ab = cpp.NativeArray.getBase(_data);
-    //     var ptr:cpp.RawPointer<cpp.UInt8> = untyped Native_cppNative_('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
-    //     return _createImageRGBA(_ctx, _w, _h, _imageFlags, cast ptr);
-    // }
+    @:native("nvgCreateImageRGBA")
+    private static function _createImageRGBA(_ctx:cpp.Star<Native_NvgContext>, _w:Int, _h:Int, _imageFlags:cpp.Int32, _data:cpp.RawPointer<cpp.UInt8>):Int;
+    inline public static function createImageRGBA(_ctx:cpp.Star<Native_NvgContext>, _w:Int, _h:Int, _imageFlags:cpp.Int32, _data:haxe.io.BytesData):Int {
+        var ab = cpp.NativeArray.getBase(_data);
+        var ptr:cpp.RawPointer<cpp.UInt8> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
+        return _createImageRGBA(_ctx, _w, _h, _imageFlags, cast ptr);
+    }
 
-    // @:native("nvgUpdateImage")
-    // private static function _updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:cpp.RawPointer<cpp.UInt8>):Void;
-    // inline public static function updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:haxe.io.BytesData):Void {
-    //     var ab = cpp.NativeArray.getBase(_data);
-    //     var ptr:cpp.RawPointer<cpp.UInt8> = untyped Native_cppNative_('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
-    //     _updateImage(_ctx, _image, cast ptr);
-    // }
+    @:native("nvgUpdateImage")
+    private static function _updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:cpp.RawPointer<cpp.UInt8>):Void;
+    inline public static function updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:haxe.io.BytesData):Void {
+        var ab = cpp.NativeArray.getBase(_data);
+        var ptr:cpp.RawPointer<cpp.UInt8> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
+        _updateImage(_ctx, _image, cast ptr);
+    }
 
-    // @:native("nanovgnvglCreateImageFromHandle")
-    // public static function createImageFromHandle(_ctx:cpp.Star<Native_NvgContext>, _glHandle:Int, _w:Int, _h:Int, _flags:Int):Int;    
+    @:native("nvgImageSize")
+    inline public static function imageSize(_ctx:cpp.Star<Native_NvgContext>, _image:Int):Array<Int> {
+        var dims:Array<cpp.Int32> = cpp.NativeArray.create(2);
+        untyped __cpp__("nvgImageSize({0}, {1}, {2}, {3})", _ctx, _image, cpp.NativeArray.address(dims, 0), cpp.NativeArray.address(dims, 1));
+        return cast dims;
+    }
 
-    // //@:native("nvgImageSize")
-    // inline public static function imageSize(_ctx:cpp.Star<Native_NvgContext>, _image:Int):Array<Int> {
-    //     var dims:Array<cpp.Int32> = cpp.NativeArray.create(2);
-    //     untyped Native_cppNative_("nvgImageSize({0}, {1}, {2}, {3})", _ctx, _image, cpp.NativeArray.address(dims, 0), cpp.NativeArray.address(dims, 1));
-    //     return cast dims;
-    // }
-
-    // @:native("nvgDeleteImage")
-    // public static function deleteImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int):Void;
+    @:native("nvgDeleteImage")
+    public static function deleteImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int):Void;
 
 
     @:native("nvgLinearGradient")
@@ -381,6 +378,9 @@ extern class Native_Nvg {
     @:native("nvgBezierTo")
     public static function bezierTo(_ctx:cpp.Star<Native_NvgContext>, _c1x:cpp.Float32, _c1y:cpp.Float32, _c2x:cpp.Float32, _c2y:cpp.Float32, _x:cpp.Float32, _y:cpp.Float32):Void;
 
+    @:native("nvgQuadTo")//(NVGcontext* ctx, float cx, float cy, float x, float y);
+    public static function quadTo(_ctx:cpp.Star<Native_NvgContext>, _cx:cpp.Float32, _cy:cpp.Float32, _x:cpp.Float32, _y:cpp.Float32):Void;
+
     @:native("nvgArcTo")
     public static function arcTo(_ctx:cpp.Star<Native_NvgContext>, _x1:cpp.Float32, _y1:cpp.Float32, _x2:cpp.Float32, _y2:cpp.Float32, _radius:cpp.Float32):Void;
 
@@ -411,17 +411,17 @@ extern class Native_Nvg {
     @:native("nvgStroke")
     public static function stroke(_ctx:cpp.Star<Native_NvgContext>):Void;
 
-    
+
     @:native("nvgCreateFont")
     public static function createFont(_ctx:cpp.Star<Native_NvgContext>, _name:String, _filename:String):Int;
 
-    // @:native("nvgCreateFontMem")
-    // private static function _createFontMem(_ctx:cpp.Star<Native_NvgContext>, _name:String, _data:cpp.RawPointer<cpp.UInt8>, _ndata:Int, _freeData:Int):Int;
-    // inline public static function createFontMem(_ctx:cpp.Star<Native_NvgContext>, _name:String, _data:haxe.io.BytesData):Int {
-    //     var ab = cpp.NativeArray.getBase(_data);
-    //     var ptr:cpp.RawPointer<cpp.UInt8> = untyped Native_cppNative_('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
-    //     return _createFontMem(_ctx, _name, cast ptr, _data.length, 0);
-    // }
+    @:native("nvgCreateFontMem")
+    private static function _createFontMem(_ctx:cpp.Star<Native_NvgContext>, _name:String, _data:cpp.RawPointer<cpp.UInt8>, _ndata:Int, _freeData:Int):Int;
+    inline public static function createFontMem(_ctx:cpp.Star<Native_NvgContext>, _name:String, _data:haxe.io.BytesData):Int {
+        var ab = cpp.NativeArray.getBase(_data);
+        var ptr:cpp.RawPointer<cpp.UInt8> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
+        return _createFontMem(_ctx, _name, cast ptr, _data.length, 0);
+    }
 
     @:native("nvgFindFont")
     public static function findFont(_ctx:cpp.Star<Native_NvgContext>, _name:String):Int;
@@ -447,33 +447,52 @@ extern class Native_Nvg {
     @:native("nvgFontFace")
     public static function fontFace(_ctx:cpp.Star<Native_NvgContext>, _font:String):Void;
 
+    // Draws text string at specified location. If end is specified only the sub-string up to the end is drawn.
     @:native("nvgText")
     public static function text(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _end:String=null):cpp.Float32;
 
+    // Draws multi-line text string at specified location wrapped at the specified width. If end is specified only the sub-string up to the end is drawn.
+    // White space is stripped at the beginning of the rows, the text is split at word boundaries or when new-line characters are encountered.
+    // Words longer than the max width are slit at nearest character (i.e. no hyphenation).
     @:native("nvgTextBox")
     public static function textBox(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _breakRowWidth:cpp.Float32, _string:String, _end:String):Void;
 
+    // Measures the specified text string. Parameter bounds should be a pointer to float[4],
+    // if the bounding box of the text should be returned. The bounds value are [xmin,ymin, xmax,ymax]
+    // Returns the horizontal advance of the measured text (i.e. where the next character should drawn).
+    // Measured values are returned in local coordinate space.
     public static inline function textBounds(_ctx:cpp.Star<Native_NvgContext>, _x:Float, _y:Float, _string:String, _end:String, _out:Array<cpp.Float32>):Float{
         var out:cpp.Star<cpp.Float32> = _out != null ? cast cpp.NativeArray.getBase(_out).getBase() : null;
         return untyped __cpp__('linc_nanovg::nvgTextBoundsHelper({0},{1},{2},{3},{4},{5})', _ctx, _x, _y, _string, _end, out);
     }
 
+    // Measures the specified multi-text string. Parameter bounds should be a pointer to float[4],
+    // if the bounding box of the text should be returned. The bounds value are [xmin,ymin, xmax,ymax]
+    // Measured values are returned in local coordinate space.
     public static inline function textBoxBounds(_ctx:cpp.Star<Native_NvgContext>, _x:Float, _y:Float, _breakRowWidth:Float, _string:String, _end:String, _out:Array<cpp.Float32>):Void{
         var out:cpp.Star<cpp.Float32> = _out != null ? cast cpp.NativeArray.getBase(_out).getBase() : null;
         untyped __cpp__('linc_nanovg::nvgTextBoxBoundsHelper({0},{1},{2},{3},{4},{5},{6})', _ctx, _x, _y, _breakRowWidth, _string, _end, out);
     }
 
+    // Calculates the glyph x positions of the specified text. If end is specified only the sub-string will be used.
+    // Measured values are returned in local coordinate space.
     @:native("nvgTextGlyphPositions")
     public static function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _end:String, _positions:cpp.Star<Native_NvgGlyphPosition>, _maxPositions:Int):Int;
 
+    // Returns the vertical metrics based on the current text style.
+    // Measured values are returned in local coordinate space.
     @:native("nvgTextMetrics")
     public static function textMetrics(_ctx:cpp.Star<Native_NvgContext>, _ascender:cpp.Star<cpp.Float32>, _descender:cpp.Star<cpp.Float32>, _lineh:cpp.Star<cpp.Float32>):Void;
 
+    // Breaks the specified text into lines. If end is specified only the sub-string will be used.
+    // White space is stripped at the beginning of the rows, the text is split at word boundaries or when new-line characters are encountered.
+    // Words longer than the max width are slit at nearest character (i.e. no hyphenation).
     public static inline function textBreakLines(_ctx:cpp.Star<Native_NvgContext>, _string:String, _breakRowWidth:Float):Array<
     {
-        start:String,
-        end:String,
-        next:String,
+        // start:String,
+        // end:String,
+        // next:String,
+        line:String,
         width:Float,
         minx:Float,
         maxx:Float

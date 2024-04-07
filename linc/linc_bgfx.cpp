@@ -1,6 +1,8 @@
 #include <hxcpp.h>
 
 #include "linc_bgfx.h"
+#include <bx/allocator.h>
+#include <bimg/decode.h>
 #include "nanovg.h"
 
 namespace linc_bgfx {
@@ -79,9 +81,9 @@ namespace linc_nanovg {
             for (i = 0; i < nrows; i++) {
                 NVGtextRow row = rows[i];
                 hx::Anon result = hx::Anon_obj::Create();
-                result->Add(HX_CSTRING("start"), row.start);
-                result->Add(HX_CSTRING("end"), row.end);
-                result->Add(HX_CSTRING("next"), row.next);
+                result->Add(HX_CSTRING("line"), ::String(row.start));
+                // result->Add(HX_CSTRING("end"), row.end);
+                // result->Add(HX_CSTRING("next"), row.next);
                 result->Add(HX_CSTRING("width"), row.width);
                 result->Add(HX_CSTRING("minx"), row.minx);
                 result->Add(HX_CSTRING("maxx"), row.maxx);
@@ -100,6 +102,17 @@ namespace linc_nanovg {
 
     void nvgTextBoxBoundsHelper(NVGcontext* _ctx, float _x, float _y, float _breakRowWidth, String _string, String _end, float* _outArray) {
         nvgTextBoxBounds(_ctx, _x, _y, _breakRowWidth, _string.c_str(), _end.c_str(), _outArray);
+    }
+
+    int32_t nvgCreateImageMem(NVGcontext* _ctx, uint32_t _imageFlags, void* _data, uint32_t _size) {
+        bx::DefaultAllocator defaultAllocator;
+        bimg::ImageContainer* imageContainer = bimg::imageParse(&defaultAllocator, (const void*)_data, _size, bimg::TextureFormat::RGBA8);
+
+        int32_t texId = nvgCreateImageRGBA(_ctx, imageContainer->m_width, imageContainer->m_height, _imageFlags, (const uint8_t*)imageContainer->m_data);
+
+        bimg::imageFree(imageContainer);
+
+        return texId;
     }
     
 }
