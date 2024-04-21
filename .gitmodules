@@ -1,9 +1,9 @@
 [submodule "lib/bgfx"]
 	path = lib/bgfx
-	url = https://github.com/bkaradzic/bgfx.git
+	url = https://github.com/cortex-engine/bgfx.git
 [submodule "lib/bimg"]
 	path = lib/bimg
-	url = https://github.com/bkaradzic/bimg.git
+	url = https://github.com/cortex-engine/bimg.git
 [submodule "lib/bx"]
 	path = lib/bx
-	url = https://github.com/bkaradzic/bx.git
+	url = https://github.com/cortex-engine/bx.git
