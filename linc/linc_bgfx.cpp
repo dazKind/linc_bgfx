@@ -74,14 +74,22 @@ namespace linc_nanovg {
         NVGtextRow rows[3];
         const char* text = string.c_str();
         const char* start = text;
-        const char* end = text + strlen(text);
+        const char* end = start + strlen(text);
         int nrows;
         int i;
         while ((nrows = nvgTextBreakLines(ctx, start, end, breakRowWidth, rows, 3))) {
             for (i = 0; i < nrows; i++) {
                 NVGtextRow row = rows[i];
                 hx::Anon result = hx::Anon_obj::Create();
-                result->Add(HX_CSTRING("line"), ::String(row.start));
+
+                int length = 1;
+                const char* cur = row.start;
+                while(cur != row.end) { length++; cur++; }
+                const char* foo = (const char*)malloc(length); 
+                memcpy((void*)foo, (void*)row.start, length);
+                memset((void*)(foo+length-1), '\0', 1);
+                result->Add(HX_CSTRING("line"), ::String(foo));
+                free((void*)foo);
                 // result->Add(HX_CSTRING("end"), row.end);
                 // result->Add(HX_CSTRING("next"), row.next);
                 result->Add(HX_CSTRING("width"), row.width);
@@ -93,6 +101,27 @@ namespace linc_nanovg {
             // Keep going...
             start = rows[nrows-1].next;
         }
+        // if (nrows == 0)
+        //     outArray->push(string);
+        return outArray;
+    }
+
+    Array<Array<Float>> nvgTextGlyphPositionsHelper(NVGcontext* ctx, float _x, float _y, String _string, int _maxPositions) {
+        Array<Array<Float>> outArray = Array_obj<Array<Float>>::__new(0, 1);
+        NVGglyphPosition *positions = (NVGglyphPosition*)calloc(_maxPositions, sizeof(NVGglyphPosition));
+        size_t length = _hx_utf8_length(_string);
+        const char* start = _string.c_str();
+        const char* end = start + length;
+        int res = nvgTextGlyphPositions(ctx, _x, _y, start, end, positions, _maxPositions);
+        for (int i = 0; i < length; i++) {
+            NVGglyphPosition p = positions[i];
+            Array<Float> out = Array_obj<Float>::__new(0, 1);
+            out->push(p.x);
+            out->push(p.minx);
+            out->push(p.maxx);
+            outArray->push(out);
+        }
+        free(positions);
         return outArray;
     }
 

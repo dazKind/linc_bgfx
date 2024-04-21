@@ -955,10 +955,11 @@ int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, in
 	// Store normalized line height. The real line height is got
 	// by multiplying the lineh by font size.
 	fons__tt_getFontVMetrics( &font->font, &ascent, &descent, &lineGap);
+	ascent += lineGap;
 	fh = ascent - descent;
 	font->ascender = (float)ascent / (float)fh;
 	font->descender = (float)descent / (float)fh;
-	font->lineh = (float)(fh + lineGap) / (float)fh;
+	font->lineh = font->ascender - font->descender;
 
 	return idx;
 
@@ -1215,8 +1216,8 @@ static void fons__getQuad(FONScontext* stash, FONSfont* font,
 	y1 = (float)(glyph->y1-1);
 
 	if (stash->params.flags & FONS_ZERO_TOPLEFT) {
-		rx = (float)(int)(*x + xoff);
-		ry = (float)(int)(*y + yoff);
+		rx = floorf(*x + xoff);
+		ry = floorf(*y + yoff);
 
 		q->x0 = rx;
 		q->y0 = ry;
@@ -1228,8 +1229,8 @@ static void fons__getQuad(FONScontext* stash, FONSfont* font,
 		q->s1 = x1 * stash->itw;
 		q->t1 = y1 * stash->ith;
 	} else {
-		rx = (float)(int)(*x + xoff);
-		ry = (float)(int)(*y - yoff);
+		rx = floorf(*x + xoff);
+		ry = floorf(*y - yoff);
 
 		q->x0 = rx;
 		q->y0 = ry;

@@ -476,8 +476,11 @@ extern class Native_Nvg {
 
     // Calculates the glyph x positions of the specified text. If end is specified only the sub-string will be used.
     // Measured values are returned in local coordinate space.
-    @:native("nvgTextGlyphPositions")
-    public static function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _end:String, _positions:cpp.Star<Native_NvgGlyphPosition>, _maxPositions:Int):Int;
+    // @:native("nvgTextGlyphPositions")
+    // public static function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _end:String, _positions:cpp.Star<Native_NvgGlyphPosition>, _maxPositions:Int):Int;
+    public static inline function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _maxPositions:Int):Array<Array<Float>> {
+        return untyped __cpp__('linc_nanovg::nvgTextGlyphPositionsHelper({0}, {1}, {2}, {3}, {4})', _ctx, _x, _y, _string, _maxPositions);
+    }
 
     // Returns the vertical metrics based on the current text style.
     // Measured values are returned in local coordinate space.
