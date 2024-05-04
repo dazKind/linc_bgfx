@@ -1,6 +1,6 @@
 package nanovg;
 
-import bgfx.Bgfx;
+import bgfx.*;
 
 #if cpp
 import cpp.ConstStar;

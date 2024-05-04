@@ -1,20 +1,31 @@
 <xml>
     <files id="haxe">
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/bx/include"/>
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/bimg/include"/>
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/bgfx/include"/>
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/bgfx/include/bgfx"/>
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/bgfx/3rdparty"/>
-        <compilerflag value="-I${LINC_BGFX_PATH}/lib/nanovg"/>
-        <compilerflag value='-I${LINC_BGFX_PATH}/linc'/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include/bgfx"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/nanovg"/>
+        <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
 
-        <compilerflag if="windows" value="-I${LINC_BGFX_PATH}/lib/bx/include/compat/msvc"/>
-        <compilerflag if="mac" value="-I${LINC_BGFX_PATH}/lib/bx/include/compat/osx"/>
+        <compilerflag if="windows" value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
+        <compilerflag if="mac" value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
 
-        <file name='${LINC_BGFX_PATH}/linc/Dynamic2.cpp'/>
-        <file name='${LINC_BGFX_PATH}/linc/linc_bgfx.cpp'/>
-        <file name='${LINC_BGFX_PATH}/lib/nanovg/nanovg.cpp'/>
-        <file name='${LINC_BGFX_PATH}/lib/nanovg/nanovg_bgfx.cpp'/>
+        <file name='${LINC_BGFX_PATH}linc/Dynamic2.cpp'/>
+        <file name='${LINC_BGFX_PATH}linc/linc_bgfx.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/nanovg/nanovg.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/nanovg/nanovg_bgfx.cpp'/>
+        <!-- <file name='${LINC_BGFX_PATH}lib/debugdraw/debugdraw.cpp'/> -->
+    </files>
+    <files id="__main__">
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include/bgfx"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/nanovg"/>
+        <!-- <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/> -->
+        <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
     </files>
     <section if="windows">
         <compiler exe="cl.exe" id="MSVC">
@@ -30,18 +41,18 @@
             <lib name="kernel32.lib"/>
             <lib name="psapi.lib"/>
             <section unless="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_decodeRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_encodeRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bgfxRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimgRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_decodeRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_encodeRelease.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bxRelease.lib"/>
             </section>
             <section if="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bgfxDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimgDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_decodeDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bimg_encodeDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}/lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bgfxDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimgDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_decodeDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_encodeDebug.lib"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
             </section>
         </section>
     </target>
