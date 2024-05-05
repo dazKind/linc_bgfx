@@ -1,68 +1,6 @@
 package bgfx;
 
-import bgfx.ViewId;
-import bgfx.StateFlags;
-import bgfx.StencilFlags;
-import bgfx.ClearFlags;
-import bgfx.DiscardFlags;
-import bgfx.DebugFlags;
-import bgfx.BufferFlags;
-import bgfx.TextureFlags;
-import bgfx.SamplerFlags;
-import bgfx.ResetFlags;
-import bgfx.CapsFlags;
-import bgfx.CapsFormatFlags;
-import bgfx.ResolveFlags;
-import bgfx.PciIdFlags;
-import bgfx.CubeMapFlags;
-import bgfx.Fatal;
-import bgfx.RendererType;
-import bgfx.Access;
-import bgfx.Attrib;
-import bgfx.AttribType;
-import bgfx.TextureFormat;
-import bgfx.UniformType;
-import bgfx.BackbufferRatio;
-import bgfx.OcclusionQueryResult;
-import bgfx.Topology;
-import bgfx.TopologyConvert;
-import bgfx.TopologySort;
-import bgfx.ViewMode;
-import bgfx.NativeWindowHandleType;
-import bgfx.RenderFrame;
-import bgfx.CapsGPU;
-import bgfx.CapsLimits;
-import bgfx.Caps;
-import bgfx.InternalData;
-import bgfx.PlatformData;
-import bgfx.Resolution;
-import bgfx.InitLimits;
-import bgfx.Init;
-import bgfx.Memory;
-import bgfx.TransientIndexBuffer;
-import bgfx.TransientVertexBuffer;
-import bgfx.InstanceDataBuffer;
-import bgfx.TextureInfo;
-import bgfx.UniformInfo;
-import bgfx.Attachment;
-import bgfx.Transform;
-import bgfx.ViewStats;
-import bgfx.EncoderStats;
-import bgfx.Stats;
-import bgfx.VertexLayout;
-import bgfx.Encoder;
-import bgfx.DynamicIndexBufferHandle;
-import bgfx.DynamicVertexBufferHandle;
-import bgfx.FrameBufferHandle;
-import bgfx.IndexBufferHandle;
-import bgfx.IndirectBufferHandle;
-import bgfx.OcclusionQueryHandle;
-import bgfx.ProgramHandle;
-import bgfx.ShaderHandle;
-import bgfx.TextureHandle;
-import bgfx.UniformHandle;
-import bgfx.VertexBufferHandle;
-import bgfx.VertexLayoutHandle;
+import bgfx.*;
 
 @:headerCode("#include <Dynamic2.h>")
 @:include("linc_bgfx.h")
@@ -84,14 +22,14 @@ extern class Native_Bgfx {
     @param: _resolve : cpp.UInt8 - Resolve flags. See: `BGFX_RESOLVE_*`
     **/
     @:native("bgfx_attachment_init")
-    overload extern public static function attachmentInit(_this:cpp.Star<bgfx.Attachment.Native_Attachment>, _handle:bgfx.TextureHandle.Native_TextureHandle, _access:bgfx.Access.Native_Access, _layer:cpp.UInt16, _numLayers:cpp.UInt16, _mip:cpp.UInt16, _resolve:cpp.UInt8):cpp.Void;
+    extern public static function attachmentInit(_this:cpp.Star<bgfx.Attachment.Native_Attachment>, _handle:bgfx.TextureHandle.Native_TextureHandle, _access:bgfx.Access.Native_Access, _layer:cpp.UInt16, _numLayers:cpp.UInt16, _mip:cpp.UInt16, _resolve:cpp.UInt8):cpp.Void;
 
     /**
     Start VertexLayout.
     @param: _rendererType : bgfx.RendererType.Native_RendererType - Renderer backend type. See: `bgfx::RendererType`
     **/
     @:native("bgfx_vertex_layout_begin")
-    overload extern public static function vertexLayoutBegin(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _rendererType:bgfx.RendererType.Native_RendererType):cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>;
+    extern public static function vertexLayoutBegin(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _rendererType:bgfx.RendererType.Native_RendererType):cpp.Star<bgfx.VertexLayout.Native_VertexLayout>;
 
     /**
     Add attribute to VertexLayout.
@@ -108,175 +46,112 @@ extern class Native_Bgfx {
     @param: Unpacking code must be implemented inside vertex shader.
     **/
     @:native("bgfx_vertex_layout_add")
-    overload extern public static function vertexLayoutAdd(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib, _num:cpp.UInt8, _type:bgfx.AttribType.Native_AttribType, _normalized:Bool, _asInt:Bool):cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>;
+    extern public static function vertexLayoutAdd(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib, _num:cpp.UInt8, _type:bgfx.AttribType.Native_AttribType, _normalized:Bool, _asInt:Bool):cpp.Star<bgfx.VertexLayout.Native_VertexLayout>;
 
     /**
     Decode attribute.
     @param: _attrib : bgfx.Attrib.Native_Attrib - Attribute semantics. See: `bgfx::Attrib`
-    @param: _num : cpp.UInt8 - Number of elements.
-    @param: _type : bgfx.AttribType.Native_AttribType - Element type.
-    @param: _normalized : Bool - Attribute is normalized.
-    @param: _asInt : Bool - Attribute is packed as int.
+    @param: _num : cpp.Star<cpp.UInt8> - Number of elements.
+    @param: _type : cpp.Star<bgfx.AttribType.Native_AttribType> - Element type.
+    @param: _normalized : cpp.Star<Bool> - Attribute is normalized.
+    @param: _asInt : cpp.Star<Bool> - Attribute is packed as int.
     **/
     @:native("bgfx_vertex_layout_decode")
-    overload extern public static function vertexLayoutDecode(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib, _num:cpp.UInt8, _type:bgfx.AttribType.Native_AttribType, _normalized:Bool, _asInt:Bool):cpp.Void;
+    extern public static function vertexLayoutDecode(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib, _num:cpp.Star<cpp.UInt8>, _type:cpp.Star<bgfx.AttribType.Native_AttribType>, _normalized:cpp.Star<Bool>, _asInt:cpp.Star<Bool>):cpp.Void;
 
     /**
     Returns `true` if VertexLayout contains attribute.
     @param: _attrib : bgfx.Attrib.Native_Attrib - Attribute semantics. See: `bgfx::Attrib`
     **/
     @:native("bgfx_vertex_layout_has")
-    overload extern public static function vertexLayoutHas(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib):Bool;
+    extern public static function vertexLayoutHas(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib):Bool;
 
     /**
     Skip `_num` bytes in vertex stream.
     @param: _num : cpp.UInt8 - Number of bytes to skip.
     **/
     @:native("bgfx_vertex_layout_skip")
-    overload extern public static function vertexLayoutSkip(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _num:cpp.UInt8):cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>;
+    extern public static function vertexLayoutSkip(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _num:cpp.UInt8):cpp.Star<bgfx.VertexLayout.Native_VertexLayout>;
 
     /**
     End VertexLayout.
     **/
     @:native("bgfx_vertex_layout_end")
-    overload extern public static function vertexLayoutEnd(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>):cpp.Void;
-
-    /**
-    Returns relative attribute offset from the vertex.
-    @param: _attrib : bgfx.Attrib.Native_Attrib - Attribute semantics. See: `bgfx::Attrib`
-    **/
-    @:native("bgfx_vertex_layout_get_offset")
-    overload extern public static function vertexLayoutGetOffset(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _attrib:bgfx.Attrib.Native_Attrib):cpp.UInt16;
-
-    /**
-    Returns vertex stride.
-    **/
-    @:native("bgfx_vertex_layout_get_stride")
-    overload extern public static function vertexLayoutGetStride(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>):cpp.UInt16;
-
-    /**
-    Returns size of vertex buffer for number of vertices.
-    @param: _num : cpp.UInt32 - Number of vertices.
-    **/
-    @:native("bgfx_vertex_layout_get_size")
-    overload extern public static function vertexLayoutGetSize(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>, _num:cpp.UInt32):cpp.UInt32;
-
-    /**
-    Pack vertex attribute into vertex stream format.
-    @param: _input : cpp.Float32 - Value to be packed into vertex stream.
-    @param: _inputNormalized : Bool - `true` if input value is already normalized.
-    @param: _attr : bgfx.Attrib.Native_Attrib - Attribute to pack.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex stream layout.
-    @param: _data : cpp.RawPointer<cpp.Void> - Destination vertex stream where data will be packed.
-    @param: _index : cpp.UInt32 - Vertex index that will be modified.
-    **/
-    @:native("bgfx_vertex_pack")
-    overload extern public static function vertexPack(_input:cpp.Float32, _inputNormalized:Bool, _attr:bgfx.Attrib.Native_Attrib, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _data:cpp.RawPointer<cpp.Void>, _index:cpp.UInt32):cpp.Void;
-
-    /**
-    Unpack vertex attribute from vertex stream format.
-    @param: _output : cpp.Float32 - Result of unpacking.
-    @param: _attr : bgfx.Attrib.Native_Attrib - Attribute to unpack.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex stream layout.
-    @param: _data : cpp.RawPointer<cpp.Void> - Source vertex stream from where data will be unpacked.
-    @param: _index : cpp.UInt32 - Vertex index that will be unpacked.
-    **/
-    @:native("bgfx_vertex_unpack")
-    overload extern public static function vertexUnpack(_output:cpp.Float32, _attr:bgfx.Attrib.Native_Attrib, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _data:cpp.RawPointer<cpp.Void>, _index:cpp.UInt32):cpp.Void;
+    extern public static function vertexLayoutEnd(_this:cpp.Star<bgfx.VertexLayout.Native_VertexLayout>):cpp.Void;
 
     /**
     Converts vertex stream data from one vertex stream format to another.
-    @param: _dstLayout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Destination vertex stream layout.
-    @param: _dstData : cpp.RawPointer<cpp.Void> - Destination vertex stream.
-    @param: _srcLayout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Source vertex stream layout.
-    @param: _srcData : cpp.RawPointer<cpp.Void> - Source vertex stream data.
+    @param: _dstLayout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Destination vertex stream layout.
+    @param: _dstData : cpp.Star<cpp.Void> - Destination vertex stream.
+    @param: _srcLayout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Source vertex stream layout.
+    @param: _srcData : cpp.ConstStar<cpp.Void> - Source vertex stream data.
     @param: _num : cpp.UInt32 - Number of vertices to convert from source to destination.
     **/
     @:native("bgfx_vertex_convert")
-    overload extern public static function vertexConvert(_dstLayout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _dstData:cpp.RawPointer<cpp.Void>, _srcLayout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _srcData:cpp.RawPointer<cpp.Void>, _num:cpp.UInt32):cpp.Void;
+    extern public static function vertexConvert(_dstLayout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _dstData:cpp.Star<cpp.Void>, _srcLayout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _srcData:cpp.ConstStar<cpp.Void>, _num:cpp.UInt32):cpp.Void;
 
     /**
     Weld vertices.
-    @param: _output : cpp.RawPointer<cpp.Void> - Welded vertices remapping table. The size of buffer
+    @param: _output : cpp.Star<cpp.Void> - Welded vertices remapping table. The size of buffer
     @param: must be the same as number of vertices.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex stream layout.
-    @param: _data : cpp.RawPointer<cpp.Void> - Vertex stream.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex stream layout.
+    @param: _data : cpp.ConstStar<cpp.Void> - Vertex stream.
     @param: _num : cpp.UInt32 - Number of vertices in vertex stream.
     @param: _index32 : Bool - Set to `true` if input indices are 32-bit.
     @param: _epsilon : cpp.Float32 - Error tolerance for vertex position comparison.
     **/
     @:native("bgfx_weld_vertices")
-    overload extern public static function weldVertices(_output:cpp.RawPointer<cpp.Void>, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _data:cpp.RawPointer<cpp.Void>, _num:cpp.UInt32, _index32:Bool, _epsilon:cpp.Float32):cpp.UInt32;
+    extern public static function weldVertices(_output:cpp.Star<cpp.Void>, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _data:cpp.ConstStar<cpp.Void>, _num:cpp.UInt32, _index32:Bool, _epsilon:cpp.Float32):cpp.UInt32;
 
     /**
     Convert index buffer for use with different primitive topologies.
     @param: _conversion : bgfx.TopologyConvert.Native_TopologyConvert - Conversion type, see `TopologyConvert::Enum`.
-    @param: _dst : cpp.RawPointer<cpp.Void> - Destination index buffer. If this argument is NULL
+    @param: _dst : cpp.Star<cpp.Void> - Destination index buffer. If this argument is NULL
     @param: function will return number of indices after conversion.
     @param: _dstSize : cpp.UInt32 - Destination index buffer in bytes. It must be
     @param: large enough to contain output indices. If destination size is
     @param: insufficient index buffer will be truncated.
-    @param: _indices : cpp.RawPointer<cpp.Void> - Source indices.
+    @param: _indices : cpp.ConstStar<cpp.Void> - Source indices.
     @param: _numIndices : cpp.UInt32 - Number of input indices.
     @param: _index32 : Bool - Set to `true` if input indices are 32-bit.
     **/
     @:native("bgfx_topology_convert")
-    overload extern public static function topologyConvert(_conversion:bgfx.TopologyConvert.Native_TopologyConvert, _dst:cpp.RawPointer<cpp.Void>, _dstSize:cpp.UInt32, _indices:cpp.RawPointer<cpp.Void>, _numIndices:cpp.UInt32, _index32:Bool):cpp.UInt32;
-
-    /**
-    Sort indices.
-    @param: _sort : bgfx.TopologySort.Native_TopologySort - Sort order, see `TopologySort::Enum`.
-    @param: _dst : cpp.RawPointer<cpp.Void> - Destination index buffer.
-    @param: _dstSize : cpp.UInt32 - Destination index buffer in bytes. It must be
-    @param: large enough to contain output indices. If destination size is
-    @param: insufficient index buffer will be truncated.
-    @param: _dir : cpp.Float32 - Direction (vector must be normalized).
-    @param: _pos : cpp.Float32 - Position.
-    @param: _vertices : cpp.RawPointer<cpp.Void> - Pointer to first vertex represented as
-    @param: float x, y, z. Must contain at least number of vertices
-    @param: referencende by index buffer.
-    @param: _stride : cpp.UInt32 - Vertex stride.
-    @param: _indices : cpp.RawPointer<cpp.Void> - Source indices.
-    @param: _numIndices : cpp.UInt32 - Number of input indices.
-    @param: _index32 : Bool - Set to `true` if input indices are 32-bit.
-    **/
-    @:native("bgfx_topology_sort_tri_list")
-    overload extern public static function topologySortTriList(_sort:bgfx.TopologySort.Native_TopologySort, _dst:cpp.RawPointer<cpp.Void>, _dstSize:cpp.UInt32, _dir:cpp.Float32, _pos:cpp.Float32, _vertices:cpp.RawPointer<cpp.Void>, _stride:cpp.UInt32, _indices:cpp.RawPointer<cpp.Void>, _numIndices:cpp.UInt32, _index32:Bool):cpp.Void;
+    extern public static function topologyConvert(_conversion:bgfx.TopologyConvert.Native_TopologyConvert, _dst:cpp.Star<cpp.Void>, _dstSize:cpp.UInt32, _indices:cpp.ConstStar<cpp.Void>, _numIndices:cpp.UInt32, _index32:Bool):cpp.UInt32;
 
     /**
     Returns supported backend API renderers.
     @param: _max : cpp.UInt8 - Maximum number of elements in _enum array.
-    @param: _enum : bgfx.RendererType.Native_RendererType - Array where supported renderers will be written.
+    @param: _enum : cpp.Star<bgfx.RendererType.Native_RendererType> - Array where supported renderers will be written.
     **/
     @:native("bgfx_get_supported_renderers")
-    overload extern public static function getSupportedRenderers(_max:cpp.UInt8, _enum:bgfx.RendererType.Native_RendererType):cpp.UInt8;
+    extern public static function getSupportedRenderers(_max:cpp.UInt8, _enum:cpp.Star<bgfx.RendererType.Native_RendererType>):cpp.UInt8;
 
     /**
     Returns name of renderer.
     @param: _type : bgfx.RendererType.Native_RendererType - Renderer backend type. See: `bgfx::RendererType`
     **/
     @:native("bgfx_get_renderer_name")
-    overload extern public static function getRendererName(_type:bgfx.RendererType.Native_RendererType):cpp.Char;
+    extern public static function getRendererName(_type:bgfx.RendererType.Native_RendererType):cpp.ConstStar<cpp.Char>;
 
     /**
     Fill bgfx::Init struct with default values, before using it to initialize the library.
     @param: _init : cpp.Star<bgfx.Init.Native_Init> - Pointer to structure to be initialized. See: `bgfx::Init` for more info.
     **/
     @:native("bgfx_init_ctor")
-    overload extern public static function initCtor(_init:cpp.Star<bgfx.Init.Native_Init>):cpp.Void;
+    extern public static function initCtor(_init:cpp.Star<bgfx.Init.Native_Init>):cpp.Void;
 
     /**
     Initialize the bgfx library.
     @param: _init : cpp.ConstStar<bgfx.Init.Native_Init> - Initialization parameters. See: `bgfx::Init` for more info.
     **/
     @:native("bgfx_init")
-    overload extern public static function init(_init:cpp.ConstStar<bgfx.Init.Native_Init>):Bool;
+    extern public static function init(_init:cpp.ConstStar<bgfx.Init.Native_Init>):Bool;
 
     /**
     Shutdown bgfx library.
     **/
     @:native("bgfx_shutdown")
-    overload extern public static function shutdown():cpp.Void;
+    extern public static function shutdown():cpp.Void;
 
     /**
     Reset graphic settings and back-buffer size.
@@ -299,7 +174,7 @@ extern class Native_Bgfx {
     @param: _format : bgfx.TextureFormat.Native_TextureFormat - Texture format. See: `TextureFormat::Enum`.
     **/
     @:native("bgfx_reset")
-    overload extern public static function reset(_width:cpp.UInt32, _height:cpp.UInt32, _flags:cpp.UInt32, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
+    extern public static function reset(_width:cpp.UInt32, _height:cpp.UInt32, _flags:cpp.UInt32, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
 
     /**
     Advance to next frame. When using multithreaded renderer, this call
@@ -308,7 +183,7 @@ extern class Native_Bgfx {
     @param: _capture : Bool - Capture frame with graphics debugger.
     **/
     @:native("bgfx_frame")
-    overload extern public static function frame(_capture:Bool):cpp.UInt32;
+    extern public static function frame(_capture:Bool):cpp.UInt32;
 
     /**
     Returns current renderer backend API type.
@@ -316,7 +191,7 @@ extern class Native_Bgfx {
       Library must be initialized.
     **/
     @:native("bgfx_get_renderer_type")
-    overload extern public static function getRendererType():bgfx.RendererType.Native_RendererType;
+    extern public static function getRendererType():bgfx.RendererType.Native_RendererType;
 
     /**
     Returns renderer capabilities.
@@ -324,29 +199,29 @@ extern class Native_Bgfx {
       Library must be initialized.
     **/
     @:native("bgfx_get_caps")
-    overload extern public static function getCaps():cpp.ConstStar<bgfx.Caps.Native_Caps>;
+    extern public static function getCaps():cpp.ConstStar<bgfx.Caps.Native_Caps>;
 
     /**
     Returns performance counters.
     @attention Pointer returned is valid until `bgfx::frame` is called.
     **/
     @:native("bgfx_get_stats")
-    overload extern public static function getStats():cpp.ConstStar<bgfx.Stats.Native_Stats>;
+    extern public static function getStats():cpp.ConstStar<bgfx.Stats.Native_Stats>;
 
     /**
     Allocate buffer to pass to bgfx calls. Data will be freed inside bgfx.
     @param: _size : cpp.UInt32 - Size to allocate.
     **/
     @:native("bgfx_alloc")
-    overload extern public static function alloc(_size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
+    extern public static function alloc(_size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
 
     /**
     Allocate buffer and copy data into it. Data will be freed inside bgfx.
-    @param: _data : cpp.RawPointer<cpp.Void> - Pointer to data to be copied.
+    @param: _data : cpp.ConstStar<cpp.Void> - Pointer to data to be copied.
     @param: _size : cpp.UInt32 - Size of data to be copied.
     **/
     @:native("bgfx_copy")
-    overload extern public static function copy(_data:cpp.RawPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
+    extern public static function copy(_data:cpp.ConstStar<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
 
     /**
     Make reference to data to pass to bgfx. Unlike `bgfx::alloc`, this call
@@ -356,11 +231,11 @@ extern class Native_Bgfx {
     `bgfx::frame` calls. `ReleaseFn` function must be able to be called
     from any thread.
     @attention Data passed must be available for at least 2 `bgfx::frame` calls.
-    @param: _data : cpp.RawPointer<cpp.Void> - Pointer to data.
+    @param: _data : cpp.ConstStar<cpp.Void> - Pointer to data.
     @param: _size : cpp.UInt32 - Size of data.
     **/
     @:native("bgfx_make_ref")
-    overload extern public static function makeRef(_data:cpp.RawPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
+    extern public static function makeRef(_data:cpp.ConstStar<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory>;
 
     /**
     Set debug flags.
@@ -375,7 +250,7 @@ extern class Native_Bgfx {
     @param:     primitives will be rendered as lines.
     **/
     @:native("bgfx_set_debug")
-    overload extern public static function setDebug(_debug:cpp.UInt32):cpp.Void;
+    extern public static function setDebug(_debug:cpp.UInt32):cpp.Void;
 
     /**
     Draw image into internal debug text buffer.
@@ -383,11 +258,11 @@ extern class Native_Bgfx {
     @param: _y : cpp.UInt16 - Position y from the top corner of the window.
     @param: _width : cpp.UInt16 - Image width.
     @param: _height : cpp.UInt16 - Image height.
-    @param: _data : cpp.RawPointer<cpp.Void> - Raw image data (character/attribute raw encoding).
+    @param: _data : cpp.ConstStar<cpp.Void> - Raw image data (character/attribute raw encoding).
     @param: _pitch : cpp.UInt16 - Image pitch in bytes.
     **/
     @:native("bgfx_dbg_text_image")
-    overload extern public static function dbgTextImage(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _data:cpp.RawPointer<cpp.Void>, _pitch:cpp.UInt16):cpp.Void;
+    extern public static function dbgTextImage(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _data:cpp.ConstStar<cpp.Void>, _pitch:cpp.UInt16):cpp.Void;
 
     /**
     Create static index buffer.
@@ -406,43 +281,43 @@ extern class Native_Bgfx {
     @param:       index buffers.
     **/
     @:native("bgfx_create_index_buffer")
-    overload extern public static function createIndexBuffer(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt16):bgfx.IndexBufferHandle.Native_IndexBufferHandle;
+    extern public static function createIndexBuffer(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt16):bgfx.IndexBufferHandle.Native_IndexBufferHandle;
 
     /**
     Set static index buffer debug name.
     @param: _handle : bgfx.IndexBufferHandle.Native_IndexBufferHandle - Static index buffer handle.
-    @param: _name : cpp.Char - Static index buffer name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Static index buffer name.
     @param: _len : cpp.Int32 - Static index buffer name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_index_buffer_name")
-    overload extern public static function setIndexBufferName(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setIndexBufferName(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy static index buffer.
     @param: _handle : bgfx.IndexBufferHandle.Native_IndexBufferHandle - Static index buffer handle.
     **/
     @:native("bgfx_destroy_index_buffer")
-    overload extern public static function destroyIndexBuffer(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle):cpp.Void;
+    extern public static function destroyIndexBuffer(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle):cpp.Void;
 
     /**
     Create vertex layout.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     **/
     @:native("bgfx_create_vertex_layout")
-    overload extern public static function createVertexLayout(_layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>):bgfx.VertexLayoutHandle.Native_VertexLayoutHandle;
+    extern public static function createVertexLayout(_layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>):bgfx.VertexLayoutHandle.Native_VertexLayoutHandle;
 
     /**
     Destroy vertex layout.
     @param: _layoutHandle : bgfx.VertexLayoutHandle.Native_VertexLayoutHandle - Vertex layout handle.
     **/
     @:native("bgfx_destroy_vertex_layout")
-    overload extern public static function destroyVertexLayout(_layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
+    extern public static function destroyVertexLayout(_layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Create static vertex buffer.
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Vertex buffer data.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     @param: _flags : cpp.UInt16 - Buffer creation flags.
     @param:  - `BGFX_BUFFER_NONE` - No flags.
     @param:  - `BGFX_BUFFER_COMPUTE_READ` - Buffer will be read from by compute shader.
@@ -455,24 +330,24 @@ extern class Native_Bgfx {
     @param:  - `BGFX_BUFFER_INDEX32` - Buffer is using 32-bit indices. This flag has effect only on index buffers.
     **/
     @:native("bgfx_create_vertex_buffer")
-    overload extern public static function createVertexBuffer(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.VertexBufferHandle.Native_VertexBufferHandle;
+    extern public static function createVertexBuffer(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.VertexBufferHandle.Native_VertexBufferHandle;
 
     /**
     Set static vertex buffer debug name.
     @param: _handle : bgfx.VertexBufferHandle.Native_VertexBufferHandle - Static vertex buffer handle.
-    @param: _name : cpp.Char - Static vertex buffer name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Static vertex buffer name.
     @param: _len : cpp.Int32 - Static vertex buffer name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_vertex_buffer_name")
-    overload extern public static function setVertexBufferName(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setVertexBufferName(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy static vertex buffer.
     @param: _handle : bgfx.VertexBufferHandle.Native_VertexBufferHandle - Static vertex buffer handle.
     **/
     @:native("bgfx_destroy_vertex_buffer")
-    overload extern public static function destroyVertexBuffer(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle):cpp.Void;
+    extern public static function destroyVertexBuffer(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle):cpp.Void;
 
     /**
     Create empty dynamic index buffer.
@@ -491,7 +366,7 @@ extern class Native_Bgfx {
     @param:       index buffers.
     **/
     @:native("bgfx_create_dynamic_index_buffer")
-    overload extern public static function createDynamicIndexBuffer(_num:cpp.UInt32, _flags:cpp.UInt16):bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle;
+    extern public static function createDynamicIndexBuffer(_num:cpp.UInt32, _flags:cpp.UInt16):bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle;
 
     /**
     Create a dynamic index buffer and initialize it.
@@ -510,7 +385,7 @@ extern class Native_Bgfx {
     @param:       index buffers.
     **/
     @:native("bgfx_create_dynamic_index_buffer_mem")
-    overload extern public static function createDynamicIndexBufferMem(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt16):bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle;
+    extern public static function createDynamicIndexBufferMem(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt16):bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle;
 
     /**
     Update dynamic index buffer.
@@ -519,19 +394,19 @@ extern class Native_Bgfx {
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Index buffer data.
     **/
     @:native("bgfx_update_dynamic_index_buffer")
-    overload extern public static function updateDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _startIndex:cpp.UInt32, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
+    extern public static function updateDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _startIndex:cpp.UInt32, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
 
     /**
     Destroy dynamic index buffer.
     @param: _handle : bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle - Dynamic index buffer handle.
     **/
     @:native("bgfx_destroy_dynamic_index_buffer")
-    overload extern public static function destroyDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle):cpp.Void;
+    extern public static function destroyDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle):cpp.Void;
 
     /**
     Create empty dynamic vertex buffer.
     @param: _num : cpp.UInt32 - Number of vertices.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     @param: _flags : cpp.UInt16 - Buffer creation flags.
     @param:   - `BGFX_BUFFER_NONE` - No flags.
     @param:   - `BGFX_BUFFER_COMPUTE_READ` - Buffer will be read from by compute shader.
@@ -546,12 +421,12 @@ extern class Native_Bgfx {
     @param:       index buffers.
     **/
     @:native("bgfx_create_dynamic_vertex_buffer")
-    overload extern public static function createDynamicVertexBuffer(_num:cpp.UInt32, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle;
+    extern public static function createDynamicVertexBuffer(_num:cpp.UInt32, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle;
 
     /**
     Create dynamic vertex buffer and initialize it.
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Vertex buffer data.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     @param: _flags : cpp.UInt16 - Buffer creation flags.
     @param:   - `BGFX_BUFFER_NONE` - No flags.
     @param:   - `BGFX_BUFFER_COMPUTE_READ` - Buffer will be read from by compute shader.
@@ -566,7 +441,7 @@ extern class Native_Bgfx {
     @param:       index buffers.
     **/
     @:native("bgfx_create_dynamic_vertex_buffer_mem")
-    overload extern public static function createDynamicVertexBufferMem(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle;
+    extern public static function createDynamicVertexBufferMem(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _flags:cpp.UInt16):bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle;
 
     /**
     Update dynamic vertex buffer.
@@ -575,14 +450,14 @@ extern class Native_Bgfx {
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Vertex buffer data.
     **/
     @:native("bgfx_update_dynamic_vertex_buffer")
-    overload extern public static function updateDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
+    extern public static function updateDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
 
     /**
     Destroy dynamic vertex buffer.
     @param: _handle : bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle - Dynamic vertex buffer handle.
     **/
     @:native("bgfx_destroy_dynamic_vertex_buffer")
-    overload extern public static function destroyDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle):cpp.Void;
+    extern public static function destroyDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle):cpp.Void;
 
     /**
     Returns number of requested or maximum available indices.
@@ -590,15 +465,15 @@ extern class Native_Bgfx {
     @param: _index32 : Bool - Set to `true` if input indices will be 32-bit.
     **/
     @:native("bgfx_get_avail_transient_index_buffer")
-    overload extern public static function getAvailTransientIndexBuffer(_num:cpp.UInt32, _index32:Bool):cpp.UInt32;
+    extern public static function getAvailTransientIndexBuffer(_num:cpp.UInt32, _index32:Bool):cpp.UInt32;
 
     /**
     Returns number of requested or maximum available vertices.
     @param: _num : cpp.UInt32 - Number of required vertices.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     **/
     @:native("bgfx_get_avail_transient_vertex_buffer")
-    overload extern public static function getAvailTransientVertexBuffer(_num:cpp.UInt32, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>):cpp.UInt32;
+    extern public static function getAvailTransientVertexBuffer(_num:cpp.UInt32, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>):cpp.UInt32;
 
     /**
     Returns number of requested or maximum available instance buffer slots.
@@ -606,7 +481,7 @@ extern class Native_Bgfx {
     @param: _stride : cpp.UInt16 - Stride per instance.
     **/
     @:native("bgfx_get_avail_instance_data_buffer")
-    overload extern public static function getAvailInstanceDataBuffer(_num:cpp.UInt32, _stride:cpp.UInt16):cpp.UInt32;
+    extern public static function getAvailInstanceDataBuffer(_num:cpp.UInt32, _stride:cpp.UInt16):cpp.UInt32;
 
     /**
     Allocate transient index buffer.
@@ -617,7 +492,7 @@ extern class Native_Bgfx {
     @param: _index32 : Bool - Set to `true` if input indices will be 32-bit.
     **/
     @:native("bgfx_alloc_transient_index_buffer")
-    overload extern public static function allocTransientIndexBuffer(_tib:cpp.Star<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _num:cpp.UInt32, _index32:Bool):cpp.Void;
+    extern public static function allocTransientIndexBuffer(_tib:cpp.Star<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _num:cpp.UInt32, _index32:Bool):cpp.Void;
 
     /**
     Allocate transient vertex buffer.
@@ -625,10 +500,10 @@ extern class Native_Bgfx {
     @param: for the duration of frame, and can be reused for multiple draw
     @param: calls.
     @param: _num : cpp.UInt32 - Number of vertices to allocate.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     **/
     @:native("bgfx_alloc_transient_vertex_buffer")
-    overload extern public static function allocTransientVertexBuffer(_tvb:cpp.Star<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _num:cpp.UInt32, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>):cpp.Void;
+    extern public static function allocTransientVertexBuffer(_tvb:cpp.Star<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _num:cpp.UInt32, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>):cpp.Void;
 
     /**
     Check for required space and allocate transient vertex and index
@@ -637,7 +512,7 @@ extern class Native_Bgfx {
     @param: _tvb : cpp.Star<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer> - TransientVertexBuffer structure will be filled, and will be valid
     @param: for the duration of frame, and can be reused for multiple draw
     @param: calls.
-    @param: _layout : cpp.Reference<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
+    @param: _layout : cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout> - Vertex layout.
     @param: _numVertices : cpp.UInt32 - Number of vertices to allocate.
     @param: _tib : cpp.Star<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer> - TransientIndexBuffer structure will be filled, and will be valid
     @param: for the duration of frame, and can be reused for multiple draw
@@ -646,7 +521,7 @@ extern class Native_Bgfx {
     @param: _index32 : Bool - Set to `true` if input indices will be 32-bit.
     **/
     @:native("bgfx_alloc_transient_buffers")
-    overload extern public static function allocTransientBuffers(_tvb:cpp.Star<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _layout:cpp.Reference<bgfx.VertexLayout.Native_VertexLayout>, _numVertices:cpp.UInt32, _tib:cpp.Star<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _numIndices:cpp.UInt32, _index32:Bool):Bool;
+    extern public static function allocTransientBuffers(_tvb:cpp.Star<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _layout:cpp.ConstStar<bgfx.VertexLayout.Native_VertexLayout>, _numVertices:cpp.UInt32, _tib:cpp.Star<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _numIndices:cpp.UInt32, _index32:Bool):Bool;
 
     /**
     Allocate instance data buffer.
@@ -657,21 +532,21 @@ extern class Native_Bgfx {
     @param: _stride : cpp.UInt16 - Instance stride. Must be multiple of 16.
     **/
     @:native("bgfx_alloc_instance_data_buffer")
-    overload extern public static function allocInstanceDataBuffer(_idb:cpp.Star<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _num:cpp.UInt32, _stride:cpp.UInt16):cpp.Void;
+    extern public static function allocInstanceDataBuffer(_idb:cpp.Star<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _num:cpp.UInt32, _stride:cpp.UInt16):cpp.Void;
 
     /**
     Create draw indirect buffer.
     @param: _num : cpp.UInt32 - Number of indirect calls.
     **/
     @:native("bgfx_create_indirect_buffer")
-    overload extern public static function createIndirectBuffer(_num:cpp.UInt32):bgfx.IndirectBufferHandle.Native_IndirectBufferHandle;
+    extern public static function createIndirectBuffer(_num:cpp.UInt32):bgfx.IndirectBufferHandle.Native_IndirectBufferHandle;
 
     /**
     Destroy draw indirect buffer.
     @param: _handle : bgfx.IndirectBufferHandle.Native_IndirectBufferHandle - Indirect buffer handle.
     **/
     @:native("bgfx_destroy_indirect_buffer")
-    overload extern public static function destroyIndirectBuffer(_handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle):cpp.Void;
+    extern public static function destroyIndirectBuffer(_handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle):cpp.Void;
 
     /**
     Create shader from memory buffer.
@@ -680,7 +555,7 @@ extern class Native_Bgfx {
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Shader binary.
     **/
     @:native("bgfx_create_shader")
-    overload extern public static function createShader(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.ShaderHandle.Native_ShaderHandle;
+    extern public static function createShader(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.ShaderHandle.Native_ShaderHandle;
 
     /**
     Returns the number of uniforms and uniform handles used inside a shader.
@@ -691,17 +566,17 @@ extern class Native_Bgfx {
     @param: _max : cpp.UInt16 - Maximum capacity of array.
     **/
     @:native("bgfx_get_shader_uniforms")
-    overload extern public static function getShaderUniforms(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _uniforms:cpp.Star<bgfx.UniformHandle.Native_UniformHandle>, _max:cpp.UInt16):cpp.UInt16;
+    extern public static function getShaderUniforms(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _uniforms:cpp.Star<bgfx.UniformHandle.Native_UniformHandle>, _max:cpp.UInt16):cpp.UInt16;
 
     /**
     Set shader debug name.
     @param: _handle : bgfx.ShaderHandle.Native_ShaderHandle - Shader handle.
-    @param: _name : cpp.Char - Shader name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Shader name.
     @param: _len : cpp.Int32 - Shader name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string).
     **/
     @:native("bgfx_set_shader_name")
-    overload extern public static function setShaderName(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setShaderName(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy shader.
@@ -710,7 +585,7 @@ extern class Native_Bgfx {
     @param: _handle : bgfx.ShaderHandle.Native_ShaderHandle - Shader handle.
     **/
     @:native("bgfx_destroy_shader")
-    overload extern public static function destroyShader(_handle:bgfx.ShaderHandle.Native_ShaderHandle):cpp.Void;
+    extern public static function destroyShader(_handle:bgfx.ShaderHandle.Native_ShaderHandle):cpp.Void;
 
     /**
     Create program with vertex and fragment shaders.
@@ -719,7 +594,7 @@ extern class Native_Bgfx {
     @param: _destroyShaders : Bool - If true, shaders will be destroyed when program is destroyed.
     **/
     @:native("bgfx_create_program")
-    overload extern public static function createProgram(_vsh:bgfx.ShaderHandle.Native_ShaderHandle, _fsh:bgfx.ShaderHandle.Native_ShaderHandle, _destroyShaders:Bool):bgfx.ProgramHandle.Native_ProgramHandle;
+    extern public static function createProgram(_vsh:bgfx.ShaderHandle.Native_ShaderHandle, _fsh:bgfx.ShaderHandle.Native_ShaderHandle, _destroyShaders:Bool):bgfx.ProgramHandle.Native_ProgramHandle;
 
     /**
     Create program with compute shader.
@@ -727,14 +602,14 @@ extern class Native_Bgfx {
     @param: _destroyShaders : Bool - If true, shaders will be destroyed when program is destroyed.
     **/
     @:native("bgfx_create_compute_program")
-    overload extern public static function createComputeProgram(_csh:bgfx.ShaderHandle.Native_ShaderHandle, _destroyShaders:Bool):bgfx.ProgramHandle.Native_ProgramHandle;
+    extern public static function createComputeProgram(_csh:bgfx.ShaderHandle.Native_ShaderHandle, _destroyShaders:Bool):bgfx.ProgramHandle.Native_ProgramHandle;
 
     /**
     Destroy program.
     @param: _handle : bgfx.ProgramHandle.Native_ProgramHandle - Program handle.
     **/
     @:native("bgfx_destroy_program")
-    overload extern public static function destroyProgram(_handle:bgfx.ProgramHandle.Native_ProgramHandle):cpp.Void;
+    extern public static function destroyProgram(_handle:bgfx.ProgramHandle.Native_ProgramHandle):cpp.Void;
 
     /**
     Validate texture parameters.
@@ -745,7 +620,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt64 - Texture flags. See `BGFX_TEXTURE_*`.
     **/
     @:native("bgfx_is_texture_valid")
-    overload extern public static function isTextureValid(_depth:cpp.UInt16, _cubeMap:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):Bool;
+    extern public static function isTextureValid(_depth:cpp.UInt16, _cubeMap:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):Bool;
 
     /**
     Validate frame buffer parameters.
@@ -753,11 +628,11 @@ extern class Native_Bgfx {
     @param: _attachment : cpp.ConstStar<bgfx.Attachment.Native_Attachment> - Attachment texture info. See: `bgfx::Attachment`.
     **/
     @:native("bgfx_is_frame_buffer_valid")
-    overload extern public static function isFrameBufferValid(_num:cpp.UInt8, _attachment:cpp.ConstStar<bgfx.Attachment.Native_Attachment>):Bool;
+    extern public static function isFrameBufferValid(_num:cpp.UInt8, _attachment:cpp.ConstStar<bgfx.Attachment.Native_Attachment>):Bool;
 
     /**
     Calculate amount of memory required for texture.
-    @param: _info : cpp.Reference<bgfx.TextureInfo.Native_TextureInfo> - Resulting texture info structure. See: `TextureInfo`.
+    @param: _info : cpp.Star<bgfx.TextureInfo.Native_TextureInfo> - Resulting texture info structure. See: `TextureInfo`.
     @param: _width : cpp.UInt16 - Width.
     @param: _height : cpp.UInt16 - Height.
     @param: _depth : cpp.UInt16 - Depth dimension of volume texture.
@@ -767,7 +642,7 @@ extern class Native_Bgfx {
     @param: _format : bgfx.TextureFormat.Native_TextureFormat - Texture format. See: `TextureFormat::Enum`.
     **/
     @:native("bgfx_calc_texture_size")
-    overload extern public static function calcTextureSize(_info:cpp.Reference<bgfx.TextureInfo.Native_TextureInfo>, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _cubeMap:Bool, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
+    extern public static function calcTextureSize(_info:cpp.Star<bgfx.TextureInfo.Native_TextureInfo>, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _cubeMap:Bool, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
 
     /**
     Create texture from memory buffer.
@@ -782,7 +657,7 @@ extern class Native_Bgfx {
     @param: _info : cpp.Star<bgfx.TextureInfo.Native_TextureInfo> - When non-`NULL` is specified it returns parsed texture information.
     **/
     @:native("bgfx_create_texture")
-    overload extern public static function createTexture(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt64, _skip:cpp.UInt8, _info:cpp.Star<bgfx.TextureInfo.Native_TextureInfo>):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function createTexture(_mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _flags:cpp.UInt64, _skip:cpp.UInt8, _info:cpp.Star<bgfx.TextureInfo.Native_TextureInfo>):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Create 2D texture.
@@ -803,7 +678,7 @@ extern class Native_Bgfx {
     @param: 1, expected memory layout is texture and all mips together for each array element.
     **/
     @:native("bgfx_create_texture_2d")
-    overload extern public static function createTexture2d(_width:cpp.UInt16, _height:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function createTexture2d(_width:cpp.UInt16, _height:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Create texture with size based on back-buffer ratio. Texture will maintain ratio
@@ -821,7 +696,7 @@ extern class Native_Bgfx {
     @param:   sampling.
     **/
     @:native("bgfx_create_texture_2d_scaled")
-    overload extern public static function createTexture2dScaled(_ratio:bgfx.BackbufferRatio.Native_BackbufferRatio, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function createTexture2dScaled(_ratio:bgfx.BackbufferRatio.Native_BackbufferRatio, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Create 3D texture.
@@ -841,7 +716,7 @@ extern class Native_Bgfx {
     @param: 1, expected memory layout is texture and all mips together for each array element.
     **/
     @:native("bgfx_create_texture_3d")
-    overload extern public static function createTexture3d(_width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _hasMips:Bool, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function createTexture3d(_width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _hasMips:Bool, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Create Cube texture.
@@ -861,7 +736,7 @@ extern class Native_Bgfx {
     @param: 1, expected memory layout is texture and all mips together for each array element.
     **/
     @:native("bgfx_create_texture_cube")
-    overload extern public static function createTextureCube(_size:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function createTextureCube(_size:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Update 2D texture.
@@ -878,7 +753,7 @@ extern class Native_Bgfx {
     @param: UINT16_MAX, it will be calculated internally based on _width.
     **/
     @:native("bgfx_update_texture_2d")
-    overload extern public static function updateTexture2d(_handle:bgfx.TextureHandle.Native_TextureHandle, _layer:cpp.UInt16, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _pitch:cpp.UInt16):cpp.Void;
+    extern public static function updateTexture2d(_handle:bgfx.TextureHandle.Native_TextureHandle, _layer:cpp.UInt16, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _pitch:cpp.UInt16):cpp.Void;
 
     /**
     Update 3D texture.
@@ -894,7 +769,7 @@ extern class Native_Bgfx {
     @param: _mem : cpp.ConstStar<bgfx.Memory.Native_Memory> - Texture update data.
     **/
     @:native("bgfx_update_texture_3d")
-    overload extern public static function updateTexture3d(_handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _z:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
+    extern public static function updateTexture3d(_handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _z:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>):cpp.Void;
 
     /**
     Update Cube texture.
@@ -929,28 +804,28 @@ extern class Native_Bgfx {
     @param: UINT16_MAX, it will be calculated internally based on _width.
     **/
     @:native("bgfx_update_texture_cube")
-    overload extern public static function updateTextureCube(_handle:bgfx.TextureHandle.Native_TextureHandle, _layer:cpp.UInt16, _side:cpp.UInt8, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _pitch:cpp.UInt16):cpp.Void;
+    extern public static function updateTextureCube(_handle:bgfx.TextureHandle.Native_TextureHandle, _layer:cpp.UInt16, _side:cpp.UInt8, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:cpp.ConstStar<bgfx.Memory.Native_Memory>, _pitch:cpp.UInt16):cpp.Void;
 
     /**
     Read back texture content.
     @attention Texture must be created with `BGFX_TEXTURE_READ_BACK` flag.
     @attention Availability depends on: `BGFX_CAPS_TEXTURE_READ_BACK`.
     @param: _handle : bgfx.TextureHandle.Native_TextureHandle - Texture handle.
-    @param: _data : cpp.RawPointer<cpp.Void> - Destination buffer.
+    @param: _data : cpp.Star<cpp.Void> - Destination buffer.
     @param: _mip : cpp.UInt8 - Mip level.
     **/
     @:native("bgfx_read_texture")
-    overload extern public static function readTexture(_handle:bgfx.TextureHandle.Native_TextureHandle, _data:cpp.RawPointer<cpp.Void>, _mip:cpp.UInt8):cpp.UInt32;
+    extern public static function readTexture(_handle:bgfx.TextureHandle.Native_TextureHandle, _data:cpp.Star<cpp.Void>, _mip:cpp.UInt8):cpp.UInt32;
 
     /**
     Set texture debug name.
     @param: _handle : bgfx.TextureHandle.Native_TextureHandle - Texture handle.
-    @param: _name : cpp.Char - Texture name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Texture name.
     @param: _len : cpp.Int32 - Texture name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_texture_name")
-    overload extern public static function setTextureName(_handle:bgfx.TextureHandle.Native_TextureHandle, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setTextureName(_handle:bgfx.TextureHandle.Native_TextureHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Returns texture direct access pointer.
@@ -959,14 +834,14 @@ extern class Native_Bgfx {
     @param: _handle : bgfx.TextureHandle.Native_TextureHandle - Texture handle.
     **/
     @:native("bgfx_get_direct_access_ptr")
-    overload extern public static function getDirectAccessPtr(_handle:bgfx.TextureHandle.Native_TextureHandle):cpp.RawPointer<cpp.Void>;
+    extern public static function getDirectAccessPtr(_handle:bgfx.TextureHandle.Native_TextureHandle):cpp.Star<cpp.Void>;
 
     /**
     Destroy texture.
     @param: _handle : bgfx.TextureHandle.Native_TextureHandle - Texture handle.
     **/
     @:native("bgfx_destroy_texture")
-    overload extern public static function destroyTexture(_handle:bgfx.TextureHandle.Native_TextureHandle):cpp.Void;
+    extern public static function destroyTexture(_handle:bgfx.TextureHandle.Native_TextureHandle):cpp.Void;
 
     /**
     Create frame buffer (simple).
@@ -981,7 +856,7 @@ extern class Native_Bgfx {
     @param:   sampling.
     **/
     @:native("bgfx_create_frame_buffer")
-    overload extern public static function createFrameBuffer(_width:cpp.UInt16, _height:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _textureFlags:cpp.UInt64):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
+    extern public static function createFrameBuffer(_width:cpp.UInt16, _height:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _textureFlags:cpp.UInt64):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
 
     /**
     Create frame buffer with size based on back-buffer ratio. Frame buffer will maintain ratio
@@ -997,7 +872,7 @@ extern class Native_Bgfx {
     @param:   sampling.
     **/
     @:native("bgfx_create_frame_buffer_scaled")
-    overload extern public static function createFrameBufferScaled(_ratio:bgfx.BackbufferRatio.Native_BackbufferRatio, _format:bgfx.TextureFormat.Native_TextureFormat, _textureFlags:cpp.UInt64):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
+    extern public static function createFrameBufferScaled(_ratio:bgfx.BackbufferRatio.Native_BackbufferRatio, _format:bgfx.TextureFormat.Native_TextureFormat, _textureFlags:cpp.UInt64):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
 
     /**
     Create MRT frame buffer from texture handles (simple).
@@ -1007,7 +882,7 @@ extern class Native_Bgfx {
     @param: frame buffer is destroyed.
     **/
     @:native("bgfx_create_frame_buffer_from_handles")
-    overload extern public static function createFrameBufferFromHandles(_num:cpp.UInt8, _handles:cpp.ConstStar<bgfx.TextureHandle.Native_TextureHandle>, _destroyTexture:Bool):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
+    extern public static function createFrameBufferFromHandles(_num:cpp.UInt8, _handles:cpp.ConstStar<bgfx.TextureHandle.Native_TextureHandle>, _destroyTexture:Bool):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
 
     /**
     Create MRT frame buffer from texture handles with specific layer and
@@ -1018,45 +893,45 @@ extern class Native_Bgfx {
     @param: frame buffer is destroyed.
     **/
     @:native("bgfx_create_frame_buffer_from_attachment")
-    overload extern public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:cpp.ConstStar<bgfx.Attachment.Native_Attachment>, _destroyTexture:Bool):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
+    extern public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:cpp.ConstStar<bgfx.Attachment.Native_Attachment>, _destroyTexture:Bool):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
 
     /**
     Create frame buffer for multiple window rendering.
     @remarks
       Frame buffer cannot be used for sampling.
     @attention Availability depends on: `BGFX_CAPS_SWAP_CHAIN`.
-    @param: _nwh : cpp.RawPointer<cpp.Void> - OS' target native window handle.
+    @param: _nwh : cpp.Star<cpp.Void> - OS' target native window handle.
     @param: _width : cpp.UInt16 - Window back buffer width.
     @param: _height : cpp.UInt16 - Window back buffer height.
     @param: _format : bgfx.TextureFormat.Native_TextureFormat - Window back buffer color format.
     @param: _depthFormat : bgfx.TextureFormat.Native_TextureFormat - Window back buffer depth format.
     **/
     @:native("bgfx_create_frame_buffer_from_nwh")
-    overload extern public static function createFrameBufferFromNwh(_nwh:cpp.RawPointer<cpp.Void>, _width:cpp.UInt16, _height:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _depthFormat:bgfx.TextureFormat.Native_TextureFormat):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
+    extern public static function createFrameBufferFromNwh(_nwh:cpp.Star<cpp.Void>, _width:cpp.UInt16, _height:cpp.UInt16, _format:bgfx.TextureFormat.Native_TextureFormat, _depthFormat:bgfx.TextureFormat.Native_TextureFormat):bgfx.FrameBufferHandle.Native_FrameBufferHandle;
 
     /**
     Set frame buffer debug name.
     @param: _handle : bgfx.FrameBufferHandle.Native_FrameBufferHandle - Frame buffer handle.
-    @param: _name : cpp.Char - Frame buffer name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Frame buffer name.
     @param: _len : cpp.Int32 - Frame buffer name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_frame_buffer_name")
-    overload extern public static function setFrameBufferName(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setFrameBufferName(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Obtain texture handle of frame buffer attachment.
     @param: _handle : bgfx.FrameBufferHandle.Native_FrameBufferHandle - Frame buffer handle.
     **/
     @:native("bgfx_get_texture")
-    overload extern public static function getTexture(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _attachment:cpp.UInt8):bgfx.TextureHandle.Native_TextureHandle;
+    extern public static function getTexture(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _attachment:cpp.UInt8):bgfx.TextureHandle.Native_TextureHandle;
 
     /**
     Destroy frame buffer.
     @param: _handle : bgfx.FrameBufferHandle.Native_FrameBufferHandle - Frame buffer handle.
     **/
     @:native("bgfx_destroy_frame_buffer")
-    overload extern public static function destroyFrameBuffer(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle):cpp.Void;
+    extern public static function destroyFrameBuffer(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle):cpp.Void;
 
     /**
     Create shader uniform parameter.
@@ -1082,57 +957,49 @@ extern class Native_Bgfx {
            model matrix from array is used.
          - `u_modelViewProj mat4` - concatenated model view projection matrix.
          - `u_alphaRef float` - alpha reference value for alpha test.
-    @param: _name : cpp.Char - Uniform name in shader.
+    @param: _name : cpp.ConstStar<cpp.Char> - Uniform name in shader.
     @param: _type : bgfx.UniformType.Native_UniformType - Type of uniform (See: `bgfx::UniformType`).
     @param: _num : cpp.UInt16 - Number of elements in array.
     **/
     @:native("bgfx_create_uniform")
-    overload extern public static function createUniform(_name:cpp.Char, _type:bgfx.UniformType.Native_UniformType, _num:cpp.UInt16):bgfx.UniformHandle.Native_UniformHandle;
+    extern public static function createUniform(_name:cpp.ConstStar<cpp.Char>, _type:bgfx.UniformType.Native_UniformType, _num:cpp.UInt16):bgfx.UniformHandle.Native_UniformHandle;
 
     /**
     Retrieve uniform info.
     @param: _handle : bgfx.UniformHandle.Native_UniformHandle - Handle to uniform object.
-    @param: _info : cpp.Reference<bgfx.UniformInfo.Native_UniformInfo> - Uniform info.
+    @param: _info : cpp.Star<bgfx.UniformInfo.Native_UniformInfo> - Uniform info.
     **/
     @:native("bgfx_get_uniform_info")
-    overload extern public static function getUniformInfo(_handle:bgfx.UniformHandle.Native_UniformHandle, _info:cpp.Reference<bgfx.UniformInfo.Native_UniformInfo>):cpp.Void;
+    extern public static function getUniformInfo(_handle:bgfx.UniformHandle.Native_UniformHandle, _info:cpp.Star<bgfx.UniformInfo.Native_UniformInfo>):cpp.Void;
 
     /**
     Destroy shader uniform parameter.
     @param: _handle : bgfx.UniformHandle.Native_UniformHandle - Handle to uniform object.
     **/
     @:native("bgfx_destroy_uniform")
-    overload extern public static function destroyUniform(_handle:bgfx.UniformHandle.Native_UniformHandle):cpp.Void;
+    extern public static function destroyUniform(_handle:bgfx.UniformHandle.Native_UniformHandle):cpp.Void;
 
     /**
     Create occlusion query.
     **/
     @:native("bgfx_create_occlusion_query")
-    overload extern public static function createOcclusionQuery():bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle;
+    extern public static function createOcclusionQuery():bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle;
 
     /**
     Retrieve occlusion query result from previous frame.
     @param: _handle : bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle - Handle to occlusion query object.
-    @param: _result : cpp.RawPointer<cpp.Int32> - Number of pixels that passed test. This argument
+    @param: _result : cpp.Star<cpp.Int32> - Number of pixels that passed test. This argument
     @param: can be `NULL` if result of occlusion query is not needed.
     **/
     @:native("bgfx_get_result")
-    overload extern public static function getResult(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _result:cpp.RawPointer<cpp.Int32>):bgfx.OcclusionQueryResult.Native_OcclusionQueryResult;
+    extern public static function getResult(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _result:cpp.Star<cpp.Int32>):bgfx.OcclusionQueryResult.Native_OcclusionQueryResult;
 
     /**
     Destroy occlusion query.
     @param: _handle : bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle - Handle to occlusion query object.
     **/
     @:native("bgfx_destroy_occlusion_query")
-    overload extern public static function destroyOcclusionQuery(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle):cpp.Void;
-
-    /**
-    Set palette color value.
-    @param: _index : cpp.UInt8 - Index into palette.
-    @param: _rgba : cpp.Float32 - RGBA floating point values.
-    **/
-    @:native("bgfx_set_palette_color")
-    overload extern public static function setPaletteColor(_index:cpp.UInt8, _rgba:cpp.Float32):cpp.Void;
+    extern public static function destroyOcclusionQuery(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle):cpp.Void;
 
     /**
     Set palette color value.
@@ -1140,7 +1007,7 @@ extern class Native_Bgfx {
     @param: _rgba : cpp.UInt32 - Packed 32-bit RGBA value.
     **/
     @:native("bgfx_set_palette_color_rgba8")
-    overload extern public static function setPaletteColorRgba8(_index:cpp.UInt8, _rgba:cpp.UInt32):cpp.Void;
+    extern public static function setPaletteColorRgba8(_index:cpp.UInt8, _rgba:cpp.UInt32):cpp.Void;
 
     /**
     Set view name.
@@ -1152,12 +1019,12 @@ extern class Native_Bgfx {
            |  +--- compute (C)
            +------ view id
     @param: _id : bgfx.ViewId - View id.
-    @param: _name : cpp.Char - View name.
+    @param: _name : cpp.ConstStar<cpp.Char> - View name.
     @param: _len : cpp.Int32 - View name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_view_name")
-    overload extern public static function setViewName(_id:bgfx.ViewId, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setViewName(_id:bgfx.ViewId, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Set view rectangle. Draw primitive outside view will be clipped.
@@ -1168,7 +1035,7 @@ extern class Native_Bgfx {
     @param: _height : cpp.UInt16 - Height of view port region.
     **/
     @:native("bgfx_set_view_rect")
-    overload extern public static function setViewRect(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
+    extern public static function setViewRect(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
 
     /**
     Set view rectangle. Draw primitive outside view will be clipped.
@@ -1179,7 +1046,7 @@ extern class Native_Bgfx {
     @param: See: `BackbufferRatio::Enum`.
     **/
     @:native("bgfx_set_view_rect_ratio")
-    overload extern public static function setViewRectRatio(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _ratio:bgfx.BackbufferRatio.Native_BackbufferRatio):cpp.Void;
+    extern public static function setViewRectRatio(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _ratio:bgfx.BackbufferRatio.Native_BackbufferRatio):cpp.Void;
 
     /**
     Set view scissor. Draw primitive outside view will be clipped. When
@@ -1191,7 +1058,7 @@ extern class Native_Bgfx {
     @param: _height : cpp.UInt16 - Height of view scissor region.
     **/
     @:native("bgfx_set_view_scissor")
-    overload extern public static function setViewScissor(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
+    extern public static function setViewScissor(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
 
     /**
     Set view clear flags.
@@ -1203,7 +1070,7 @@ extern class Native_Bgfx {
     @param: _stencil : cpp.UInt8 - Stencil clear value.
     **/
     @:native("bgfx_set_view_clear")
-    overload extern public static function setViewClear(_id:bgfx.ViewId, _flags:cpp.UInt16, _rgba:cpp.UInt32, _depth:cpp.Float32, _stencil:cpp.UInt8):cpp.Void;
+    extern public static function setViewClear(_id:bgfx.ViewId, _flags:cpp.UInt16, _rgba:cpp.UInt32, _depth:cpp.Float32, _stencil:cpp.UInt8):cpp.Void;
 
     /**
     Set view clear flags with different clear color for each
@@ -1224,7 +1091,7 @@ extern class Native_Bgfx {
     @param: _c7 : cpp.UInt8 - Palette index for frame buffer attachment 7.
     **/
     @:native("bgfx_set_view_clear_mrt")
-    overload extern public static function setViewClearMrt(_id:bgfx.ViewId, _flags:cpp.UInt16, _depth:cpp.Float32, _stencil:cpp.UInt8, _c0:cpp.UInt8, _c1:cpp.UInt8, _c2:cpp.UInt8, _c3:cpp.UInt8, _c4:cpp.UInt8, _c5:cpp.UInt8, _c6:cpp.UInt8, _c7:cpp.UInt8):cpp.Void;
+    extern public static function setViewClearMrt(_id:bgfx.ViewId, _flags:cpp.UInt16, _depth:cpp.Float32, _stencil:cpp.UInt8, _c0:cpp.UInt8, _c1:cpp.UInt8, _c2:cpp.UInt8, _c3:cpp.UInt8, _c4:cpp.UInt8, _c5:cpp.UInt8, _c6:cpp.UInt8, _c7:cpp.UInt8):cpp.Void;
 
     /**
     Set view sorting mode.
@@ -1234,7 +1101,7 @@ extern class Native_Bgfx {
     @param: _mode : bgfx.ViewMode.Native_ViewMode - View sort mode. See `ViewMode::Enum`.
     **/
     @:native("bgfx_set_view_mode")
-    overload extern public static function setViewMode(_id:bgfx.ViewId, _mode:bgfx.ViewMode.Native_ViewMode):cpp.Void;
+    extern public static function setViewMode(_id:bgfx.ViewId, _mode:bgfx.ViewMode.Native_ViewMode):cpp.Void;
 
     /**
     Set view frame buffer.
@@ -1246,57 +1113,47 @@ extern class Native_Bgfx {
     @param: default back buffer.
     **/
     @:native("bgfx_set_view_frame_buffer")
-    overload extern public static function setViewFrameBuffer(_id:bgfx.ViewId, _handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle):cpp.Void;
+    extern public static function setViewFrameBuffer(_id:bgfx.ViewId, _handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle):cpp.Void;
 
     /**
     Set view's view matrix and projection matrix,
     all draw primitives in this view will use these two matrices.
     @param: _id : bgfx.ViewId - View id.
-    @param: _view : cpp.RawPointer<cpp.Void> - View matrix.
-    @param: _proj : cpp.RawPointer<cpp.Void> - Projection matrix.
+    @param: _view : cpp.ConstStar<cpp.Void> - View matrix.
+    @param: _proj : cpp.ConstStar<cpp.Void> - Projection matrix.
     **/
     @:native("bgfx_set_view_transform")
-    overload extern public static function setViewTransform(_id:bgfx.ViewId, _view:cpp.RawPointer<cpp.Void>, _proj:cpp.RawPointer<cpp.Void>):cpp.Void;
-
-    /**
-    Post submit view reordering.
-    @param: _id : bgfx.ViewId - First view id.
-    @param: _num : cpp.UInt16 - Number of views to remap.
-    @param: _order : cpp.Star<cpp.Void> - View remap id table. Passing `NULL` will reset view ids
-    @param: to default state.
-    **/
-    @:native("bgfx_set_view_order")
-    overload extern public static function setViewOrder(_id:bgfx.ViewId, _num:cpp.UInt16, _order:cpp.Star<cpp.Void>):cpp.Void;
+    extern public static function setViewTransform(_id:bgfx.ViewId, _view:cpp.ConstStar<cpp.Void>, _proj:cpp.ConstStar<cpp.Void>):cpp.Void;
 
     /**
     Reset all view settings to default.
     **/
     @:native("bgfx_reset_view")
-    overload extern public static function resetView(_id:bgfx.ViewId):cpp.Void;
+    extern public static function resetView(_id:bgfx.ViewId):cpp.Void;
 
     /**
     Begin submitting draw calls from thread.
     @param: _forThread : Bool - Explicitly request an encoder for a worker thread.
     **/
     @:native("bgfx_encoder_begin")
-    overload extern public static function encoderBegin(_forThread:Bool):cpp.Star<bgfx.Encoder.Native_Encoder>;
+    extern public static function encoderBegin(_forThread:Bool):cpp.Star<bgfx.Encoder.Native_Encoder>;
 
     /**
     End submitting draw calls from thread.
     @param: _encoder : cpp.Star<bgfx.Encoder.Native_Encoder> - Encoder.
     **/
     @:native("bgfx_encoder_end")
-    overload extern public static function encoderEnd(_encoder:cpp.Star<bgfx.Encoder.Native_Encoder>):cpp.Void;
+    extern public static function encoderEnd(_encoder:cpp.Star<bgfx.Encoder.Native_Encoder>):cpp.Void;
 
     /**
     Sets a debug marker. This allows you to group graphics calls together for easy browsing in
     graphics debugging tools.
-    @param: _name : cpp.Char - Marker name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Marker name.
     @param: _len : cpp.Int32 - Marker name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_encoder_set_marker")
-    overload extern public static function encoderSetMarker(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function encoderSetMarker(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Set render states for draw primitive.
@@ -1323,7 +1180,7 @@ extern class Native_Bgfx {
     @param:   `BGFX_STATE_BLEND_INV_FACTOR` blend modes.
     **/
     @:native("bgfx_encoder_set_state")
-    overload extern public static function encoderSetState(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _state:cpp.UInt64, _rgba:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetState(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _state:cpp.UInt64, _rgba:cpp.UInt32):cpp.Void;
 
     /**
     Set condition for rendering.
@@ -1331,7 +1188,7 @@ extern class Native_Bgfx {
     @param: _visible : Bool - Render if occlusion query is visible.
     **/
     @:native("bgfx_encoder_set_condition")
-    overload extern public static function encoderSetCondition(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _visible:Bool):cpp.Void;
+    extern public static function encoderSetCondition(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _visible:Bool):cpp.Void;
 
     /**
     Set stencil test state.
@@ -1340,7 +1197,7 @@ extern class Native_Bgfx {
     @param: _fstencil is applied to both front and back facing primitives.
     **/
     @:native("bgfx_encoder_set_stencil")
-    overload extern public static function encoderSetStencil(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _fstencil:cpp.UInt32, _bstencil:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetStencil(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _fstencil:cpp.UInt32, _bstencil:cpp.UInt32):cpp.Void;
 
     /**
     Set scissor for draw primitive.
@@ -1352,7 +1209,7 @@ extern class Native_Bgfx {
     @param: _height : cpp.UInt16 - Height of view scissor region.
     **/
     @:native("bgfx_encoder_set_scissor")
-    overload extern public static function encoderSetScissor(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16;
+    extern public static function encoderSetScissor(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16;
 
     /**
     Set scissor from cache for draw primitive.
@@ -1361,16 +1218,16 @@ extern class Native_Bgfx {
     @param: _cache : cpp.UInt16 - Index in scissor cache.
     **/
     @:native("bgfx_encoder_set_scissor_cached")
-    overload extern public static function encoderSetScissorCached(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _cache:cpp.UInt16):cpp.Void;
+    extern public static function encoderSetScissorCached(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _cache:cpp.UInt16):cpp.Void;
 
     /**
     Set model matrix for draw primitive. If it is not called,
     the model will be rendered with an identity model matrix.
-    @param: _mtx : cpp.RawPointer<cpp.Void> - Pointer to first matrix in array.
+    @param: _mtx : cpp.ConstStar<cpp.Void> - Pointer to first matrix in array.
     @param: _num : cpp.UInt16 - Number of matrices in array.
     **/
     @:native("bgfx_encoder_set_transform")
-    overload extern public static function encoderSetTransform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _mtx:cpp.RawPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32;
+    extern public static function encoderSetTransform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _mtx:cpp.ConstStar<cpp.Void>, _num:cpp.UInt16):cpp.UInt32;
 
     /**
      Set model matrix from matrix cache for draw primitive.
@@ -1378,7 +1235,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt16 - Number of matrices from cache.
     **/
     @:native("bgfx_encoder_set_transform_cached")
-    overload extern public static function encoderSetTransformCached(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _cache:cpp.UInt32, _num:cpp.UInt16):cpp.Void;
+    extern public static function encoderSetTransformCached(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _cache:cpp.UInt32, _num:cpp.UInt16):cpp.Void;
 
     /**
     Reserve matrices in internal matrix cache.
@@ -1387,24 +1244,17 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt16 - Number of matrices.
     **/
     @:native("bgfx_encoder_alloc_transform")
-    overload extern public static function encoderAllocTransform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _transform:cpp.Star<bgfx.Transform.Native_Transform>, _num:cpp.UInt16):cpp.UInt32;
+    extern public static function encoderAllocTransform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _transform:cpp.Star<bgfx.Transform.Native_Transform>, _num:cpp.UInt16):cpp.UInt32;
 
     /**
     Set shader uniform parameter for draw primitive.
     @param: _handle : bgfx.UniformHandle.Native_UniformHandle - Uniform.
-    @param: _value : cpp.RawPointer<cpp.Void> - Pointer to uniform data.
+    @param: _value : cpp.ConstStar<cpp.Void> - Pointer to uniform data.
     @param: _num : cpp.UInt16 - Number of elements. Passing `UINT16_MAX` will
     @param: use the _num passed on uniform creation.
     **/
     @:native("bgfx_encoder_set_uniform")
-    overload extern public static function encoderSetUniform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.UniformHandle.Native_UniformHandle, _value:cpp.RawPointer<cpp.Void>, _num:cpp.UInt16):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _handle : bgfx.IndexBufferHandle.Native_IndexBufferHandle - Index buffer.
-    **/
-    @:native("bgfx_encoder_set_index_buffer")
-    overload extern public static function encoderSetIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle):cpp.Void;
+    extern public static function encoderSetUniform(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.UniformHandle.Native_UniformHandle, _value:cpp.ConstStar<cpp.Void>, _num:cpp.UInt16):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -1413,14 +1263,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_encoder_set_index_buffer")
-    overload extern public static function encoderSetIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _handle : bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle - Dynamic index buffer.
-    **/
-    @:native("bgfx_encoder_set_index_buffer")
-    overload extern public static function encoderSetIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle):cpp.Void;
+    extern public static function encoderSetIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -1429,14 +1272,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_encoder_set_dynamic_index_buffer")
-    overload extern public static function encoderSetDynamicIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _tib : cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer> - Transient index buffer.
-    **/
-    @:native("bgfx_encoder_set_index_buffer")
-    overload extern public static function encoderSetIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>):cpp.Void;
+    extern public static function encoderSetDynamicIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -1445,15 +1281,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_encoder_set_transient_index_buffer")
-    overload extern public static function encoderSetTransientIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _handle : bgfx.VertexBufferHandle.Native_VertexBufferHandle - Vertex buffer.
-    **/
-    @:native("bgfx_encoder_set_vertex_buffer")
-    overload extern public static function encoderSetVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle):cpp.Void;
+    extern public static function encoderSetTransientIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -1463,7 +1291,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_encoder_set_vertex_buffer")
-    overload extern public static function encoderSetVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -1476,15 +1304,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_encoder_set_vertex_buffer_with_layout")
-    overload extern public static function encoderSetVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _handle : bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle - Dynamic vertex buffer.
-    **/
-    @:native("bgfx_encoder_set_vertex_buffer")
-    overload extern public static function encoderSetVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle):cpp.Void;
+    extern public static function encoderSetVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -1494,7 +1314,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_encoder_set_dynamic_vertex_buffer")
-    overload extern public static function encoderSetDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     encoderSetDynamicVertexBufferWithLayout
@@ -1507,15 +1327,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_encoder_set_dynamic_vertex_buffer_with_layout")
-    overload extern public static function encoderSetDynamicVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _tvb : cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer> - Transient vertex buffer.
-    **/
-    @:native("bgfx_encoder_set_vertex_buffer")
-    overload extern public static function encoderSetVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>):cpp.Void;
+    extern public static function encoderSetDynamicVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -1525,7 +1337,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_encoder_set_transient_vertex_buffer")
-    overload extern public static function encoderSetTransientVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetTransientVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -1538,7 +1350,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_encoder_set_transient_vertex_buffer_with_layout")
-    overload extern public static function encoderSetTransientVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
+    extern public static function encoderSetTransientVertexBufferWithLayout(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set number of vertices for auto generated vertices use in conjunction
@@ -1547,14 +1359,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices.
     **/
     @:native("bgfx_encoder_set_vertex_count")
-    overload extern public static function encoderSetVertexCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _numVertices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set instance data buffer for draw primitive.
-    @param: _idb : cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer> - Transient instance data buffer.
-    **/
-    @:native("bgfx_encoder_set_instance_data_buffer")
-    overload extern public static function encoderSetInstanceDataBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>):cpp.Void;
+    extern public static function encoderSetVertexCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -1563,7 +1368,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_encoder_set_instance_data_buffer")
-    overload extern public static function encoderSetInstanceDataBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _start:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetInstanceDataBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _start:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -1572,7 +1377,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_encoder_set_instance_data_from_vertex_buffer")
-    overload extern public static function encoderSetInstanceDataFromVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetInstanceDataFromVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -1581,7 +1386,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_encoder_set_instance_data_from_dynamic_vertex_buffer")
-    overload extern public static function encoderSetInstanceDataFromDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetInstanceDataFromDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set number of instances for auto generated instances use in conjunction
@@ -1589,7 +1394,7 @@ extern class Native_Bgfx {
     @attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.
     **/
     @:native("bgfx_encoder_set_instance_count")
-    overload extern public static function encoderSetInstanceCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _numInstances:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetInstanceCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _numInstances:cpp.UInt32):cpp.Void;
 
     /**
     Set texture stage for draw primitive.
@@ -1604,7 +1409,7 @@ extern class Native_Bgfx {
     @param:     sampling.
     **/
     @:native("bgfx_encoder_set_texture")
-    overload extern public static function encoderSetTexture(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _sampler:bgfx.UniformHandle.Native_UniformHandle, _handle:bgfx.TextureHandle.Native_TextureHandle, _flags:cpp.UInt32):cpp.Void;
+    extern public static function encoderSetTexture(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _sampler:bgfx.UniformHandle.Native_UniformHandle, _handle:bgfx.TextureHandle.Native_TextureHandle, _flags:cpp.UInt32):cpp.Void;
 
     /**
     Submit an empty primitive for rendering. Uniforms and draw state
@@ -1616,7 +1421,7 @@ extern class Native_Bgfx {
     @param: _id : bgfx.ViewId - View id.
     **/
     @:native("bgfx_encoder_touch")
-    overload extern public static function encoderTouch(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId):cpp.Void;
+    extern public static function encoderTouch(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId):cpp.Void;
 
     /**
     Submit primitive for rendering.
@@ -1626,7 +1431,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_submit")
-    overload extern public static function encoderSubmit(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderSubmit(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive with occlusion query for rendering.
@@ -1637,7 +1442,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_submit_occlusion_query")
-    overload extern public static function encoderSubmitOcclusionQuery(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _occlusionQuery:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderSubmitOcclusionQuery(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _occlusionQuery:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive for rendering with index and instance data info from
@@ -1652,7 +1457,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_submit_indirect")
-    overload extern public static function encoderSubmitIndirect(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderSubmitIndirect(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive for rendering with index and instance data info and
@@ -1670,7 +1475,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_submit_indirect_count")
-    overload extern public static function encoderSubmitIndirectCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _numHandle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderSubmitIndirectCount(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _numHandle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Set compute index buffer.
@@ -1679,7 +1484,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_encoder_set_compute_index_buffer")
-    overload extern public static function encoderSetComputeIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function encoderSetComputeIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute vertex buffer.
@@ -1688,7 +1493,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_encoder_set_compute_vertex_buffer")
-    overload extern public static function encoderSetComputeVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function encoderSetComputeVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute dynamic index buffer.
@@ -1697,7 +1502,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_encoder_set_compute_dynamic_index_buffer")
-    overload extern public static function encoderSetComputeDynamicIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function encoderSetComputeDynamicIndexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute dynamic vertex buffer.
@@ -1706,7 +1511,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_encoder_set_compute_dynamic_vertex_buffer")
-    overload extern public static function encoderSetComputeDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function encoderSetComputeDynamicVertexBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute indirect buffer.
@@ -1715,7 +1520,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_encoder_set_compute_indirect_buffer")
-    overload extern public static function encoderSetComputeIndirectBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function encoderSetComputeIndirectBuffer(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute image from texture.
@@ -1726,7 +1531,7 @@ extern class Native_Bgfx {
     @param: _format : bgfx.TextureFormat.Native_TextureFormat - Texture format. See: `TextureFormat::Enum`.
     **/
     @:native("bgfx_encoder_set_image")
-    overload extern public static function encoderSetImage(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _access:bgfx.Access.Native_Access, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
+    extern public static function encoderSetImage(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _stage:cpp.UInt8, _handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _access:bgfx.Access.Native_Access, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
 
     /**
     Dispatch compute.
@@ -1738,7 +1543,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_dispatch")
-    overload extern public static function encoderDispatch(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderDispatch(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Dispatch compute indirect.
@@ -1750,31 +1555,14 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_dispatch_indirect")
-    overload extern public static function encoderDispatchIndirect(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function encoderDispatchIndirect(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Discard previously set state for draw or compute call.
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_encoder_discard")
-    overload extern public static function encoderDiscard(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _flags:cpp.UInt8):cpp.Void;
-
-    /**
-    Blit 2D texture region between two 2D textures.
-    @attention Destination texture must be created with `BGFX_TEXTURE_BLIT_DST` flag.
-    @attention Availability depends on: `BGFX_CAPS_TEXTURE_BLIT`.
-    @param: _id : bgfx.ViewId - View id.
-    @param: _dst : bgfx.TextureHandle.Native_TextureHandle - Destination texture handle.
-    @param: _dstX : cpp.UInt16 - Destination texture X position.
-    @param: _dstY : cpp.UInt16 - Destination texture Y position.
-    @param: _src : bgfx.TextureHandle.Native_TextureHandle - Source texture handle.
-    @param: _srcX : cpp.UInt16 - Source texture X position.
-    @param: _srcY : cpp.UInt16 - Source texture Y position.
-    @param: _width : cpp.UInt16 - Width of region.
-    @param: _height : cpp.UInt16 - Height of region.
-    **/
-    @:native("bgfx_encoder_blit")
-    overload extern public static function encoderBlit(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
+    extern public static function encoderDiscard(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Blit 2D texture region between two 2D textures.
@@ -1801,7 +1589,7 @@ extern class Native_Bgfx {
     @param: unused.
     **/
     @:native("bgfx_encoder_blit")
-    overload extern public static function encoderBlit(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):cpp.Void;
+    extern public static function encoderBlit(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):cpp.Void;
 
     /**
     Request screen shot of window back buffer.
@@ -1810,10 +1598,10 @@ extern class Native_Bgfx {
     @attention Frame buffer handle must be created with OS' target native window handle.
     @param: _handle : bgfx.FrameBufferHandle.Native_FrameBufferHandle - Frame buffer handle. If handle is `BGFX_INVALID_HANDLE` request will be
     @param: made for main window back buffer.
-    @param: _filePath : cpp.Char - Will be passed to `bgfx::CallbackI::screenShot` callback.
+    @param: _filePath : cpp.ConstStar<cpp.Char> - Will be passed to `bgfx::CallbackI::screenShot` callback.
     **/
     @:native("bgfx_request_screen_shot")
-    overload extern public static function requestScreenShot(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _filePath:cpp.Char):cpp.Void;
+    extern public static function requestScreenShot(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _filePath:cpp.ConstStar<cpp.Char>):cpp.Void;
 
     /**
     Render frame.
@@ -1827,15 +1615,15 @@ extern class Native_Bgfx {
     @param: _msecs : cpp.Int32 - Timeout in milliseconds.
     **/
     @:native("bgfx_render_frame")
-    overload extern public static function renderFrame(_msecs:cpp.Int32):bgfx.RenderFrame.Native_RenderFrame;
+    extern public static function renderFrame(_msecs:cpp.Int32):bgfx.RenderFrame.Native_RenderFrame;
 
     /**
     Set platform data.
     @warning Must be called before `bgfx::init`.
-    @param: _data : cpp.Reference<bgfx.PlatformData.Native_PlatformData> - Platform data.
+    @param: _data : cpp.ConstStar<bgfx.PlatformData.Native_PlatformData> - Platform data.
     **/
     @:native("bgfx_set_platform_data")
-    overload extern public static function setPlatformData(_data:cpp.Reference<bgfx.PlatformData.Native_PlatformData>):cpp.Void;
+    extern public static function setPlatformData(_data:cpp.ConstStar<bgfx.PlatformData.Native_PlatformData>):cpp.Void;
 
     /**
     Get internal data for interop.
@@ -1844,7 +1632,7 @@ extern class Native_Bgfx {
     @warning Must be called only on render thread.
     **/
     @:native("bgfx_get_internal_data")
-    overload extern public static function getInternalData():cpp.ConstStar<bgfx.InternalData.Native_InternalData>;
+    extern public static function getInternalData():cpp.ConstStar<bgfx.InternalData.Native_InternalData>;
 
     /**
     Override internal texture with externally created texture. Previously
@@ -1856,7 +1644,7 @@ extern class Native_Bgfx {
     @param: _ptr : cpp.UInt64 - Native API pointer to texture.
     **/
     @:native("bgfx_override_internal_texture_ptr")
-    overload extern public static function overrideInternalTexturePtr(_handle:bgfx.TextureHandle.Native_TextureHandle, _ptr:cpp.UInt64):cpp.UInt64;
+    extern public static function overrideInternalTexturePtr(_handle:bgfx.TextureHandle.Native_TextureHandle, _ptr:cpp.UInt64):cpp.UInt64;
 
     /**
     Override internal texture by creating new texture. Previously created
@@ -1879,17 +1667,17 @@ extern class Native_Bgfx {
     @param:   sampling.
     **/
     @:native("bgfx_override_internal_texture")
-    overload extern public static function overrideInternalTexture(_handle:bgfx.TextureHandle.Native_TextureHandle, _width:cpp.UInt16, _height:cpp.UInt16, _numMips:cpp.UInt8, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):cpp.UInt64;
+    extern public static function overrideInternalTexture(_handle:bgfx.TextureHandle.Native_TextureHandle, _width:cpp.UInt16, _height:cpp.UInt16, _numMips:cpp.UInt8, _format:bgfx.TextureFormat.Native_TextureFormat, _flags:cpp.UInt64):cpp.UInt64;
 
     /**
     Sets a debug marker. This allows you to group graphics calls together for easy browsing in
     graphics debugging tools.
-    @param: _name : cpp.Char - Marker name.
+    @param: _name : cpp.ConstStar<cpp.Char> - Marker name.
     @param: _len : cpp.Int32 - Marker name length (if length is INT32_MAX, it's expected
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_marker")
-    overload extern public static function setMarker(_name:cpp.Char, _len:cpp.Int32):cpp.Void;
+    extern public static function setMarker(_name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
 
     /**
     Set render states for draw primitive.
@@ -1916,7 +1704,7 @@ extern class Native_Bgfx {
     @param:   `BGFX_STATE_BLEND_INV_FACTOR` blend modes.
     **/
     @:native("bgfx_set_state")
-    overload extern public static function setState(_state:cpp.UInt64, _rgba:cpp.UInt32):cpp.Void;
+    extern public static function setState(_state:cpp.UInt64, _rgba:cpp.UInt32):cpp.Void;
 
     /**
     Set condition for rendering.
@@ -1924,7 +1712,7 @@ extern class Native_Bgfx {
     @param: _visible : Bool - Render if occlusion query is visible.
     **/
     @:native("bgfx_set_condition")
-    overload extern public static function setCondition(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _visible:Bool):cpp.Void;
+    extern public static function setCondition(_handle:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _visible:Bool):cpp.Void;
 
     /**
     Set stencil test state.
@@ -1933,7 +1721,7 @@ extern class Native_Bgfx {
     @param: _fstencil is applied to both front and back facing primitives.
     **/
     @:native("bgfx_set_stencil")
-    overload extern public static function setStencil(_fstencil:cpp.UInt32, _bstencil:cpp.UInt32):cpp.Void;
+    extern public static function setStencil(_fstencil:cpp.UInt32, _bstencil:cpp.UInt32):cpp.Void;
 
     /**
     Set scissor for draw primitive.
@@ -1945,7 +1733,7 @@ extern class Native_Bgfx {
     @param: _height : cpp.UInt16 - Height of view scissor region.
     **/
     @:native("bgfx_set_scissor")
-    overload extern public static function setScissor(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16;
+    extern public static function setScissor(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16;
 
     /**
     Set scissor from cache for draw primitive.
@@ -1954,16 +1742,16 @@ extern class Native_Bgfx {
     @param: _cache : cpp.UInt16 - Index in scissor cache.
     **/
     @:native("bgfx_set_scissor_cached")
-    overload extern public static function setScissorCached(_cache:cpp.UInt16):cpp.Void;
+    extern public static function setScissorCached(_cache:cpp.UInt16):cpp.Void;
 
     /**
     Set model matrix for draw primitive. If it is not called,
     the model will be rendered with an identity model matrix.
-    @param: _mtx : cpp.RawPointer<cpp.Void> - Pointer to first matrix in array.
+    @param: _mtx : cpp.ConstStar<cpp.Void> - Pointer to first matrix in array.
     @param: _num : cpp.UInt16 - Number of matrices in array.
     **/
     @:native("bgfx_set_transform")
-    overload extern public static function setTransform(_mtx:cpp.RawPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32;
+    extern public static function setTransform(_mtx:cpp.ConstStar<cpp.Void>, _num:cpp.UInt16):cpp.UInt32;
 
     /**
      Set model matrix from matrix cache for draw primitive.
@@ -1971,7 +1759,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt16 - Number of matrices from cache.
     **/
     @:native("bgfx_set_transform_cached")
-    overload extern public static function setTransformCached(_cache:cpp.UInt32, _num:cpp.UInt16):cpp.Void;
+    extern public static function setTransformCached(_cache:cpp.UInt32, _num:cpp.UInt16):cpp.Void;
 
     /**
     Reserve matrices in internal matrix cache.
@@ -1980,24 +1768,17 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt16 - Number of matrices.
     **/
     @:native("bgfx_alloc_transform")
-    overload extern public static function allocTransform(_transform:cpp.Star<bgfx.Transform.Native_Transform>, _num:cpp.UInt16):cpp.UInt32;
+    extern public static function allocTransform(_transform:cpp.Star<bgfx.Transform.Native_Transform>, _num:cpp.UInt16):cpp.UInt32;
 
     /**
     Set shader uniform parameter for draw primitive.
     @param: _handle : bgfx.UniformHandle.Native_UniformHandle - Uniform.
-    @param: _value : cpp.RawPointer<cpp.Void> - Pointer to uniform data.
+    @param: _value : cpp.ConstStar<cpp.Void> - Pointer to uniform data.
     @param: _num : cpp.UInt16 - Number of elements. Passing `UINT16_MAX` will
     @param: use the _num passed on uniform creation.
     **/
     @:native("bgfx_set_uniform")
-    overload extern public static function setUniform(_handle:bgfx.UniformHandle.Native_UniformHandle, _value:cpp.RawPointer<cpp.Void>, _num:cpp.UInt16):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _handle : bgfx.IndexBufferHandle.Native_IndexBufferHandle - Index buffer.
-    **/
-    @:native("bgfx_set_index_buffer")
-    overload extern public static function setIndexBuffer(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle):cpp.Void;
+    extern public static function setUniform(_handle:bgfx.UniformHandle.Native_UniformHandle, _value:cpp.ConstStar<cpp.Void>, _num:cpp.UInt16):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -2006,14 +1787,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_set_index_buffer")
-    overload extern public static function setIndexBuffer(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _handle : bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle - Dynamic index buffer.
-    **/
-    @:native("bgfx_set_index_buffer")
-    overload extern public static function setIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle):cpp.Void;
+    extern public static function setIndexBuffer(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -2022,14 +1796,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_set_dynamic_index_buffer")
-    overload extern public static function setDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set index buffer for draw primitive.
-    @param: _tib : cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer> - Transient index buffer.
-    **/
-    @:native("bgfx_set_index_buffer")
-    overload extern public static function setIndexBuffer(_tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>):cpp.Void;
+    extern public static function setDynamicIndexBuffer(_handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set index buffer for draw primitive.
@@ -2038,15 +1805,7 @@ extern class Native_Bgfx {
     @param: _numIndices : cpp.UInt32 - Number of indices to render.
     **/
     @:native("bgfx_set_transient_index_buffer")
-    overload extern public static function setTransientIndexBuffer(_tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _handle : bgfx.VertexBufferHandle.Native_VertexBufferHandle - Vertex buffer.
-    **/
-    @:native("bgfx_set_vertex_buffer")
-    overload extern public static function setVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle):cpp.Void;
+    extern public static function setTransientIndexBuffer(_tib:cpp.ConstStar<bgfx.TransientIndexBuffer.Native_TransientIndexBuffer>, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2056,7 +1815,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_set_vertex_buffer")
-    overload extern public static function setVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function setVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2069,15 +1828,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_set_vertex_buffer_with_layout")
-    overload extern public static function setVertexBufferWithLayout(_stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _handle : bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle - Dynamic vertex buffer.
-    **/
-    @:native("bgfx_set_vertex_buffer")
-    overload extern public static function setVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle):cpp.Void;
+    extern public static function setVertexBufferWithLayout(_stream:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2087,7 +1838,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_set_dynamic_vertex_buffer")
-    overload extern public static function setDynamicVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function setDynamicVertexBuffer(_stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2100,15 +1851,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_set_dynamic_vertex_buffer_with_layout")
-    overload extern public static function setDynamicVertexBufferWithLayout(_stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
-
-    /**
-    Set vertex buffer for draw primitive.
-    @param: _stream : cpp.UInt8 - Vertex stream.
-    @param: _tvb : cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer> - Transient vertex buffer.
-    **/
-    @:native("bgfx_set_vertex_buffer")
-    overload extern public static function setVertexBuffer(_stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>):cpp.Void;
+    extern public static function setDynamicVertexBufferWithLayout(_stream:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2118,7 +1861,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices to render.
     **/
     @:native("bgfx_set_transient_vertex_buffer")
-    overload extern public static function setTransientVertexBuffer(_stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
+    extern public static function setTransientVertexBuffer(_stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set vertex buffer for draw primitive.
@@ -2131,7 +1874,7 @@ extern class Native_Bgfx {
     @param: of vertex buffer will be used.
     **/
     @:native("bgfx_set_transient_vertex_buffer_with_layout")
-    overload extern public static function setTransientVertexBufferWithLayout(_stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
+    extern public static function setTransientVertexBufferWithLayout(_stream:cpp.UInt8, _tvb:cpp.ConstStar<bgfx.TransientVertexBuffer.Native_TransientVertexBuffer>, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:bgfx.VertexLayoutHandle.Native_VertexLayoutHandle):cpp.Void;
 
     /**
     Set number of vertices for auto generated vertices use in conjunction
@@ -2140,14 +1883,7 @@ extern class Native_Bgfx {
     @param: _numVertices : cpp.UInt32 - Number of vertices.
     **/
     @:native("bgfx_set_vertex_count")
-    overload extern public static function setVertexCount(_numVertices:cpp.UInt32):cpp.Void;
-
-    /**
-    Set instance data buffer for draw primitive.
-    @param: _idb : cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer> - Transient instance data buffer.
-    **/
-    @:native("bgfx_set_instance_data_buffer")
-    overload extern public static function setInstanceDataBuffer(_idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>):cpp.Void;
+    extern public static function setVertexCount(_numVertices:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -2156,7 +1892,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_set_instance_data_buffer")
-    overload extern public static function setInstanceDataBuffer(_idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _start:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function setInstanceDataBuffer(_idb:cpp.ConstStar<bgfx.InstanceDataBuffer.Native_InstanceDataBuffer>, _start:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -2165,7 +1901,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_set_instance_data_from_vertex_buffer")
-    overload extern public static function setInstanceDataFromVertexBuffer(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function setInstanceDataFromVertexBuffer(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set instance data buffer for draw primitive.
@@ -2174,7 +1910,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt32 - Number of data instances.
     **/
     @:native("bgfx_set_instance_data_from_dynamic_vertex_buffer")
-    overload extern public static function setInstanceDataFromDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
+    extern public static function setInstanceDataFromDynamicVertexBuffer(_handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):cpp.Void;
 
     /**
     Set number of instances for auto generated instances use in conjunction
@@ -2182,7 +1918,7 @@ extern class Native_Bgfx {
     @attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.
     **/
     @:native("bgfx_set_instance_count")
-    overload extern public static function setInstanceCount(_numInstances:cpp.UInt32):cpp.Void;
+    extern public static function setInstanceCount(_numInstances:cpp.UInt32):cpp.Void;
 
     /**
     Set texture stage for draw primitive.
@@ -2197,7 +1933,7 @@ extern class Native_Bgfx {
     @param:     sampling.
     **/
     @:native("bgfx_set_texture")
-    overload extern public static function setTexture(_stage:cpp.UInt8, _sampler:bgfx.UniformHandle.Native_UniformHandle, _handle:bgfx.TextureHandle.Native_TextureHandle, _flags:cpp.UInt32):cpp.Void;
+    extern public static function setTexture(_stage:cpp.UInt8, _sampler:bgfx.UniformHandle.Native_UniformHandle, _handle:bgfx.TextureHandle.Native_TextureHandle, _flags:cpp.UInt32):cpp.Void;
 
     /**
     Submit an empty primitive for rendering. Uniforms and draw state
@@ -2207,7 +1943,7 @@ extern class Native_Bgfx {
     @param: _id : bgfx.ViewId - View id.
     **/
     @:native("bgfx_touch")
-    overload extern public static function touch(_id:bgfx.ViewId):cpp.Void;
+    extern public static function touch(_id:bgfx.ViewId):cpp.Void;
 
     /**
     Submit primitive for rendering.
@@ -2217,7 +1953,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Which states to discard for next draw. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_submit")
-    overload extern public static function submit(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function submit(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive with occlusion query for rendering.
@@ -2228,7 +1964,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Which states to discard for next draw. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_submit_occlusion_query")
-    overload extern public static function submitOcclusionQuery(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _occlusionQuery:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function submitOcclusionQuery(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _occlusionQuery:bgfx.OcclusionQueryHandle.Native_OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive for rendering with index and instance data info from
@@ -2243,7 +1979,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Which states to discard for next draw. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_submit_indirect")
-    overload extern public static function submitIndirect(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function submitIndirect(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Submit primitive for rendering with index and instance data info and
@@ -2261,7 +1997,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Which states to discard for next draw. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_submit_indirect_count")
-    overload extern public static function submitIndirectCount(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _numHandle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function submitIndirectCount(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _numHandle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Set compute index buffer.
@@ -2270,7 +2006,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_set_compute_index_buffer")
-    overload extern public static function setComputeIndexBuffer(_stage:cpp.UInt8, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function setComputeIndexBuffer(_stage:cpp.UInt8, _handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute vertex buffer.
@@ -2279,7 +2015,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_set_compute_vertex_buffer")
-    overload extern public static function setComputeVertexBuffer(_stage:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function setComputeVertexBuffer(_stage:cpp.UInt8, _handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute dynamic index buffer.
@@ -2288,7 +2024,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_set_compute_dynamic_index_buffer")
-    overload extern public static function setComputeDynamicIndexBuffer(_stage:cpp.UInt8, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function setComputeDynamicIndexBuffer(_stage:cpp.UInt8, _handle:bgfx.DynamicIndexBufferHandle.Native_DynamicIndexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute dynamic vertex buffer.
@@ -2297,7 +2033,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_set_compute_dynamic_vertex_buffer")
-    overload extern public static function setComputeDynamicVertexBuffer(_stage:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function setComputeDynamicVertexBuffer(_stage:cpp.UInt8, _handle:bgfx.DynamicVertexBufferHandle.Native_DynamicVertexBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute indirect buffer.
@@ -2306,7 +2042,7 @@ extern class Native_Bgfx {
     @param: _access : bgfx.Access.Native_Access - Buffer access. See `Access::Enum`.
     **/
     @:native("bgfx_set_compute_indirect_buffer")
-    overload extern public static function setComputeIndirectBuffer(_stage:cpp.UInt8, _handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
+    extern public static function setComputeIndirectBuffer(_stage:cpp.UInt8, _handle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _access:bgfx.Access.Native_Access):cpp.Void;
 
     /**
     Set compute image from texture.
@@ -2317,7 +2053,7 @@ extern class Native_Bgfx {
     @param: _format : bgfx.TextureFormat.Native_TextureFormat - Texture format. See: `TextureFormat::Enum`.
     **/
     @:native("bgfx_set_image")
-    overload extern public static function setImage(_stage:cpp.UInt8, _handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _access:bgfx.Access.Native_Access, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
+    extern public static function setImage(_stage:cpp.UInt8, _handle:bgfx.TextureHandle.Native_TextureHandle, _mip:cpp.UInt8, _access:bgfx.Access.Native_Access, _format:bgfx.TextureFormat.Native_TextureFormat):cpp.Void;
 
     /**
     Dispatch compute.
@@ -2329,7 +2065,7 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_dispatch")
-    overload extern public static function dispatch(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function dispatch(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Dispatch compute indirect.
@@ -2341,31 +2077,14 @@ extern class Native_Bgfx {
     @param: _flags : cpp.UInt8 - Discard or preserve states. See `BGFX_DISCARD_*`.
     **/
     @:native("bgfx_dispatch_indirect")
-    overload extern public static function dispatchIndirect(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
+    extern public static function dispatchIndirect(_id:bgfx.ViewId, _program:bgfx.ProgramHandle.Native_ProgramHandle, _indirectHandle:bgfx.IndirectBufferHandle.Native_IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):cpp.Void;
 
     /**
     Discard previously set state for draw or compute call.
     @param: _flags : cpp.UInt8 - Draw/compute states to discard.
     **/
     @:native("bgfx_discard")
-    overload extern public static function discard(_flags:cpp.UInt8):cpp.Void;
-
-    /**
-    Blit 2D texture region between two 2D textures.
-    @attention Destination texture must be created with `BGFX_TEXTURE_BLIT_DST` flag.
-    @attention Availability depends on: `BGFX_CAPS_TEXTURE_BLIT`.
-    @param: _id : bgfx.ViewId - View id.
-    @param: _dst : bgfx.TextureHandle.Native_TextureHandle - Destination texture handle.
-    @param: _dstX : cpp.UInt16 - Destination texture X position.
-    @param: _dstY : cpp.UInt16 - Destination texture Y position.
-    @param: _src : bgfx.TextureHandle.Native_TextureHandle - Source texture handle.
-    @param: _srcX : cpp.UInt16 - Source texture X position.
-    @param: _srcY : cpp.UInt16 - Source texture Y position.
-    @param: _width : cpp.UInt16 - Width of region.
-    @param: _height : cpp.UInt16 - Height of region.
-    **/
-    @:native("bgfx_blit")
-    overload extern public static function blit(_id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.Void;
+    extern public static function discard(_flags:cpp.UInt8):cpp.Void;
 
     /**
     Blit 2D texture region between two 2D textures.
@@ -2392,12 +2111,989 @@ extern class Native_Bgfx {
     @param: unused.
     **/
     @:native("bgfx_blit")
-    overload extern public static function blit(_id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):cpp.Void;
+    extern public static function blit(_id:bgfx.ViewId, _dst:bgfx.TextureHandle.Native_TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:bgfx.TextureHandle.Native_TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):cpp.Void;
 
 }
 #if (scriptable || cppia)
-    class Bgfx {
+    class CppiaBgfx {
+
+        public static function getCallback():cpp.Pointer<cpp.Void> { return cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }
+
+        public static function attachmentInit(_this:Attachment, _handle:TextureHandle, _access:Access, _layer:cpp.UInt16, _numLayers:cpp.UInt16, _mip:cpp.UInt16, _resolve:cpp.UInt8):Void {
+             Native_Bgfx.attachmentInit(_this.__inst, _handle.__inst, cast _access, _layer, _numLayers, _mip, _resolve);
+        }
+        
+        
+        public static function vertexLayoutBegin(_this:VertexLayout, _rendererType:RendererType):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
+            return Native_Bgfx.vertexLayoutBegin(_this.__inst, cast _rendererType);
+        }
+        
+        
+        public static function vertexLayoutAdd(_this:VertexLayout, _attrib:Attrib, _num:cpp.UInt8, _type:AttribType, _normalized:Bool, _asInt:Bool):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
+            return Native_Bgfx.vertexLayoutAdd(_this.__inst, cast _attrib, _num, cast _type, _normalized, _asInt);
+        }
+        
+        
+        public static function vertexLayoutDecode(_this:VertexLayout, _attrib:Attrib, _num:cpp.Pointer<cpp.UInt8>, _type:cpp.Pointer<bgfx.AttribType.Native_AttribType>, _normalized:cpp.Pointer<Bool>, _asInt:cpp.Pointer<Bool>):Void {
+             Native_Bgfx.vertexLayoutDecode(_this.__inst, cast _attrib, cast cpp.Pointer.addressOf(_num), cast cpp.Pointer.addressOf(_type), cast cpp.Pointer.addressOf(_normalized), cast cpp.Pointer.addressOf(_asInt));
+        }
+        
+        
+        public static function vertexLayoutHas(_this:VertexLayout, _attrib:Attrib):Bool {
+            return Native_Bgfx.vertexLayoutHas(_this.__inst, cast _attrib);
+        }
+        
+        
+        public static function vertexLayoutSkip(_this:VertexLayout, _num:cpp.UInt8):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
+            return Native_Bgfx.vertexLayoutSkip(_this.__inst, _num);
+        }
+        
+        
+        public static function vertexLayoutEnd(_this:VertexLayout):Void {
+             Native_Bgfx.vertexLayoutEnd(_this.__inst);
+        }
+        
+        
+        public static function vertexConvert(_dstLayout:VertexLayout, _dstData:cpp.Pointer<cpp.Void>, _srcLayout:VertexLayout, _srcData:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt32):Void {
+             Native_Bgfx.vertexConvert(_dstLayout.__inst, cast cpp.Pointer.addressOf(_dstData), _srcLayout.__inst, cast cpp.Pointer.addressOf(_srcData), _num);
+        }
+        
+        
+        public static function weldVertices(_output:cpp.Pointer<cpp.Void>, _layout:VertexLayout, _data:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt32, _index32:Bool, _epsilon:cpp.Float32):cpp.UInt32 {
+            return Native_Bgfx.weldVertices(cast cpp.Pointer.addressOf(_output), _layout.__inst, cast cpp.Pointer.addressOf(_data), _num, _index32, _epsilon);
+        }
+        
+        
+        public static function topologyConvert(_conversion:TopologyConvert, _dst:cpp.Pointer<cpp.Void>, _dstSize:cpp.UInt32, _indices:cpp.ConstPointer<cpp.Void>, _numIndices:cpp.UInt32, _index32:Bool):cpp.UInt32 {
+            return Native_Bgfx.topologyConvert(cast _conversion, cast cpp.Pointer.addressOf(_dst), _dstSize, cast cpp.Pointer.addressOf(_indices), _numIndices, _index32);
+        }
+        
+        
+        public static function getSupportedRenderers(_max:cpp.UInt8, _enum:cpp.Pointer<bgfx.RendererType.Native_RendererType>):cpp.UInt8 {
+            return Native_Bgfx.getSupportedRenderers(_max, cast cpp.Pointer.addressOf(_enum));
+        }
+        
+        
+        public static function getRendererName(_type:RendererType):cpp.ConstStar<cpp.Char> {
+            return Native_Bgfx.getRendererName(cast _type);
+        }
+        
+        
+        public static function initCtor(_init:Init):Void {
+             Native_Bgfx.initCtor(_init.__inst);
+        }
+        
+        
+        public static function init(_init:Init):Bool {
+            return Native_Bgfx.init(_init.__inst);
+        }
+        
+        
+        public static function shutdown():Void {
+             Native_Bgfx.shutdown();
+        }
+        
+        
+        public static function reset(_width:cpp.UInt32, _height:cpp.UInt32, _flags:cpp.UInt32, _format:TextureFormat):Void {
+             Native_Bgfx.reset(_width, _height, _flags, cast _format);
+        }
+        
+        
+        public static function frame(_capture:Bool):cpp.UInt32 {
+            return Native_Bgfx.frame(_capture);
+        }
+        
+        
+        public static function getRendererType():bgfx.RendererType.Native_RendererType {
+            return Native_Bgfx.getRendererType();
+        }
+        
+        
+        public static function getCaps():cpp.ConstStar<bgfx.Caps.Native_Caps> {
+            return Native_Bgfx.getCaps();
+        }
+        
+        
+        public static function getStats():cpp.ConstStar<bgfx.Stats.Native_Stats> {
+            return Native_Bgfx.getStats();
+        }
+        
+        
+        public static function alloc(_size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
+            return Native_Bgfx.alloc(_size);
+        }
+        
+        
+        public static function copy(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
+            return Native_Bgfx.copy(cast cpp.Pointer.addressOf(_data), _size);
+        }
+        
+        
+        public static function makeRef(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
+            return Native_Bgfx.makeRef(cast cpp.Pointer.addressOf(_data), _size);
+        }
+        
+        
+        public static function setDebug(_debug:cpp.UInt32):Void {
+             Native_Bgfx.setDebug(_debug);
+        }
+        
+        
+        public static function dbgTextImage(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _data:cpp.ConstPointer<cpp.Void>, _pitch:cpp.UInt16):Void {
+             Native_Bgfx.dbgTextImage(_x, _y, _width, _height, cast cpp.Pointer.addressOf(_data), _pitch);
+        }
+        
+        
+        public static function createIndexBuffer(_mem:Memory, _flags:cpp.UInt16):IndexBufferHandle {
+            final res = Type.createEmptyInstance(IndexBufferHandle);
+            res.__inst = Native_Bgfx.createIndexBuffer(_mem.__inst, _flags);
+            return res;
+        }
+        
+        
+        public static function setIndexBufferName(_handle:IndexBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setIndexBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function destroyIndexBuffer(_handle:IndexBufferHandle):Void {
+             Native_Bgfx.destroyIndexBuffer(_handle.__inst);
+        }
+        
+        
+        public static function createVertexLayout(_layout:VertexLayout):VertexLayoutHandle {
+            final res = Type.createEmptyInstance(VertexLayoutHandle);
+            res.__inst = Native_Bgfx.createVertexLayout(_layout.__inst);
+            return res;
+        }
+        
+        
+        public static function destroyVertexLayout(_layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.destroyVertexLayout(_layoutHandle.__inst);
+        }
+        
+        
+        public static function createVertexBuffer(_mem:Memory, _layout:VertexLayout, _flags:cpp.UInt16):VertexBufferHandle {
+            final res = Type.createEmptyInstance(VertexBufferHandle);
+            res.__inst = Native_Bgfx.createVertexBuffer(_mem.__inst, _layout.__inst, _flags);
+            return res;
+        }
+        
+        
+        public static function setVertexBufferName(_handle:VertexBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setVertexBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function destroyVertexBuffer(_handle:VertexBufferHandle):Void {
+             Native_Bgfx.destroyVertexBuffer(_handle.__inst);
+        }
+        
+        
+        public static function createDynamicIndexBuffer(_num:cpp.UInt32, _flags:cpp.UInt16):DynamicIndexBufferHandle {
+            final res = Type.createEmptyInstance(DynamicIndexBufferHandle);
+            res.__inst = Native_Bgfx.createDynamicIndexBuffer(_num, _flags);
+            return res;
+        }
+        
+        
+        public static function createDynamicIndexBufferMem(_mem:Memory, _flags:cpp.UInt16):DynamicIndexBufferHandle {
+            final res = Type.createEmptyInstance(DynamicIndexBufferHandle);
+            res.__inst = Native_Bgfx.createDynamicIndexBufferMem(_mem.__inst, _flags);
+            return res;
+        }
+        
+        
+        public static function updateDynamicIndexBuffer(_handle:DynamicIndexBufferHandle, _startIndex:cpp.UInt32, _mem:Memory):Void {
+             Native_Bgfx.updateDynamicIndexBuffer(_handle.__inst, _startIndex, _mem.__inst);
+        }
+        
+        
+        public static function destroyDynamicIndexBuffer(_handle:DynamicIndexBufferHandle):Void {
+             Native_Bgfx.destroyDynamicIndexBuffer(_handle.__inst);
+        }
+        
+        
+        public static function createDynamicVertexBuffer(_num:cpp.UInt32, _layout:VertexLayout, _flags:cpp.UInt16):DynamicVertexBufferHandle {
+            final res = Type.createEmptyInstance(DynamicVertexBufferHandle);
+            res.__inst = Native_Bgfx.createDynamicVertexBuffer(_num, _layout.__inst, _flags);
+            return res;
+        }
+        
+        
+        public static function createDynamicVertexBufferMem(_mem:Memory, _layout:VertexLayout, _flags:cpp.UInt16):DynamicVertexBufferHandle {
+            final res = Type.createEmptyInstance(DynamicVertexBufferHandle);
+            res.__inst = Native_Bgfx.createDynamicVertexBufferMem(_mem.__inst, _layout.__inst, _flags);
+            return res;
+        }
+        
+        
+        public static function updateDynamicVertexBuffer(_handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _mem:Memory):Void {
+             Native_Bgfx.updateDynamicVertexBuffer(_handle.__inst, _startVertex, _mem.__inst);
+        }
+        
+        
+        public static function destroyDynamicVertexBuffer(_handle:DynamicVertexBufferHandle):Void {
+             Native_Bgfx.destroyDynamicVertexBuffer(_handle.__inst);
+        }
+        
+        
+        public static function getAvailTransientIndexBuffer(_num:cpp.UInt32, _index32:Bool):cpp.UInt32 {
+            return Native_Bgfx.getAvailTransientIndexBuffer(_num, _index32);
+        }
+        
+        
+        public static function getAvailTransientVertexBuffer(_num:cpp.UInt32, _layout:VertexLayout):cpp.UInt32 {
+            return Native_Bgfx.getAvailTransientVertexBuffer(_num, _layout.__inst);
+        }
+        
+        
+        public static function getAvailInstanceDataBuffer(_num:cpp.UInt32, _stride:cpp.UInt16):cpp.UInt32 {
+            return Native_Bgfx.getAvailInstanceDataBuffer(_num, _stride);
+        }
+        
+        
+        public static function allocTransientIndexBuffer(_tib:TransientIndexBuffer, _num:cpp.UInt32, _index32:Bool):Void {
+             Native_Bgfx.allocTransientIndexBuffer(_tib.__inst, _num, _index32);
+        }
+        
+        
+        public static function allocTransientVertexBuffer(_tvb:TransientVertexBuffer, _num:cpp.UInt32, _layout:VertexLayout):Void {
+             Native_Bgfx.allocTransientVertexBuffer(_tvb.__inst, _num, _layout.__inst);
+        }
+        
+        
+        public static function allocTransientBuffers(_tvb:TransientVertexBuffer, _layout:VertexLayout, _numVertices:cpp.UInt32, _tib:TransientIndexBuffer, _numIndices:cpp.UInt32, _index32:Bool):Bool {
+            return Native_Bgfx.allocTransientBuffers(_tvb.__inst, _layout.__inst, _numVertices, _tib.__inst, _numIndices, _index32);
+        }
+        
+        
+        public static function allocInstanceDataBuffer(_idb:InstanceDataBuffer, _num:cpp.UInt32, _stride:cpp.UInt16):Void {
+             Native_Bgfx.allocInstanceDataBuffer(_idb.__inst, _num, _stride);
+        }
+        
+        
+        public static function createIndirectBuffer(_num:cpp.UInt32):IndirectBufferHandle {
+            final res = Type.createEmptyInstance(IndirectBufferHandle);
+            res.__inst = Native_Bgfx.createIndirectBuffer(_num);
+            return res;
+        }
+        
+        
+        public static function destroyIndirectBuffer(_handle:IndirectBufferHandle):Void {
+             Native_Bgfx.destroyIndirectBuffer(_handle.__inst);
+        }
+        
+        
+        public static function createShader(_mem:Memory):ShaderHandle {
+            final res = Type.createEmptyInstance(ShaderHandle);
+            res.__inst = Native_Bgfx.createShader(_mem.__inst);
+            return res;
+        }
+        
+        
+        public static function getShaderUniforms(_handle:ShaderHandle, _uniforms:UniformHandle, _max:cpp.UInt16):cpp.UInt16 {
+            return Native_Bgfx.getShaderUniforms(_handle.__inst, _uniforms.__inst, _max);
+        }
+        
+        
+        public static function setShaderName(_handle:ShaderHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setShaderName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function destroyShader(_handle:ShaderHandle):Void {
+             Native_Bgfx.destroyShader(_handle.__inst);
+        }
+        
+        
+        public static function createProgram(_vsh:ShaderHandle, _fsh:ShaderHandle, _destroyShaders:Bool):ProgramHandle {
+            final res = Type.createEmptyInstance(ProgramHandle);
+            res.__inst = Native_Bgfx.createProgram(_vsh.__inst, _fsh.__inst, _destroyShaders);
+            return res;
+        }
+        
+        
+        public static function createComputeProgram(_csh:ShaderHandle, _destroyShaders:Bool):ProgramHandle {
+            final res = Type.createEmptyInstance(ProgramHandle);
+            res.__inst = Native_Bgfx.createComputeProgram(_csh.__inst, _destroyShaders);
+            return res;
+        }
+        
+        
+        public static function destroyProgram(_handle:ProgramHandle):Void {
+             Native_Bgfx.destroyProgram(_handle.__inst);
+        }
+        
+        
+        public static function isTextureValid(_depth:cpp.UInt16, _cubeMap:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64):Bool {
+            return Native_Bgfx.isTextureValid(_depth, _cubeMap, _numLayers, cast _format, _flags);
+        }
+        
+        
+        public static function isFrameBufferValid(_num:cpp.UInt8, _attachment:Attachment):Bool {
+            return Native_Bgfx.isFrameBufferValid(_num, _attachment.__inst);
+        }
+        
+        
+        public static function calcTextureSize(_info:TextureInfo, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _cubeMap:Bool, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat):Void {
+             Native_Bgfx.calcTextureSize(_info.__inst, _width, _height, _depth, _cubeMap, _hasMips, _numLayers, cast _format);
+        }
+        
+        
+        public static function createTexture(_mem:Memory, _flags:cpp.UInt64, _skip:cpp.UInt8, _info:TextureInfo):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.createTexture(_mem.__inst, _flags, _skip, _info.__inst);
+            return res;
+        }
+        
+        
+        public static function createTexture2d(_width:cpp.UInt16, _height:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.createTexture2d(_width, _height, _hasMips, _numLayers, cast _format, _flags, _mem.__inst);
+            return res;
+        }
+        
+        
+        public static function createTexture2dScaled(_ratio:BackbufferRatio, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.createTexture2dScaled(cast _ratio, _hasMips, _numLayers, cast _format, _flags);
+            return res;
+        }
+        
+        
+        public static function createTexture3d(_width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _hasMips:Bool, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.createTexture3d(_width, _height, _depth, _hasMips, cast _format, _flags, _mem.__inst);
+            return res;
+        }
+        
+        
+        public static function createTextureCube(_size:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.createTextureCube(_size, _hasMips, _numLayers, cast _format, _flags, _mem.__inst);
+            return res;
+        }
+        
+        
+        public static function updateTexture2d(_handle:TextureHandle, _layer:cpp.UInt16, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:Memory, _pitch:cpp.UInt16):Void {
+             Native_Bgfx.updateTexture2d(_handle.__inst, _layer, _mip, _x, _y, _width, _height, _mem.__inst, _pitch);
+        }
+        
+        
+        public static function updateTexture3d(_handle:TextureHandle, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _z:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _mem:Memory):Void {
+             Native_Bgfx.updateTexture3d(_handle.__inst, _mip, _x, _y, _z, _width, _height, _depth, _mem.__inst);
+        }
+        
+        
+        public static function updateTextureCube(_handle:TextureHandle, _layer:cpp.UInt16, _side:cpp.UInt8, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:Memory, _pitch:cpp.UInt16):Void {
+             Native_Bgfx.updateTextureCube(_handle.__inst, _layer, _side, _mip, _x, _y, _width, _height, _mem.__inst, _pitch);
+        }
+        
+        
+        public static function readTexture(_handle:TextureHandle, _data:cpp.Pointer<cpp.Void>, _mip:cpp.UInt8):cpp.UInt32 {
+            return Native_Bgfx.readTexture(_handle.__inst, cast cpp.Pointer.addressOf(_data), _mip);
+        }
+        
+        
+        public static function setTextureName(_handle:TextureHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setTextureName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function getDirectAccessPtr(_handle:TextureHandle):cpp.Star<cpp.Void> {
+            return Native_Bgfx.getDirectAccessPtr(_handle.__inst);
+        }
+        
+        
+        public static function destroyTexture(_handle:TextureHandle):Void {
+             Native_Bgfx.destroyTexture(_handle.__inst);
+        }
+        
+        
+        public static function createFrameBuffer(_width:cpp.UInt16, _height:cpp.UInt16, _format:TextureFormat, _textureFlags:cpp.UInt64):FrameBufferHandle {
+            final res = Type.createEmptyInstance(FrameBufferHandle);
+            res.__inst = Native_Bgfx.createFrameBuffer(_width, _height, cast _format, _textureFlags);
+            return res;
+        }
+        
+        
+        public static function createFrameBufferScaled(_ratio:BackbufferRatio, _format:TextureFormat, _textureFlags:cpp.UInt64):FrameBufferHandle {
+            final res = Type.createEmptyInstance(FrameBufferHandle);
+            res.__inst = Native_Bgfx.createFrameBufferScaled(cast _ratio, cast _format, _textureFlags);
+            return res;
+        }
+        
+        
+        public static function createFrameBufferFromHandles(_num:cpp.UInt8, _handles:TextureHandle, _destroyTexture:Bool):FrameBufferHandle {
+            final res = Type.createEmptyInstance(FrameBufferHandle);
+            res.__inst = Native_Bgfx.createFrameBufferFromHandles(_num, _handles.__inst, _destroyTexture);
+            return res;
+        }
+        
+        
+        public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:Attachment, _destroyTexture:Bool):FrameBufferHandle {
+            final res = Type.createEmptyInstance(FrameBufferHandle);
+            res.__inst = Native_Bgfx.createFrameBufferFromAttachment(_num, _attachment.__inst, _destroyTexture);
+            return res;
+        }
+        
+        
+        public static function createFrameBufferFromNwh(_nwh:cpp.Pointer<cpp.Void>, _width:cpp.UInt16, _height:cpp.UInt16, _format:TextureFormat, _depthFormat:TextureFormat):FrameBufferHandle {
+            final res = Type.createEmptyInstance(FrameBufferHandle);
+            res.__inst = Native_Bgfx.createFrameBufferFromNwh(cast cpp.Pointer.addressOf(_nwh), _width, _height, cast _format, cast _depthFormat);
+            return res;
+        }
+        
+        
+        public static function setFrameBufferName(_handle:FrameBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setFrameBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function getTexture(_handle:FrameBufferHandle, _attachment:cpp.UInt8):TextureHandle {
+            final res = Type.createEmptyInstance(TextureHandle);
+            res.__inst = Native_Bgfx.getTexture(_handle.__inst, _attachment);
+            return res;
+        }
+        
+        
+        public static function destroyFrameBuffer(_handle:FrameBufferHandle):Void {
+             Native_Bgfx.destroyFrameBuffer(_handle.__inst);
+        }
+        
+        
+        public static function createUniform(_name:cpp.ConstPointer<cpp.Char>, _type:UniformType, _num:cpp.UInt16):UniformHandle {
+            final res = Type.createEmptyInstance(UniformHandle);
+            res.__inst = Native_Bgfx.createUniform(cast cpp.Pointer.addressOf(_name), cast _type, _num);
+            return res;
+        }
+        
+        
+        public static function getUniformInfo(_handle:UniformHandle, _info:UniformInfo):Void {
+             Native_Bgfx.getUniformInfo(_handle.__inst, _info.__inst);
+        }
+        
+        
+        public static function destroyUniform(_handle:UniformHandle):Void {
+             Native_Bgfx.destroyUniform(_handle.__inst);
+        }
+        
+        
+        public static function createOcclusionQuery():OcclusionQueryHandle {
+            final res = Type.createEmptyInstance(OcclusionQueryHandle);
+            res.__inst = Native_Bgfx.createOcclusionQuery();
+            return res;
+        }
+        
+        
+        public static function getResult(_handle:OcclusionQueryHandle, _result:cpp.Pointer<cpp.Int32>):bgfx.OcclusionQueryResult.Native_OcclusionQueryResult {
+            return Native_Bgfx.getResult(_handle.__inst, cast cpp.Pointer.addressOf(_result));
+        }
+        
+        
+        public static function destroyOcclusionQuery(_handle:OcclusionQueryHandle):Void {
+             Native_Bgfx.destroyOcclusionQuery(_handle.__inst);
+        }
+        
+        
+        public static function setPaletteColorRgba8(_index:cpp.UInt8, _rgba:cpp.UInt32):Void {
+             Native_Bgfx.setPaletteColorRgba8(_index, _rgba);
+        }
+        
+        
+        public static function setViewName(_id:bgfx.ViewId, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setViewName(_id, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function setViewRect(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):Void {
+             Native_Bgfx.setViewRect(_id, _x, _y, _width, _height);
+        }
+        
+        
+        public static function setViewRectRatio(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _ratio:BackbufferRatio):Void {
+             Native_Bgfx.setViewRectRatio(_id, _x, _y, cast _ratio);
+        }
+        
+        
+        public static function setViewScissor(_id:bgfx.ViewId, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):Void {
+             Native_Bgfx.setViewScissor(_id, _x, _y, _width, _height);
+        }
+        
+        
+        public static function setViewClear(_id:bgfx.ViewId, _flags:cpp.UInt16, _rgba:cpp.UInt32, _depth:cpp.Float32, _stencil:cpp.UInt8):Void {
+             Native_Bgfx.setViewClear(_id, _flags, _rgba, _depth, _stencil);
+        }
+        
+        
+        public static function setViewClearMrt(_id:bgfx.ViewId, _flags:cpp.UInt16, _depth:cpp.Float32, _stencil:cpp.UInt8, _c0:cpp.UInt8, _c1:cpp.UInt8, _c2:cpp.UInt8, _c3:cpp.UInt8, _c4:cpp.UInt8, _c5:cpp.UInt8, _c6:cpp.UInt8, _c7:cpp.UInt8):Void {
+             Native_Bgfx.setViewClearMrt(_id, _flags, _depth, _stencil, _c0, _c1, _c2, _c3, _c4, _c5, _c6, _c7);
+        }
+        
+        
+        public static function setViewMode(_id:bgfx.ViewId, _mode:ViewMode):Void {
+             Native_Bgfx.setViewMode(_id, cast _mode);
+        }
+        
+        
+        public static function setViewFrameBuffer(_id:bgfx.ViewId, _handle:FrameBufferHandle):Void {
+             Native_Bgfx.setViewFrameBuffer(_id, _handle.__inst);
+        }
+        
+        
+        public static function setViewTransform(_id:bgfx.ViewId, _view:cpp.ConstPointer<cpp.Void>, _proj:cpp.ConstPointer<cpp.Void>):Void {
+             Native_Bgfx.setViewTransform(_id, cast cpp.Pointer.addressOf(_view), cast cpp.Pointer.addressOf(_proj));
+        }
+        
+        
+        public static function resetView(_id:bgfx.ViewId):Void {
+             Native_Bgfx.resetView(_id);
+        }
+        
+        
+        public static function encoderBegin(_forThread:Bool):cpp.Star<bgfx.Encoder.Native_Encoder> {
+            return Native_Bgfx.encoderBegin(_forThread);
+        }
+        
+        
+        public static function encoderEnd(_encoder:Encoder):Void {
+             Native_Bgfx.encoderEnd(_encoder.__inst);
+        }
+        
+        
+        public static function encoderSetMarker(_this:Encoder, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.encoderSetMarker(_this.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function encoderSetState(_this:Encoder, _state:cpp.UInt64, _rgba:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetState(_this.__inst, _state, _rgba);
+        }
+        
+        
+        public static function encoderSetCondition(_this:Encoder, _handle:OcclusionQueryHandle, _visible:Bool):Void {
+             Native_Bgfx.encoderSetCondition(_this.__inst, _handle.__inst, _visible);
+        }
+        
+        
+        public static function encoderSetStencil(_this:Encoder, _fstencil:cpp.UInt32, _bstencil:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetStencil(_this.__inst, _fstencil, _bstencil);
+        }
+        
+        
+        public static function encoderSetScissor(_this:Encoder, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16 {
+            return Native_Bgfx.encoderSetScissor(_this.__inst, _x, _y, _width, _height);
+        }
+        
+        
+        public static function encoderSetScissorCached(_this:Encoder, _cache:cpp.UInt16):Void {
+             Native_Bgfx.encoderSetScissorCached(_this.__inst, _cache);
+        }
+        
+        
+        public static function encoderSetTransform(_this:Encoder, _mtx:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32 {
+            return Native_Bgfx.encoderSetTransform(_this.__inst, cast cpp.Pointer.addressOf(_mtx), _num);
+        }
+        
+        
+        public static function encoderSetTransformCached(_this:Encoder, _cache:cpp.UInt32, _num:cpp.UInt16):Void {
+             Native_Bgfx.encoderSetTransformCached(_this.__inst, _cache, _num);
+        }
+        
+        
+        public static function encoderAllocTransform(_this:Encoder, _transform:Transform, _num:cpp.UInt16):cpp.UInt32 {
+            return Native_Bgfx.encoderAllocTransform(_this.__inst, _transform.__inst, _num);
+        }
+        
+        
+        public static function encoderSetUniform(_this:Encoder, _handle:UniformHandle, _value:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):Void {
+             Native_Bgfx.encoderSetUniform(_this.__inst, _handle.__inst, cast cpp.Pointer.addressOf(_value), _num);
+        }
+        
+        
+        public static function encoderSetIndexBuffer(_this:Encoder, _handle:IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetIndexBuffer(_this.__inst, _handle.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function encoderSetDynamicIndexBuffer(_this:Encoder, _handle:DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetDynamicIndexBuffer(_this.__inst, _handle.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function encoderSetTransientIndexBuffer(_this:Encoder, _tib:TransientIndexBuffer, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetTransientIndexBuffer(_this.__inst, _tib.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function encoderSetVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetVertexBuffer(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function encoderSetVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.encoderSetVertexBufferWithLayout(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function encoderSetDynamicVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetDynamicVertexBuffer(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function encoderSetDynamicVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.encoderSetDynamicVertexBufferWithLayout(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function encoderSetTransientVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetTransientVertexBuffer(_this.__inst, _stream, _tvb.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function encoderSetTransientVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.encoderSetTransientVertexBufferWithLayout(_this.__inst, _stream, _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function encoderSetVertexCount(_this:Encoder, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetVertexCount(_this.__inst, _numVertices);
+        }
+        
+        
+        public static function encoderSetInstanceDataBuffer(_this:Encoder, _idb:InstanceDataBuffer, _start:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetInstanceDataBuffer(_this.__inst, _idb.__inst, _start, _num);
+        }
+        
+        
+        public static function encoderSetInstanceDataFromVertexBuffer(_this:Encoder, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetInstanceDataFromVertexBuffer(_this.__inst, _handle.__inst, _startVertex, _num);
+        }
+        
+        
+        public static function encoderSetInstanceDataFromDynamicVertexBuffer(_this:Encoder, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetInstanceDataFromDynamicVertexBuffer(_this.__inst, _handle.__inst, _startVertex, _num);
+        }
+        
+        
+        public static function encoderSetInstanceCount(_this:Encoder, _numInstances:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetInstanceCount(_this.__inst, _numInstances);
+        }
+        
+        
+        public static function encoderSetTexture(_this:Encoder, _stage:cpp.UInt8, _sampler:UniformHandle, _handle:TextureHandle, _flags:cpp.UInt32):Void {
+             Native_Bgfx.encoderSetTexture(_this.__inst, _stage, _sampler.__inst, _handle.__inst, _flags);
+        }
+        
+        
+        public static function encoderTouch(_this:Encoder, _id:bgfx.ViewId):Void {
+             Native_Bgfx.encoderTouch(_this.__inst, _id);
+        }
+        
+        
+        public static function encoderSubmit(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderSubmit(_this.__inst, _id, _program.__inst, _depth, _flags);
+        }
+        
+        
+        public static function encoderSubmitOcclusionQuery(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _occlusionQuery:OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderSubmitOcclusionQuery(_this.__inst, _id, _program.__inst, _occlusionQuery.__inst, _depth, _flags);
+        }
+        
+        
+        public static function encoderSubmitIndirect(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderSubmitIndirect(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _depth, _flags);
+        }
+        
+        
+        public static function encoderSubmitIndirectCount(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _numHandle:IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderSubmitIndirectCount(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _numHandle.__inst, _numIndex, _numMax, _depth, _flags);
+        }
+        
+        
+        public static function encoderSetComputeIndexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:IndexBufferHandle, _access:Access):Void {
+             Native_Bgfx.encoderSetComputeIndexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function encoderSetComputeVertexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:VertexBufferHandle, _access:Access):Void {
+             Native_Bgfx.encoderSetComputeVertexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function encoderSetComputeDynamicIndexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:DynamicIndexBufferHandle, _access:Access):Void {
+             Native_Bgfx.encoderSetComputeDynamicIndexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function encoderSetComputeDynamicVertexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:DynamicVertexBufferHandle, _access:Access):Void {
+             Native_Bgfx.encoderSetComputeDynamicVertexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function encoderSetComputeIndirectBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:IndirectBufferHandle, _access:Access):Void {
+             Native_Bgfx.encoderSetComputeIndirectBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function encoderSetImage(_this:Encoder, _stage:cpp.UInt8, _handle:TextureHandle, _mip:cpp.UInt8, _access:Access, _format:TextureFormat):Void {
+             Native_Bgfx.encoderSetImage(_this.__inst, _stage, _handle.__inst, _mip, cast _access, cast _format);
+        }
+        
+        
+        public static function encoderDispatch(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderDispatch(_this.__inst, _id, _program.__inst, _numX, _numY, _numZ, _flags);
+        }
+        
+        
+        public static function encoderDispatchIndirect(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderDispatchIndirect(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _flags);
+        }
+        
+        
+        public static function encoderDiscard(_this:Encoder, _flags:cpp.UInt8):Void {
+             Native_Bgfx.encoderDiscard(_this.__inst, _flags);
+        }
+        
+        
+        public static function encoderBlit(_this:Encoder, _id:bgfx.ViewId, _dst:TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):Void {
+             Native_Bgfx.encoderBlit(_this.__inst, _id, _dst.__inst, _dstMip, _dstX, _dstY, _dstZ, _src.__inst, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
+        }
+        
+        
+        public static function requestScreenShot(_handle:FrameBufferHandle, _filePath:cpp.ConstPointer<cpp.Char>):Void {
+             Native_Bgfx.requestScreenShot(_handle.__inst, cast cpp.Pointer.addressOf(_filePath));
+        }
+        
+        
+        public static function renderFrame(_msecs:cpp.Int32):bgfx.RenderFrame.Native_RenderFrame {
+            return Native_Bgfx.renderFrame(_msecs);
+        }
+        
+        
+        public static function setPlatformData(_data:PlatformData):Void {
+             Native_Bgfx.setPlatformData(_data.__inst);
+        }
+        
+        
+        public static function getInternalData():cpp.ConstStar<bgfx.InternalData.Native_InternalData> {
+            return Native_Bgfx.getInternalData();
+        }
+        
+        
+        public static function overrideInternalTexturePtr(_handle:TextureHandle, _ptr:cpp.UInt64):cpp.UInt64 {
+            return Native_Bgfx.overrideInternalTexturePtr(_handle.__inst, _ptr);
+        }
+        
+        
+        public static function overrideInternalTexture(_handle:TextureHandle, _width:cpp.UInt16, _height:cpp.UInt16, _numMips:cpp.UInt8, _format:TextureFormat, _flags:cpp.UInt64):cpp.UInt64 {
+            return Native_Bgfx.overrideInternalTexture(_handle.__inst, _width, _height, _numMips, cast _format, _flags);
+        }
+        
+        
+        public static function setMarker(_name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
+             Native_Bgfx.setMarker(cast cpp.Pointer.addressOf(_name), _len);
+        }
+        
+        
+        public static function setState(_state:cpp.UInt64, _rgba:cpp.UInt32):Void {
+             Native_Bgfx.setState(_state, _rgba);
+        }
+        
+        
+        public static function setCondition(_handle:OcclusionQueryHandle, _visible:Bool):Void {
+             Native_Bgfx.setCondition(_handle.__inst, _visible);
+        }
+        
+        
+        public static function setStencil(_fstencil:cpp.UInt32, _bstencil:cpp.UInt32):Void {
+             Native_Bgfx.setStencil(_fstencil, _bstencil);
+        }
+        
+        
+        public static function setScissor(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16 {
+            return Native_Bgfx.setScissor(_x, _y, _width, _height);
+        }
+        
+        
+        public static function setScissorCached(_cache:cpp.UInt16):Void {
+             Native_Bgfx.setScissorCached(_cache);
+        }
+        
+        
+        public static function setTransform(_mtx:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32 {
+            return Native_Bgfx.setTransform(cast cpp.Pointer.addressOf(_mtx), _num);
+        }
+        
+        
+        public static function setTransformCached(_cache:cpp.UInt32, _num:cpp.UInt16):Void {
+             Native_Bgfx.setTransformCached(_cache, _num);
+        }
+        
+        
+        public static function allocTransform(_transform:Transform, _num:cpp.UInt16):cpp.UInt32 {
+            return Native_Bgfx.allocTransform(_transform.__inst, _num);
+        }
+        
+        
+        public static function setUniform(_handle:UniformHandle, _value:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):Void {
+             Native_Bgfx.setUniform(_handle.__inst, cast cpp.Pointer.addressOf(_value), _num);
+        }
+        
+        
+        public static function setIndexBuffer(_handle:IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.setIndexBuffer(_handle.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function setDynamicIndexBuffer(_handle:DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.setDynamicIndexBuffer(_handle.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function setTransientIndexBuffer(_tib:TransientIndexBuffer, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
+             Native_Bgfx.setTransientIndexBuffer(_tib.__inst, _firstIndex, _numIndices);
+        }
+        
+        
+        public static function setVertexBuffer(_stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.setVertexBuffer(_stream, _handle.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function setVertexBufferWithLayout(_stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.setVertexBufferWithLayout(_stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function setDynamicVertexBuffer(_stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.setDynamicVertexBuffer(_stream, _handle.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function setDynamicVertexBufferWithLayout(_stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.setDynamicVertexBufferWithLayout(_stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function setTransientVertexBuffer(_stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
+             Native_Bgfx.setTransientVertexBuffer(_stream, _tvb.__inst, _startVertex, _numVertices);
+        }
+        
+        
+        public static function setTransientVertexBufferWithLayout(_stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
+             Native_Bgfx.setTransientVertexBufferWithLayout(_stream, _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+        }
+        
+        
+        public static function setVertexCount(_numVertices:cpp.UInt32):Void {
+             Native_Bgfx.setVertexCount(_numVertices);
+        }
+        
+        
+        public static function setInstanceDataBuffer(_idb:InstanceDataBuffer, _start:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.setInstanceDataBuffer(_idb.__inst, _start, _num);
+        }
+        
+        
+        public static function setInstanceDataFromVertexBuffer(_handle:VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.setInstanceDataFromVertexBuffer(_handle.__inst, _startVertex, _num);
+        }
+        
+        
+        public static function setInstanceDataFromDynamicVertexBuffer(_handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
+             Native_Bgfx.setInstanceDataFromDynamicVertexBuffer(_handle.__inst, _startVertex, _num);
+        }
+        
+        
+        public static function setInstanceCount(_numInstances:cpp.UInt32):Void {
+             Native_Bgfx.setInstanceCount(_numInstances);
+        }
+        
+        
+        public static function setTexture(_stage:cpp.UInt8, _sampler:UniformHandle, _handle:TextureHandle, _flags:cpp.UInt32):Void {
+             Native_Bgfx.setTexture(_stage, _sampler.__inst, _handle.__inst, _flags);
+        }
+        
+        
+        public static function touch(_id:bgfx.ViewId):Void {
+             Native_Bgfx.touch(_id);
+        }
+        
+        
+        public static function submit(_id:bgfx.ViewId, _program:ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.submit(_id, _program.__inst, _depth, _flags);
+        }
+        
+        
+        public static function submitOcclusionQuery(_id:bgfx.ViewId, _program:ProgramHandle, _occlusionQuery:OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.submitOcclusionQuery(_id, _program.__inst, _occlusionQuery.__inst, _depth, _flags);
+        }
+        
+        
+        public static function submitIndirect(_id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.submitIndirect(_id, _program.__inst, _indirectHandle.__inst, _start, _num, _depth, _flags);
+        }
+        
+        
+        public static function submitIndirectCount(_id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _numHandle:IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.submitIndirectCount(_id, _program.__inst, _indirectHandle.__inst, _start, _numHandle.__inst, _numIndex, _numMax, _depth, _flags);
+        }
+        
+        
+        public static function setComputeIndexBuffer(_stage:cpp.UInt8, _handle:IndexBufferHandle, _access:Access):Void {
+             Native_Bgfx.setComputeIndexBuffer(_stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function setComputeVertexBuffer(_stage:cpp.UInt8, _handle:VertexBufferHandle, _access:Access):Void {
+             Native_Bgfx.setComputeVertexBuffer(_stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function setComputeDynamicIndexBuffer(_stage:cpp.UInt8, _handle:DynamicIndexBufferHandle, _access:Access):Void {
+             Native_Bgfx.setComputeDynamicIndexBuffer(_stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function setComputeDynamicVertexBuffer(_stage:cpp.UInt8, _handle:DynamicVertexBufferHandle, _access:Access):Void {
+             Native_Bgfx.setComputeDynamicVertexBuffer(_stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function setComputeIndirectBuffer(_stage:cpp.UInt8, _handle:IndirectBufferHandle, _access:Access):Void {
+             Native_Bgfx.setComputeIndirectBuffer(_stage, _handle.__inst, cast _access);
+        }
+        
+        
+        public static function setImage(_stage:cpp.UInt8, _handle:TextureHandle, _mip:cpp.UInt8, _access:Access, _format:TextureFormat):Void {
+             Native_Bgfx.setImage(_stage, _handle.__inst, _mip, cast _access, cast _format);
+        }
+        
+        
+        public static function dispatch(_id:bgfx.ViewId, _program:ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.dispatch(_id, _program.__inst, _numX, _numY, _numZ, _flags);
+        }
+        
+        
+        public static function dispatchIndirect(_id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):Void {
+             Native_Bgfx.dispatchIndirect(_id, _program.__inst, _indirectHandle.__inst, _start, _num, _flags);
+        }
+        
+        
+        public static function discard(_flags:cpp.UInt8):Void {
+             Native_Bgfx.discard(_flags);
+        }
+        
+        
+        public static function blit(_id:bgfx.ViewId, _dst:TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):Void {
+             Native_Bgfx.blit(_id, _dst.__inst, _dstMip, _dstX, _dstY, _dstZ, _src.__inst, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
+        }
+        
+        
     }
+    typedef Bgfx = CppiaBgfx;
 #else
     typedef Bgfx = Native_Bgfx;
 #end

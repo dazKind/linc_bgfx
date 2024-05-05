@@ -32,7 +32,13 @@ class ApiGenMacros {
         "dbgTextClear"=>true,
         "dbgTextPrintf"=>true,
         "dbgTextVprintf"=>true,
-        "makeRefRelease"=>true
+        "makeRefRelease"=>true,
+
+        "vertexPack"=>true,
+        "vertexUnpack"=>true,
+        "topologySortTriList"=>true,
+        "setPaletteColor"=>true,
+        "setViewOrder"=>true
     ];
 
     static var seenTypes = new Map<String, Bool>();
@@ -68,14 +74,17 @@ class ApiGenMacros {
             else {
                 if (isNative) {
                     if (isPointer)
-                        return (macro : cpp.RawPointer<$_type>);
+                        if (isConst)
+                            return (macro : cpp.ConstStar<$_type>);
+                        else
+                            return (macro : cpp.Star<$_type>);
                 }
                 return _type;
             }
         }
 
         var resultType = switch(val) {
-            case "bool": macro : Bool;
+            case "bool": _wrap(macro : Bool);
             case "char", "char_t": _wrap(macro : cpp.Char);
             case "uint8", "uint8_t": _wrap(macro : cpp.UInt8);
             case "uint16", "uint16_t": _wrap(macro : cpp.UInt16);
@@ -96,12 +105,8 @@ class ApiGenMacros {
                 
                 var res = macro : cpp.UNKNOWN;
 
-                if (isNative)
-                    trace('TODO: Deal with native type: '+_t);
-                else if (isEnum)
-                    res = TPath({pack:["bgfx", val], name: 'Native_$val'});
-                else if (isPointer || isArray) {
-                    if (!isStruct) {
+                if (isPointer || isArray) {
+                    if (!isStruct && !isEnum) {
                         res = macro : cpp.Star<cpp.Void>;
                     }
                     else {
@@ -113,6 +118,11 @@ class ApiGenMacros {
                             res = macro : cpp.Star<$tmp>;
                     }
                 }
+                else if (isNative)
+                    trace('TODO: Deal with native type: '+_t);
+                else if (isEnum)
+                    res = TPath({pack:["bgfx", val], name: 'Native_$val'});
+                
                 else if (isReference) {
                     var tmp = TPath({pack:["bgfx", val], name: 'Native_$val'});
                     res = macro : cpp.Reference<$tmp>;
@@ -128,6 +138,11 @@ class ApiGenMacros {
                 res;
             }
         };
+
+        if (_t == "const char*") {
+            trace(val);
+            trace(resultType);
+        }
         return {
             isArray: isArray,
             isPointer: isPointer,
@@ -145,10 +160,10 @@ class ApiGenMacros {
     public static function isTypeNative(_type:String) {
         return switch(_type) {
             case "Void", "Nil", "bool", "Bool",
-                "int", "int64", "cpp.Int64",
-                "int32_t", "int32", "cpp.Int32",
-                "uint_t", "uint", "uint64", "cpp.UInt64",
-                "uint32_t", "uint32", "cpp.UInt32",
+                "int", "int32", "int32_t", "cpp.Int32",
+                "int64_t", "int64", "cpp.Int64",
+                "uint64_t", "uint64", "cpp.UInt64",
+                "uint_t", "uint", "uint32_t", "uint32", "cpp.UInt32",
                 "uint16_t", "uint16", "cpp.UInt16",
                 "uint8_t", "uint8", "cpp.UInt8",
                 "int8_t", "int8", "cpp.Int8",
@@ -156,6 +171,7 @@ class ApiGenMacros {
                 "real_t", "float", "double", 
                 "float_t", "double_t", "Float",
                 "float32_t", "cpp.Float32", "cpp.Float64",
+                "char", "cpp.Char",
                 "void"/*, "const void*"*/: true;
 
             default: false;
@@ -218,7 +234,7 @@ class ApiGenMacros {
         var hxt = getHaxeType(_type.data_type);     
         var dt = hxt.result;
         var isInt64 = hxt.name.contains("int64");
-        trace(hxt);
+        // trace(hxt);
 
         // generate class
         var cls = macro class $name  {
@@ -311,16 +327,82 @@ class ApiGenMacros {
         buf.add('extern class Native_$name {\n');
         buf.add('    public function new();\n');
 
-        trace(_type.name);
+        // trace(_type.name);
         for (m in cast(_type.members, Array<Dynamic>)) {
             buf.add('    var ${m.name}:${getHaxeType(m.data_type).result.toString()}; // ${m.data_type}\n');
         }
         
         buf.add('}\n');
         buf.add('#if (scriptable || cppia)\n');
-        buf.add('    class $name {\n');
+        buf.add('    class Cppia$name {\n');
         // TODO: 
+        buf.add('        public var __ptr:cpp.Pointer<Native_$name> = null;\n');
+        buf.add('        public var __inst:Native_$name = new Native_$name();\n');
+        buf.add('        public function new() {}\n');
+        buf.add('        \n');
+
+        //CPPIA MEMBERS
+        for (m in cast(_type.members, Array<Dynamic>)) {
+            var dt = getHaxeType(m.data_type);
+
+            if (dt.isNative) {
+                if (dt.isPointer || dt.isArray) {
+                    var tt = getHaxeType(m.data_type).result.toString();
+                    if (tt.contains("Star"))
+                        tt = tt.replace("Star", "Pointer");
+                    else if (tt.contains("RawPointer"))
+                        tt = tt.replace("RawPointer", "Pointer");
+                    buf.add('        public var ${m.name}(get, set):${tt};\n');
+                    if (dt.isArray)
+                        buf.add('        function set_${m.name}(_v:${tt}):${tt} return null;\n');
+                    else
+                        buf.add('        function set_${m.name}(_v:${tt}):${tt} return __ptr == null ? cast __inst.${m.name} = cast _v : cast __ptr.ref.${m.name} = cast _v;\n');
+                    buf.add('        function get_${m.name}():${tt} return __ptr == null ? cast __inst.${m.name} : cast __ptr.ref.${m.name};\n');
+                } else {
+                    var tt = getHaxeType(m.data_type).result.toString();
+                    buf.add('        public var ${m.name}(get, set):${tt};\n');
+                    buf.add('        function set_${m.name}(_v:${tt}):${tt} return __ptr == null ? __inst.${m.name} = _v : __ptr.ref.${m.name} = _v;\n');
+                    buf.add('        function get_${m.name}():${tt} return __ptr == null ? __inst.${m.name} : __ptr.ref.${m.name};\n');
+                }
+
+            } else if (dt.isEnum) {
+                buf.add('        public var ${m.name}(get, set):${dt.name};\n');
+                buf.add('        function set_${m.name}(_v:${dt.name}):${dt.name} { __inst.${m.name} = (cast _v:${dt.result.toString()}); return _v; }\n');
+                buf.add('        function get_${m.name}():${dt.name} return cast(__inst.${m.name}, ${dt.name});\n');
+
+            } else if (dt.isStruct && !dt.isPointer) {
+
+                buf.add('        public var ${m.name}(get, set):${dt.name};\n');
+                if (dt.isArray)
+                    buf.add('        function set_${m.name}(_v:${dt.name}):${dt.name} { return _v; }\n'); // do nothing
+                else
+                    buf.add('        function set_${m.name}(_v:${dt.name}):${dt.name} { __inst.${m.name} = _v.__inst; return _v; }\n');
+                buf.add('        function get_${m.name}():${dt.name} { final res = Type.createEmptyInstance(${dt.name}); res.__ptr = cpp.Pointer.addressOf(__inst.${m.name}); return res; }\n');
+
+            } else if (dt.isStruct && dt.isPointer) {
+                buf.add('        public var ${m.name}(get, set):${dt.name};\n');
+                buf.add('        function set_${m.name}(_v:${dt.name}):${dt.name} { return null; }\n');
+                buf.add('        function get_${m.name}():${dt.name} { final res = Type.createEmptyInstance(${dt.name}); res.__inst = cpp.Pointer.fromStar(__inst.${m.name}).ref; return res; }\n');
+
+            } else if (!dt.isStruct && !dt.isNative && dt.isPointer) {
+                var tt = getHaxeType(m.data_type).result.toString();
+                if (tt.contains("Star")) {
+                    tt = tt.replace("Star", "Pointer");
+                    buf.add('        public var ${m.name}(get, set):${tt};\n');
+                    buf.add('        function set_${m.name}(_v:${tt}):${tt} { return null; }\n');
+                    buf.add('        function get_${m.name}():${tt} { return cast __inst.${m.name}; }\n');
+                } else {
+                    buf.add('        public var ${m.name}(get, set):${tt};\n');
+                    buf.add('        function set_${m.name}(_v:${tt}):${tt} { return cast __inst.${m.name} = untyped __cpp__(\'(void*){0}\', _v.ptr); }\n');
+                    buf.add('        function get_${m.name}():${tt} { return cast __inst.${m.name}; }\n');
+                }
+            }
+            buf.add('        \n');
+            // buf.add('        \n');
+        }
+        buf.add('        \n');
         buf.add('    }\n');
+        buf.add('    typedef $name = Cppia$name;\n');
         buf.add('#else\n');
         buf.add('    typedef $name = Native_$name;\n');
         buf.add('#end\n');
@@ -344,9 +426,7 @@ class ApiGenMacros {
 
         buf.add('package bgfx;\n\n');
 
-        for (i in imports)
-            buf.add('import bgfx.$i;\n');
-        // buf.add('import bgfx.*;\n');
+        buf.add('import bgfx.*;\n');
 
         buf.add('\n');
         buf.add('@:headerCode("#include <Dynamic2.h>")\n');
@@ -360,8 +440,14 @@ class ApiGenMacros {
         buf.add('    extern public static function getCallback():cpp.Star<cpp.Void>;\n');
         buf.add('\n');
         
+        var funcMap:Map<String, Int> = new Map();
         for (f in _funcs) {
-            if (funcBlackList.exists(f.name)) continue;
+            if (/*f.name != "vertexLayoutDecode" ||*/ funcBlackList.exists(f.name)) continue;
+
+            if (funcMap.exists(f.name))
+                funcMap.set(f.name, funcMap.get(f.name) + 1);
+            else
+                funcMap.set(f.name, 1);
 
             if (f.comment != null) {
                 var comment = f.comment.split('\n').join('\n    ');
@@ -383,16 +469,90 @@ class ApiGenMacros {
             buf.add('    **/\n');
 
             var ft = getHaxeType(f.return_type);
+            var fname = funcMap.get(f.name) > 1 ? '${f.name}${funcMap.get(f.name)}' : '${f.name}';
             buf.add('    @:native("${f.cname}")\n');
-            buf.add('    overload extern public static function ${f.name}(${args.join(", ")}):${ft.result.toString()};\n');
+            buf.add('    extern public static function ${fname}(${args.join(", ")}):${ft.result.toString()};\n');
             buf.add('\n');
         }        
 
         buf.add('}\n');
         buf.add('#if (scriptable || cppia)\n');
-        buf.add('    class $name {\n');
-        // TODO: 
+        buf.add('    class Cppia$name {\n');
+        buf.add('\n');
+        buf.add('        public static function getCallback():cpp.Pointer<cpp.Void> { return cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }\n');
+        buf.add('\n');
+
+
+        // CPPIA FUNCTIONS!
+        var funcMap:Map<String, Int> = new Map();
+        for (f in _funcs) {
+            if (/*f.name != "vertexLayoutDecode" ||*/ funcBlackList.exists(f.name)) continue;
+
+            if (funcMap.exists(f.name))
+                funcMap.set(f.name, funcMap.get(f.name) + 1);
+            else
+                funcMap.set(f.name, 1);
+
+            var args = [];
+            var callArgs = [];
+            for (a in cast(f.arguments, Array<Dynamic>)) {
+                var at = getHaxeType(a.data_type);
+                // trace(at);
+                if (at.isStruct) {
+                    args.push('${a.cname}:${at.name}');
+                    callArgs.push('${a.cname}.__inst');
+                }
+                else if (at.isPointer) {
+                    var tt = at.result.toString();
+                    if (tt.contains("Star"))
+                        tt = tt.replace("Star", "Pointer");
+                    else if (tt.contains("RawPointer"))
+                        tt = tt.replace("RawPointer", "Pointer");
+                    args.push('${a.cname}:${tt}');
+                    callArgs.push('cast cpp.Pointer.addressOf(${a.cname})');
+                } 
+                else if (at.isEnum) {
+                    args.push('${a.cname}:${at.name}');
+                    callArgs.push('cast ${a.cname}');
+                }
+                else {
+                    args.push('${a.cname}:${at.result.toString()}');
+                    callArgs.push(a.cname);
+                }
+            }
+
+            var fname = funcMap.get(f.name) > 1 ? '${f.name}${funcMap.get(f.name)}' : '${f.name}';
+            var ft = getHaxeType(f.return_type);
+            var ftStr = ft.result.toString();
+            var ret = 'return';
+            if (ft.result.toString() == 'cpp.Void') {
+                ftStr = 'Void';
+                ret = '';
+            }
+            if (ft.isStruct && !ft.isPointer) {
+                // make sure we wrap structs correctly
+                trace(ft);
+                buf.add('        public static function $fname(${args.join(", ")}):${ft.name} {\n');
+                buf.add('            final res = Type.createEmptyInstance(${ft.name});\n');
+                buf.add('            res.__inst = Native_Bgfx.$fname(${callArgs.join(", ")});\n');
+                buf.add('            $ret res;\n');
+                buf.add('        }\n');
+                buf.add('        \n');
+                buf.add('        \n');
+            }
+            else {
+                buf.add('        public static function $fname(${args.join(", ")}):${ftStr} {\n');
+                buf.add('            $ret Native_Bgfx.$fname(${callArgs.join(", ")});\n');
+                buf.add('        }\n');
+                buf.add('        \n');
+                buf.add('        \n');
+            }
+
+        }
+
         buf.add('    }\n');
+        buf.add('    typedef $name = Cppia$name;\n');
+        
         buf.add('#else\n');
         buf.add('    typedef $name = Native_$name;\n');
         buf.add('#end\n');
