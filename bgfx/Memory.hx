@@ -18,8 +18,17 @@ extern class Native_Memory {
         public function new() {}
         
         public var data(get, set):cpp.Pointer<cpp.UInt8>;
-        function set_data(_v:cpp.Pointer<cpp.UInt8>):cpp.Pointer<cpp.UInt8> return __ptr == null ? cast __inst.data = cast _v : cast __ptr.ref.data = cast _v;
-        function get_data():cpp.Pointer<cpp.UInt8> return __ptr == null ? cast __inst.data : cast __ptr.ref.data;
+        function set_data(_v:cpp.Pointer<cpp.UInt8>):cpp.Pointer<cpp.UInt8> {
+            if (__ptr == null)
+                __inst.data = cast _v;
+            else
+                __ptr.ref.data = cast _v;
+            return _v;
+        }
+        function get_data():cpp.Pointer<cpp.UInt8> {
+            if (__ptr == null) return cpp.Pointer.fromStar(__inst.data);
+            else return cpp.Pointer.fromStar(__ptr.ref.data);
+        }
         
         public var size(get, set):cpp.UInt32;
         function set_size(_v:cpp.UInt32):cpp.UInt32 return __ptr == null ? __inst.size = _v : __ptr.ref.size = _v;

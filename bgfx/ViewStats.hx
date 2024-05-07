@@ -24,7 +24,10 @@ extern class Native_ViewStats {
         
         public var name(get, set):cpp.Pointer<cpp.Char>;
         function set_name(_v:cpp.Pointer<cpp.Char>):cpp.Pointer<cpp.Char> return null;
-        function get_name():cpp.Pointer<cpp.Char> return __ptr == null ? cast __inst.name : cast __ptr.ref.name;
+        function get_name():cpp.Pointer<cpp.Char> {
+            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.name);
+            else return cpp.Pointer.fromRaw(__ptr.ref.name);
+        }
         
         
         public var cpuTimeBegin(get, set):cpp.Int64;

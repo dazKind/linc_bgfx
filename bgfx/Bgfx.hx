@@ -291,7 +291,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_index_buffer_name")
-    extern public static function setIndexBufferName(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setIndexBufferName(_handle:bgfx.IndexBufferHandle.Native_IndexBufferHandle, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy static index buffer.
@@ -340,7 +340,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_vertex_buffer_name")
-    extern public static function setVertexBufferName(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setVertexBufferName(_handle:bgfx.VertexBufferHandle.Native_VertexBufferHandle, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy static vertex buffer.
@@ -576,7 +576,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string).
     **/
     @:native("bgfx_set_shader_name")
-    extern public static function setShaderName(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setShaderName(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Destroy shader.
@@ -825,7 +825,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_texture_name")
-    extern public static function setTextureName(_handle:bgfx.TextureHandle.Native_TextureHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setTextureName(_handle:bgfx.TextureHandle.Native_TextureHandle, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Returns texture direct access pointer.
@@ -917,7 +917,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_frame_buffer_name")
-    extern public static function setFrameBufferName(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setFrameBufferName(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Obtain texture handle of frame buffer attachment.
@@ -962,7 +962,7 @@ extern class Native_Bgfx {
     @param: _num : cpp.UInt16 - Number of elements in array.
     **/
     @:native("bgfx_create_uniform")
-    extern public static function createUniform(_name:cpp.ConstStar<cpp.Char>, _type:bgfx.UniformType.Native_UniformType, _num:cpp.UInt16):bgfx.UniformHandle.Native_UniformHandle;
+    extern public static function createUniform(_name:String, _type:bgfx.UniformType.Native_UniformType, _num:cpp.UInt16):bgfx.UniformHandle.Native_UniformHandle;
 
     /**
     Retrieve uniform info.
@@ -1024,7 +1024,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_view_name")
-    extern public static function setViewName(_id:bgfx.ViewId, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setViewName(_id:bgfx.ViewId, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Set view rectangle. Draw primitive outside view will be clipped.
@@ -1153,7 +1153,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_encoder_set_marker")
-    extern public static function encoderSetMarker(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function encoderSetMarker(_this:cpp.Star<bgfx.Encoder.Native_Encoder>, _name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Set render states for draw primitive.
@@ -1601,7 +1601,7 @@ extern class Native_Bgfx {
     @param: _filePath : cpp.ConstStar<cpp.Char> - Will be passed to `bgfx::CallbackI::screenShot` callback.
     **/
     @:native("bgfx_request_screen_shot")
-    extern public static function requestScreenShot(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _filePath:cpp.ConstStar<cpp.Char>):cpp.Void;
+    extern public static function requestScreenShot(_handle:bgfx.FrameBufferHandle.Native_FrameBufferHandle, _filePath:String):cpp.Void;
 
     /**
     Render frame.
@@ -1677,7 +1677,7 @@ extern class Native_Bgfx {
     @param: that _name is zero terminated string.
     **/
     @:native("bgfx_set_marker")
-    extern public static function setMarker(_name:cpp.ConstStar<cpp.Char>, _len:cpp.Int32):cpp.Void;
+    extern public static function setMarker(_name:String, _len:cpp.Int32):cpp.Void;
 
     /**
     Set render states for draw primitive.
@@ -2120,57 +2120,63 @@ extern class Native_Bgfx {
         public static function getCallback():cpp.Pointer<cpp.Void> { return cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }
 
         public static function attachmentInit(_this:Attachment, _handle:TextureHandle, _access:Access, _layer:cpp.UInt16, _numLayers:cpp.UInt16, _mip:cpp.UInt16, _resolve:cpp.UInt8):Void {
-             Native_Bgfx.attachmentInit(_this.__inst, _handle.__inst, cast _access, _layer, _numLayers, _mip, _resolve);
+             Native_Bgfx.attachmentInit(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, cast _access, _layer, _numLayers, _mip, _resolve);
         }
         
         
-        public static function vertexLayoutBegin(_this:VertexLayout, _rendererType:RendererType):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
-            return Native_Bgfx.vertexLayoutBegin(_this.__inst, cast _rendererType);
+        public static function vertexLayoutBegin(_this:VertexLayout, _rendererType:RendererType):VertexLayout {
+            final res = Type.createEmptyInstance(VertexLayout);
+            res.__ptr = cast Native_Bgfx.vertexLayoutBegin(_this.__ptr != null ? cast _this.__ptr : _this.__inst, cast _rendererType);
+            return res;
         }
         
         
-        public static function vertexLayoutAdd(_this:VertexLayout, _attrib:Attrib, _num:cpp.UInt8, _type:AttribType, _normalized:Bool, _asInt:Bool):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
-            return Native_Bgfx.vertexLayoutAdd(_this.__inst, cast _attrib, _num, cast _type, _normalized, _asInt);
+        public static function vertexLayoutAdd(_this:VertexLayout, _attrib:Attrib, _num:cpp.UInt8, _type:AttribType, _normalized:Bool, _asInt:Bool):VertexLayout {
+            final res = Type.createEmptyInstance(VertexLayout);
+            res.__ptr = cast Native_Bgfx.vertexLayoutAdd(_this.__ptr != null ? cast _this.__ptr : _this.__inst, cast _attrib, _num, cast _type, _normalized, _asInt);
+            return res;
         }
         
         
-        public static function vertexLayoutDecode(_this:VertexLayout, _attrib:Attrib, _num:cpp.Pointer<cpp.UInt8>, _type:cpp.Pointer<bgfx.AttribType.Native_AttribType>, _normalized:cpp.Pointer<Bool>, _asInt:cpp.Pointer<Bool>):Void {
-             Native_Bgfx.vertexLayoutDecode(_this.__inst, cast _attrib, cast cpp.Pointer.addressOf(_num), cast cpp.Pointer.addressOf(_type), cast cpp.Pointer.addressOf(_normalized), cast cpp.Pointer.addressOf(_asInt));
+        public static function vertexLayoutDecode(_this:VertexLayout, _attrib:Attrib, _num:cpp.Pointer<cpp.UInt8>, _type:AttribType, _normalized:cpp.Pointer<Bool>, _asInt:cpp.Pointer<Bool>):Void {
+             Native_Bgfx.vertexLayoutDecode(_this.__ptr != null ? cast _this.__ptr : _this.__inst, cast _attrib, cast _num, cast cpp.RawPointer.addressOf(_type), cast _normalized, cast _asInt);
         }
         
         
         public static function vertexLayoutHas(_this:VertexLayout, _attrib:Attrib):Bool {
-            return Native_Bgfx.vertexLayoutHas(_this.__inst, cast _attrib);
+            return Native_Bgfx.vertexLayoutHas(_this.__ptr != null ? cast _this.__ptr : _this.__inst, cast _attrib);
         }
         
         
-        public static function vertexLayoutSkip(_this:VertexLayout, _num:cpp.UInt8):cpp.Star<bgfx.VertexLayout.Native_VertexLayout> {
-            return Native_Bgfx.vertexLayoutSkip(_this.__inst, _num);
+        public static function vertexLayoutSkip(_this:VertexLayout, _num:cpp.UInt8):VertexLayout {
+            final res = Type.createEmptyInstance(VertexLayout);
+            res.__ptr = cast Native_Bgfx.vertexLayoutSkip(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _num);
+            return res;
         }
         
         
         public static function vertexLayoutEnd(_this:VertexLayout):Void {
-             Native_Bgfx.vertexLayoutEnd(_this.__inst);
+             Native_Bgfx.vertexLayoutEnd(_this.__ptr != null ? cast _this.__ptr : _this.__inst);
         }
         
         
         public static function vertexConvert(_dstLayout:VertexLayout, _dstData:cpp.Pointer<cpp.Void>, _srcLayout:VertexLayout, _srcData:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt32):Void {
-             Native_Bgfx.vertexConvert(_dstLayout.__inst, cast cpp.Pointer.addressOf(_dstData), _srcLayout.__inst, cast cpp.Pointer.addressOf(_srcData), _num);
+             Native_Bgfx.vertexConvert(_dstLayout.__ptr != null ? cast _dstLayout.__ptr : _dstLayout.__inst, cast _dstData, _srcLayout.__ptr != null ? cast _srcLayout.__ptr : _srcLayout.__inst, cast _srcData, _num);
         }
         
         
         public static function weldVertices(_output:cpp.Pointer<cpp.Void>, _layout:VertexLayout, _data:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt32, _index32:Bool, _epsilon:cpp.Float32):cpp.UInt32 {
-            return Native_Bgfx.weldVertices(cast cpp.Pointer.addressOf(_output), _layout.__inst, cast cpp.Pointer.addressOf(_data), _num, _index32, _epsilon);
+            return Native_Bgfx.weldVertices(cast _output, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst, cast _data, _num, _index32, _epsilon);
         }
         
         
         public static function topologyConvert(_conversion:TopologyConvert, _dst:cpp.Pointer<cpp.Void>, _dstSize:cpp.UInt32, _indices:cpp.ConstPointer<cpp.Void>, _numIndices:cpp.UInt32, _index32:Bool):cpp.UInt32 {
-            return Native_Bgfx.topologyConvert(cast _conversion, cast cpp.Pointer.addressOf(_dst), _dstSize, cast cpp.Pointer.addressOf(_indices), _numIndices, _index32);
+            return Native_Bgfx.topologyConvert(cast _conversion, cast _dst, _dstSize, cast _indices, _numIndices, _index32);
         }
         
         
-        public static function getSupportedRenderers(_max:cpp.UInt8, _enum:cpp.Pointer<bgfx.RendererType.Native_RendererType>):cpp.UInt8 {
-            return Native_Bgfx.getSupportedRenderers(_max, cast cpp.Pointer.addressOf(_enum));
+        public static function getSupportedRenderers(_max:cpp.UInt8, _enum:RendererType):cpp.UInt8 {
+            return Native_Bgfx.getSupportedRenderers(_max, cast cpp.RawPointer.addressOf(_enum));
         }
         
         
@@ -2180,12 +2186,12 @@ extern class Native_Bgfx {
         
         
         public static function initCtor(_init:Init):Void {
-             Native_Bgfx.initCtor(_init.__inst);
+             Native_Bgfx.initCtor(_init.__ptr != null ? cast _init.__ptr : _init.__inst);
         }
         
         
         public static function init(_init:Init):Bool {
-            return Native_Bgfx.init(_init.__inst);
+            return Native_Bgfx.init(_init.__ptr != null ? cast _init.__ptr : _init.__inst);
         }
         
         
@@ -2204,33 +2210,43 @@ extern class Native_Bgfx {
         }
         
         
-        public static function getRendererType():bgfx.RendererType.Native_RendererType {
-            return Native_Bgfx.getRendererType();
+        public static function getRendererType():RendererType {
+            return cast Native_Bgfx.getRendererType();
         }
         
         
-        public static function getCaps():cpp.ConstStar<bgfx.Caps.Native_Caps> {
-            return Native_Bgfx.getCaps();
+        public static function getCaps():Caps {
+            final res = Type.createEmptyInstance(Caps);
+            res.__ptr = cast Native_Bgfx.getCaps();
+            return res;
         }
         
         
-        public static function getStats():cpp.ConstStar<bgfx.Stats.Native_Stats> {
-            return Native_Bgfx.getStats();
+        public static function getStats():Stats {
+            final res = Type.createEmptyInstance(Stats);
+            res.__ptr = cast Native_Bgfx.getStats();
+            return res;
         }
         
         
-        public static function alloc(_size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
-            return Native_Bgfx.alloc(_size);
+        public static function alloc(_size:cpp.UInt32):Memory {
+            final res = Type.createEmptyInstance(Memory);
+            res.__ptr = cast Native_Bgfx.alloc(_size);
+            return res;
         }
         
         
-        public static function copy(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
-            return Native_Bgfx.copy(cast cpp.Pointer.addressOf(_data), _size);
+        public static function copy(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):Memory {
+            final res = Type.createEmptyInstance(Memory);
+            res.__ptr = cast Native_Bgfx.copy(cast _data, _size);
+            return res;
         }
         
         
-        public static function makeRef(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):cpp.ConstStar<bgfx.Memory.Native_Memory> {
-            return Native_Bgfx.makeRef(cast cpp.Pointer.addressOf(_data), _size);
+        public static function makeRef(_data:cpp.ConstPointer<cpp.Void>, _size:cpp.UInt32):Memory {
+            final res = Type.createEmptyInstance(Memory);
+            res.__ptr = cast Native_Bgfx.makeRef(cast _data, _size);
+            return res;
         }
         
         
@@ -2240,19 +2256,19 @@ extern class Native_Bgfx {
         
         
         public static function dbgTextImage(_x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _data:cpp.ConstPointer<cpp.Void>, _pitch:cpp.UInt16):Void {
-             Native_Bgfx.dbgTextImage(_x, _y, _width, _height, cast cpp.Pointer.addressOf(_data), _pitch);
+             Native_Bgfx.dbgTextImage(_x, _y, _width, _height, cast _data, _pitch);
         }
         
         
         public static function createIndexBuffer(_mem:Memory, _flags:cpp.UInt16):IndexBufferHandle {
             final res = Type.createEmptyInstance(IndexBufferHandle);
-            res.__inst = Native_Bgfx.createIndexBuffer(_mem.__inst, _flags);
+            res.__inst = Native_Bgfx.createIndexBuffer(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _flags);
             return res;
         }
         
         
-        public static function setIndexBufferName(_handle:IndexBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setIndexBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setIndexBufferName(_handle:IndexBufferHandle, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setIndexBufferName(_handle.__inst, _name, _len);
         }
         
         
@@ -2263,7 +2279,7 @@ extern class Native_Bgfx {
         
         public static function createVertexLayout(_layout:VertexLayout):VertexLayoutHandle {
             final res = Type.createEmptyInstance(VertexLayoutHandle);
-            res.__inst = Native_Bgfx.createVertexLayout(_layout.__inst);
+            res.__inst = Native_Bgfx.createVertexLayout(_layout.__ptr != null ? cast _layout.__ptr : _layout.__inst);
             return res;
         }
         
@@ -2275,13 +2291,13 @@ extern class Native_Bgfx {
         
         public static function createVertexBuffer(_mem:Memory, _layout:VertexLayout, _flags:cpp.UInt16):VertexBufferHandle {
             final res = Type.createEmptyInstance(VertexBufferHandle);
-            res.__inst = Native_Bgfx.createVertexBuffer(_mem.__inst, _layout.__inst, _flags);
+            res.__inst = Native_Bgfx.createVertexBuffer(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst, _flags);
             return res;
         }
         
         
-        public static function setVertexBufferName(_handle:VertexBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setVertexBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setVertexBufferName(_handle:VertexBufferHandle, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setVertexBufferName(_handle.__inst, _name, _len);
         }
         
         
@@ -2299,13 +2315,13 @@ extern class Native_Bgfx {
         
         public static function createDynamicIndexBufferMem(_mem:Memory, _flags:cpp.UInt16):DynamicIndexBufferHandle {
             final res = Type.createEmptyInstance(DynamicIndexBufferHandle);
-            res.__inst = Native_Bgfx.createDynamicIndexBufferMem(_mem.__inst, _flags);
+            res.__inst = Native_Bgfx.createDynamicIndexBufferMem(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _flags);
             return res;
         }
         
         
         public static function updateDynamicIndexBuffer(_handle:DynamicIndexBufferHandle, _startIndex:cpp.UInt32, _mem:Memory):Void {
-             Native_Bgfx.updateDynamicIndexBuffer(_handle.__inst, _startIndex, _mem.__inst);
+             Native_Bgfx.updateDynamicIndexBuffer(_handle.__inst, _startIndex, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
         }
         
         
@@ -2316,20 +2332,20 @@ extern class Native_Bgfx {
         
         public static function createDynamicVertexBuffer(_num:cpp.UInt32, _layout:VertexLayout, _flags:cpp.UInt16):DynamicVertexBufferHandle {
             final res = Type.createEmptyInstance(DynamicVertexBufferHandle);
-            res.__inst = Native_Bgfx.createDynamicVertexBuffer(_num, _layout.__inst, _flags);
+            res.__inst = Native_Bgfx.createDynamicVertexBuffer(_num, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst, _flags);
             return res;
         }
         
         
         public static function createDynamicVertexBufferMem(_mem:Memory, _layout:VertexLayout, _flags:cpp.UInt16):DynamicVertexBufferHandle {
             final res = Type.createEmptyInstance(DynamicVertexBufferHandle);
-            res.__inst = Native_Bgfx.createDynamicVertexBufferMem(_mem.__inst, _layout.__inst, _flags);
+            res.__inst = Native_Bgfx.createDynamicVertexBufferMem(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst, _flags);
             return res;
         }
         
         
         public static function updateDynamicVertexBuffer(_handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _mem:Memory):Void {
-             Native_Bgfx.updateDynamicVertexBuffer(_handle.__inst, _startVertex, _mem.__inst);
+             Native_Bgfx.updateDynamicVertexBuffer(_handle.__inst, _startVertex, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
         }
         
         
@@ -2344,7 +2360,7 @@ extern class Native_Bgfx {
         
         
         public static function getAvailTransientVertexBuffer(_num:cpp.UInt32, _layout:VertexLayout):cpp.UInt32 {
-            return Native_Bgfx.getAvailTransientVertexBuffer(_num, _layout.__inst);
+            return Native_Bgfx.getAvailTransientVertexBuffer(_num, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst);
         }
         
         
@@ -2354,22 +2370,22 @@ extern class Native_Bgfx {
         
         
         public static function allocTransientIndexBuffer(_tib:TransientIndexBuffer, _num:cpp.UInt32, _index32:Bool):Void {
-             Native_Bgfx.allocTransientIndexBuffer(_tib.__inst, _num, _index32);
+             Native_Bgfx.allocTransientIndexBuffer(_tib.__ptr != null ? cast _tib.__ptr : _tib.__inst, _num, _index32);
         }
         
         
         public static function allocTransientVertexBuffer(_tvb:TransientVertexBuffer, _num:cpp.UInt32, _layout:VertexLayout):Void {
-             Native_Bgfx.allocTransientVertexBuffer(_tvb.__inst, _num, _layout.__inst);
+             Native_Bgfx.allocTransientVertexBuffer(_tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _num, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst);
         }
         
         
         public static function allocTransientBuffers(_tvb:TransientVertexBuffer, _layout:VertexLayout, _numVertices:cpp.UInt32, _tib:TransientIndexBuffer, _numIndices:cpp.UInt32, _index32:Bool):Bool {
-            return Native_Bgfx.allocTransientBuffers(_tvb.__inst, _layout.__inst, _numVertices, _tib.__inst, _numIndices, _index32);
+            return Native_Bgfx.allocTransientBuffers(_tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _layout.__ptr != null ? cast _layout.__ptr : _layout.__inst, _numVertices, _tib.__ptr != null ? cast _tib.__ptr : _tib.__inst, _numIndices, _index32);
         }
         
         
         public static function allocInstanceDataBuffer(_idb:InstanceDataBuffer, _num:cpp.UInt32, _stride:cpp.UInt16):Void {
-             Native_Bgfx.allocInstanceDataBuffer(_idb.__inst, _num, _stride);
+             Native_Bgfx.allocInstanceDataBuffer(_idb.__ptr != null ? cast _idb.__ptr : _idb.__inst, _num, _stride);
         }
         
         
@@ -2387,18 +2403,18 @@ extern class Native_Bgfx {
         
         public static function createShader(_mem:Memory):ShaderHandle {
             final res = Type.createEmptyInstance(ShaderHandle);
-            res.__inst = Native_Bgfx.createShader(_mem.__inst);
+            res.__inst = Native_Bgfx.createShader(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
             return res;
         }
         
         
         public static function getShaderUniforms(_handle:ShaderHandle, _uniforms:UniformHandle, _max:cpp.UInt16):cpp.UInt16 {
-            return Native_Bgfx.getShaderUniforms(_handle.__inst, _uniforms.__inst, _max);
+            return Native_Bgfx.getShaderUniforms(_handle.__inst, _uniforms.__ptr != null ? cast _uniforms.__ptr : _uniforms.__inst, _max);
         }
         
         
-        public static function setShaderName(_handle:ShaderHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setShaderName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setShaderName(_handle:ShaderHandle, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setShaderName(_handle.__inst, _name, _len);
         }
         
         
@@ -2432,25 +2448,25 @@ extern class Native_Bgfx {
         
         
         public static function isFrameBufferValid(_num:cpp.UInt8, _attachment:Attachment):Bool {
-            return Native_Bgfx.isFrameBufferValid(_num, _attachment.__inst);
+            return Native_Bgfx.isFrameBufferValid(_num, _attachment.__ptr != null ? cast _attachment.__ptr : _attachment.__inst);
         }
         
         
         public static function calcTextureSize(_info:TextureInfo, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _cubeMap:Bool, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat):Void {
-             Native_Bgfx.calcTextureSize(_info.__inst, _width, _height, _depth, _cubeMap, _hasMips, _numLayers, cast _format);
+             Native_Bgfx.calcTextureSize(_info.__ptr != null ? cast _info.__ptr : _info.__inst, _width, _height, _depth, _cubeMap, _hasMips, _numLayers, cast _format);
         }
         
         
         public static function createTexture(_mem:Memory, _flags:cpp.UInt64, _skip:cpp.UInt8, _info:TextureInfo):TextureHandle {
             final res = Type.createEmptyInstance(TextureHandle);
-            res.__inst = Native_Bgfx.createTexture(_mem.__inst, _flags, _skip, _info.__inst);
+            res.__inst = Native_Bgfx.createTexture(_mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _flags, _skip, _info.__ptr != null ? cast _info.__ptr : _info.__inst);
             return res;
         }
         
         
         public static function createTexture2d(_width:cpp.UInt16, _height:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
             final res = Type.createEmptyInstance(TextureHandle);
-            res.__inst = Native_Bgfx.createTexture2d(_width, _height, _hasMips, _numLayers, cast _format, _flags, _mem.__inst);
+            res.__inst = Native_Bgfx.createTexture2d(_width, _height, _hasMips, _numLayers, cast _format, _flags, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
             return res;
         }
         
@@ -2464,40 +2480,40 @@ extern class Native_Bgfx {
         
         public static function createTexture3d(_width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _hasMips:Bool, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
             final res = Type.createEmptyInstance(TextureHandle);
-            res.__inst = Native_Bgfx.createTexture3d(_width, _height, _depth, _hasMips, cast _format, _flags, _mem.__inst);
+            res.__inst = Native_Bgfx.createTexture3d(_width, _height, _depth, _hasMips, cast _format, _flags, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
             return res;
         }
         
         
         public static function createTextureCube(_size:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
             final res = Type.createEmptyInstance(TextureHandle);
-            res.__inst = Native_Bgfx.createTextureCube(_size, _hasMips, _numLayers, cast _format, _flags, _mem.__inst);
+            res.__inst = Native_Bgfx.createTextureCube(_size, _hasMips, _numLayers, cast _format, _flags, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
             return res;
         }
         
         
         public static function updateTexture2d(_handle:TextureHandle, _layer:cpp.UInt16, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:Memory, _pitch:cpp.UInt16):Void {
-             Native_Bgfx.updateTexture2d(_handle.__inst, _layer, _mip, _x, _y, _width, _height, _mem.__inst, _pitch);
+             Native_Bgfx.updateTexture2d(_handle.__inst, _layer, _mip, _x, _y, _width, _height, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _pitch);
         }
         
         
         public static function updateTexture3d(_handle:TextureHandle, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _z:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16, _mem:Memory):Void {
-             Native_Bgfx.updateTexture3d(_handle.__inst, _mip, _x, _y, _z, _width, _height, _depth, _mem.__inst);
+             Native_Bgfx.updateTexture3d(_handle.__inst, _mip, _x, _y, _z, _width, _height, _depth, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
         }
         
         
         public static function updateTextureCube(_handle:TextureHandle, _layer:cpp.UInt16, _side:cpp.UInt8, _mip:cpp.UInt8, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _mem:Memory, _pitch:cpp.UInt16):Void {
-             Native_Bgfx.updateTextureCube(_handle.__inst, _layer, _side, _mip, _x, _y, _width, _height, _mem.__inst, _pitch);
+             Native_Bgfx.updateTextureCube(_handle.__inst, _layer, _side, _mip, _x, _y, _width, _height, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst, _pitch);
         }
         
         
         public static function readTexture(_handle:TextureHandle, _data:cpp.Pointer<cpp.Void>, _mip:cpp.UInt8):cpp.UInt32 {
-            return Native_Bgfx.readTexture(_handle.__inst, cast cpp.Pointer.addressOf(_data), _mip);
+            return Native_Bgfx.readTexture(_handle.__inst, cast _data, _mip);
         }
         
         
-        public static function setTextureName(_handle:TextureHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setTextureName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setTextureName(_handle:TextureHandle, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setTextureName(_handle.__inst, _name, _len);
         }
         
         
@@ -2527,27 +2543,27 @@ extern class Native_Bgfx {
         
         public static function createFrameBufferFromHandles(_num:cpp.UInt8, _handles:TextureHandle, _destroyTexture:Bool):FrameBufferHandle {
             final res = Type.createEmptyInstance(FrameBufferHandle);
-            res.__inst = Native_Bgfx.createFrameBufferFromHandles(_num, _handles.__inst, _destroyTexture);
+            res.__inst = Native_Bgfx.createFrameBufferFromHandles(_num, _handles.__ptr != null ? cast _handles.__ptr : _handles.__inst, _destroyTexture);
             return res;
         }
         
         
         public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:Attachment, _destroyTexture:Bool):FrameBufferHandle {
             final res = Type.createEmptyInstance(FrameBufferHandle);
-            res.__inst = Native_Bgfx.createFrameBufferFromAttachment(_num, _attachment.__inst, _destroyTexture);
+            res.__inst = Native_Bgfx.createFrameBufferFromAttachment(_num, _attachment.__ptr != null ? cast _attachment.__ptr : _attachment.__inst, _destroyTexture);
             return res;
         }
         
         
         public static function createFrameBufferFromNwh(_nwh:cpp.Pointer<cpp.Void>, _width:cpp.UInt16, _height:cpp.UInt16, _format:TextureFormat, _depthFormat:TextureFormat):FrameBufferHandle {
             final res = Type.createEmptyInstance(FrameBufferHandle);
-            res.__inst = Native_Bgfx.createFrameBufferFromNwh(cast cpp.Pointer.addressOf(_nwh), _width, _height, cast _format, cast _depthFormat);
+            res.__inst = Native_Bgfx.createFrameBufferFromNwh(cast _nwh, _width, _height, cast _format, cast _depthFormat);
             return res;
         }
         
         
-        public static function setFrameBufferName(_handle:FrameBufferHandle, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setFrameBufferName(_handle.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setFrameBufferName(_handle:FrameBufferHandle, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setFrameBufferName(_handle.__inst, _name, _len);
         }
         
         
@@ -2563,15 +2579,15 @@ extern class Native_Bgfx {
         }
         
         
-        public static function createUniform(_name:cpp.ConstPointer<cpp.Char>, _type:UniformType, _num:cpp.UInt16):UniformHandle {
+        public static function createUniform(_name:String, _type:UniformType, _num:cpp.UInt16):UniformHandle {
             final res = Type.createEmptyInstance(UniformHandle);
-            res.__inst = Native_Bgfx.createUniform(cast cpp.Pointer.addressOf(_name), cast _type, _num);
+            res.__inst = Native_Bgfx.createUniform(_name, cast _type, _num);
             return res;
         }
         
         
         public static function getUniformInfo(_handle:UniformHandle, _info:UniformInfo):Void {
-             Native_Bgfx.getUniformInfo(_handle.__inst, _info.__inst);
+             Native_Bgfx.getUniformInfo(_handle.__inst, _info.__ptr != null ? cast _info.__ptr : _info.__inst);
         }
         
         
@@ -2587,8 +2603,8 @@ extern class Native_Bgfx {
         }
         
         
-        public static function getResult(_handle:OcclusionQueryHandle, _result:cpp.Pointer<cpp.Int32>):bgfx.OcclusionQueryResult.Native_OcclusionQueryResult {
-            return Native_Bgfx.getResult(_handle.__inst, cast cpp.Pointer.addressOf(_result));
+        public static function getResult(_handle:OcclusionQueryHandle, _result:cpp.Pointer<cpp.Int32>):OcclusionQueryResult {
+            return cast Native_Bgfx.getResult(_handle.__inst, cast _result);
         }
         
         
@@ -2602,8 +2618,8 @@ extern class Native_Bgfx {
         }
         
         
-        public static function setViewName(_id:bgfx.ViewId, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setViewName(_id, cast cpp.Pointer.addressOf(_name), _len);
+        public static function setViewName(_id:bgfx.ViewId, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setViewName(_id, _name, _len);
         }
         
         
@@ -2643,7 +2659,7 @@ extern class Native_Bgfx {
         
         
         public static function setViewTransform(_id:bgfx.ViewId, _view:cpp.ConstPointer<cpp.Void>, _proj:cpp.ConstPointer<cpp.Void>):Void {
-             Native_Bgfx.setViewTransform(_id, cast cpp.Pointer.addressOf(_view), cast cpp.Pointer.addressOf(_proj));
+             Native_Bgfx.setViewTransform(_id, cast _view, cast _proj);
         }
         
         
@@ -2652,233 +2668,237 @@ extern class Native_Bgfx {
         }
         
         
-        public static function encoderBegin(_forThread:Bool):cpp.Star<bgfx.Encoder.Native_Encoder> {
-            return Native_Bgfx.encoderBegin(_forThread);
+        public static function encoderBegin(_forThread:Bool):Encoder {
+            final res = Type.createEmptyInstance(Encoder);
+            res.__ptr = cast Native_Bgfx.encoderBegin(_forThread);
+            return res;
         }
         
         
         public static function encoderEnd(_encoder:Encoder):Void {
-             Native_Bgfx.encoderEnd(_encoder.__inst);
+             Native_Bgfx.encoderEnd(_encoder.__ptr != null ? cast _encoder.__ptr : _encoder.__inst);
         }
         
         
-        public static function encoderSetMarker(_this:Encoder, _name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.encoderSetMarker(_this.__inst, cast cpp.Pointer.addressOf(_name), _len);
+        public static function encoderSetMarker(_this:Encoder, _name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.encoderSetMarker(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _name, _len);
         }
         
         
         public static function encoderSetState(_this:Encoder, _state:cpp.UInt64, _rgba:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetState(_this.__inst, _state, _rgba);
+             Native_Bgfx.encoderSetState(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _state, _rgba);
         }
         
         
         public static function encoderSetCondition(_this:Encoder, _handle:OcclusionQueryHandle, _visible:Bool):Void {
-             Native_Bgfx.encoderSetCondition(_this.__inst, _handle.__inst, _visible);
+             Native_Bgfx.encoderSetCondition(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, _visible);
         }
         
         
         public static function encoderSetStencil(_this:Encoder, _fstencil:cpp.UInt32, _bstencil:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetStencil(_this.__inst, _fstencil, _bstencil);
+             Native_Bgfx.encoderSetStencil(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _fstencil, _bstencil);
         }
         
         
         public static function encoderSetScissor(_this:Encoder, _x:cpp.UInt16, _y:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16):cpp.UInt16 {
-            return Native_Bgfx.encoderSetScissor(_this.__inst, _x, _y, _width, _height);
+            return Native_Bgfx.encoderSetScissor(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _x, _y, _width, _height);
         }
         
         
         public static function encoderSetScissorCached(_this:Encoder, _cache:cpp.UInt16):Void {
-             Native_Bgfx.encoderSetScissorCached(_this.__inst, _cache);
+             Native_Bgfx.encoderSetScissorCached(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _cache);
         }
         
         
         public static function encoderSetTransform(_this:Encoder, _mtx:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32 {
-            return Native_Bgfx.encoderSetTransform(_this.__inst, cast cpp.Pointer.addressOf(_mtx), _num);
+            return Native_Bgfx.encoderSetTransform(_this.__ptr != null ? cast _this.__ptr : _this.__inst, cast _mtx, _num);
         }
         
         
         public static function encoderSetTransformCached(_this:Encoder, _cache:cpp.UInt32, _num:cpp.UInt16):Void {
-             Native_Bgfx.encoderSetTransformCached(_this.__inst, _cache, _num);
+             Native_Bgfx.encoderSetTransformCached(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _cache, _num);
         }
         
         
         public static function encoderAllocTransform(_this:Encoder, _transform:Transform, _num:cpp.UInt16):cpp.UInt32 {
-            return Native_Bgfx.encoderAllocTransform(_this.__inst, _transform.__inst, _num);
+            return Native_Bgfx.encoderAllocTransform(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _transform.__ptr != null ? cast _transform.__ptr : _transform.__inst, _num);
         }
         
         
         public static function encoderSetUniform(_this:Encoder, _handle:UniformHandle, _value:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):Void {
-             Native_Bgfx.encoderSetUniform(_this.__inst, _handle.__inst, cast cpp.Pointer.addressOf(_value), _num);
+             Native_Bgfx.encoderSetUniform(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, cast _value, _num);
         }
         
         
         public static function encoderSetIndexBuffer(_this:Encoder, _handle:IndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetIndexBuffer(_this.__inst, _handle.__inst, _firstIndex, _numIndices);
+             Native_Bgfx.encoderSetIndexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, _firstIndex, _numIndices);
         }
         
         
         public static function encoderSetDynamicIndexBuffer(_this:Encoder, _handle:DynamicIndexBufferHandle, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetDynamicIndexBuffer(_this.__inst, _handle.__inst, _firstIndex, _numIndices);
+             Native_Bgfx.encoderSetDynamicIndexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, _firstIndex, _numIndices);
         }
         
         
         public static function encoderSetTransientIndexBuffer(_this:Encoder, _tib:TransientIndexBuffer, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetTransientIndexBuffer(_this.__inst, _tib.__inst, _firstIndex, _numIndices);
+             Native_Bgfx.encoderSetTransientIndexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _tib.__ptr != null ? cast _tib.__ptr : _tib.__inst, _firstIndex, _numIndices);
         }
         
         
         public static function encoderSetVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetVertexBuffer(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
+             Native_Bgfx.encoderSetVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
         }
         
         
         public static function encoderSetVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
-             Native_Bgfx.encoderSetVertexBufferWithLayout(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+             Native_Bgfx.encoderSetVertexBufferWithLayout(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
         }
         
         
         public static function encoderSetDynamicVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetDynamicVertexBuffer(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
+             Native_Bgfx.encoderSetDynamicVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _handle.__inst, _startVertex, _numVertices);
         }
         
         
         public static function encoderSetDynamicVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
-             Native_Bgfx.encoderSetDynamicVertexBufferWithLayout(_this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+             Native_Bgfx.encoderSetDynamicVertexBufferWithLayout(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _handle.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
         }
         
         
         public static function encoderSetTransientVertexBuffer(_this:Encoder, _stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetTransientVertexBuffer(_this.__inst, _stream, _tvb.__inst, _startVertex, _numVertices);
+             Native_Bgfx.encoderSetTransientVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _startVertex, _numVertices);
         }
         
         
         public static function encoderSetTransientVertexBufferWithLayout(_this:Encoder, _stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
-             Native_Bgfx.encoderSetTransientVertexBufferWithLayout(_this.__inst, _stream, _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+             Native_Bgfx.encoderSetTransientVertexBufferWithLayout(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stream, _tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
         }
         
         
         public static function encoderSetVertexCount(_this:Encoder, _numVertices:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetVertexCount(_this.__inst, _numVertices);
+             Native_Bgfx.encoderSetVertexCount(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _numVertices);
         }
         
         
         public static function encoderSetInstanceDataBuffer(_this:Encoder, _idb:InstanceDataBuffer, _start:cpp.UInt32, _num:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetInstanceDataBuffer(_this.__inst, _idb.__inst, _start, _num);
+             Native_Bgfx.encoderSetInstanceDataBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _idb.__ptr != null ? cast _idb.__ptr : _idb.__inst, _start, _num);
         }
         
         
         public static function encoderSetInstanceDataFromVertexBuffer(_this:Encoder, _handle:VertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetInstanceDataFromVertexBuffer(_this.__inst, _handle.__inst, _startVertex, _num);
+             Native_Bgfx.encoderSetInstanceDataFromVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, _startVertex, _num);
         }
         
         
         public static function encoderSetInstanceDataFromDynamicVertexBuffer(_this:Encoder, _handle:DynamicVertexBufferHandle, _startVertex:cpp.UInt32, _num:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetInstanceDataFromDynamicVertexBuffer(_this.__inst, _handle.__inst, _startVertex, _num);
+             Native_Bgfx.encoderSetInstanceDataFromDynamicVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _handle.__inst, _startVertex, _num);
         }
         
         
         public static function encoderSetInstanceCount(_this:Encoder, _numInstances:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetInstanceCount(_this.__inst, _numInstances);
+             Native_Bgfx.encoderSetInstanceCount(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _numInstances);
         }
         
         
         public static function encoderSetTexture(_this:Encoder, _stage:cpp.UInt8, _sampler:UniformHandle, _handle:TextureHandle, _flags:cpp.UInt32):Void {
-             Native_Bgfx.encoderSetTexture(_this.__inst, _stage, _sampler.__inst, _handle.__inst, _flags);
+             Native_Bgfx.encoderSetTexture(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _sampler.__inst, _handle.__inst, _flags);
         }
         
         
         public static function encoderTouch(_this:Encoder, _id:bgfx.ViewId):Void {
-             Native_Bgfx.encoderTouch(_this.__inst, _id);
+             Native_Bgfx.encoderTouch(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id);
         }
         
         
         public static function encoderSubmit(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderSubmit(_this.__inst, _id, _program.__inst, _depth, _flags);
+             Native_Bgfx.encoderSubmit(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _depth, _flags);
         }
         
         
         public static function encoderSubmitOcclusionQuery(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _occlusionQuery:OcclusionQueryHandle, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderSubmitOcclusionQuery(_this.__inst, _id, _program.__inst, _occlusionQuery.__inst, _depth, _flags);
+             Native_Bgfx.encoderSubmitOcclusionQuery(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _occlusionQuery.__inst, _depth, _flags);
         }
         
         
         public static function encoderSubmitIndirect(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderSubmitIndirect(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _depth, _flags);
+             Native_Bgfx.encoderSubmitIndirect(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _depth, _flags);
         }
         
         
         public static function encoderSubmitIndirectCount(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _numHandle:IndexBufferHandle, _numIndex:cpp.UInt32, _numMax:cpp.UInt32, _depth:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderSubmitIndirectCount(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _numHandle.__inst, _numIndex, _numMax, _depth, _flags);
+             Native_Bgfx.encoderSubmitIndirectCount(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _numHandle.__inst, _numIndex, _numMax, _depth, _flags);
         }
         
         
         public static function encoderSetComputeIndexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:IndexBufferHandle, _access:Access):Void {
-             Native_Bgfx.encoderSetComputeIndexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+             Native_Bgfx.encoderSetComputeIndexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, cast _access);
         }
         
         
         public static function encoderSetComputeVertexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:VertexBufferHandle, _access:Access):Void {
-             Native_Bgfx.encoderSetComputeVertexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+             Native_Bgfx.encoderSetComputeVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, cast _access);
         }
         
         
         public static function encoderSetComputeDynamicIndexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:DynamicIndexBufferHandle, _access:Access):Void {
-             Native_Bgfx.encoderSetComputeDynamicIndexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+             Native_Bgfx.encoderSetComputeDynamicIndexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, cast _access);
         }
         
         
         public static function encoderSetComputeDynamicVertexBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:DynamicVertexBufferHandle, _access:Access):Void {
-             Native_Bgfx.encoderSetComputeDynamicVertexBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+             Native_Bgfx.encoderSetComputeDynamicVertexBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, cast _access);
         }
         
         
         public static function encoderSetComputeIndirectBuffer(_this:Encoder, _stage:cpp.UInt8, _handle:IndirectBufferHandle, _access:Access):Void {
-             Native_Bgfx.encoderSetComputeIndirectBuffer(_this.__inst, _stage, _handle.__inst, cast _access);
+             Native_Bgfx.encoderSetComputeIndirectBuffer(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, cast _access);
         }
         
         
         public static function encoderSetImage(_this:Encoder, _stage:cpp.UInt8, _handle:TextureHandle, _mip:cpp.UInt8, _access:Access, _format:TextureFormat):Void {
-             Native_Bgfx.encoderSetImage(_this.__inst, _stage, _handle.__inst, _mip, cast _access, cast _format);
+             Native_Bgfx.encoderSetImage(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _stage, _handle.__inst, _mip, cast _access, cast _format);
         }
         
         
         public static function encoderDispatch(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _numX:cpp.UInt32, _numY:cpp.UInt32, _numZ:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderDispatch(_this.__inst, _id, _program.__inst, _numX, _numY, _numZ, _flags);
+             Native_Bgfx.encoderDispatch(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _numX, _numY, _numZ, _flags);
         }
         
         
         public static function encoderDispatchIndirect(_this:Encoder, _id:bgfx.ViewId, _program:ProgramHandle, _indirectHandle:IndirectBufferHandle, _start:cpp.UInt32, _num:cpp.UInt32, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderDispatchIndirect(_this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _flags);
+             Native_Bgfx.encoderDispatchIndirect(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _program.__inst, _indirectHandle.__inst, _start, _num, _flags);
         }
         
         
         public static function encoderDiscard(_this:Encoder, _flags:cpp.UInt8):Void {
-             Native_Bgfx.encoderDiscard(_this.__inst, _flags);
+             Native_Bgfx.encoderDiscard(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _flags);
         }
         
         
         public static function encoderBlit(_this:Encoder, _id:bgfx.ViewId, _dst:TextureHandle, _dstMip:cpp.UInt8, _dstX:cpp.UInt16, _dstY:cpp.UInt16, _dstZ:cpp.UInt16, _src:TextureHandle, _srcMip:cpp.UInt8, _srcX:cpp.UInt16, _srcY:cpp.UInt16, _srcZ:cpp.UInt16, _width:cpp.UInt16, _height:cpp.UInt16, _depth:cpp.UInt16):Void {
-             Native_Bgfx.encoderBlit(_this.__inst, _id, _dst.__inst, _dstMip, _dstX, _dstY, _dstZ, _src.__inst, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
+             Native_Bgfx.encoderBlit(_this.__ptr != null ? cast _this.__ptr : _this.__inst, _id, _dst.__inst, _dstMip, _dstX, _dstY, _dstZ, _src.__inst, _srcMip, _srcX, _srcY, _srcZ, _width, _height, _depth);
         }
         
         
-        public static function requestScreenShot(_handle:FrameBufferHandle, _filePath:cpp.ConstPointer<cpp.Char>):Void {
-             Native_Bgfx.requestScreenShot(_handle.__inst, cast cpp.Pointer.addressOf(_filePath));
+        public static function requestScreenShot(_handle:FrameBufferHandle, _filePath:String):Void {
+             Native_Bgfx.requestScreenShot(_handle.__inst, _filePath);
         }
         
         
-        public static function renderFrame(_msecs:cpp.Int32):bgfx.RenderFrame.Native_RenderFrame {
-            return Native_Bgfx.renderFrame(_msecs);
+        public static function renderFrame(_msecs:cpp.Int32):RenderFrame {
+            return cast Native_Bgfx.renderFrame(_msecs);
         }
         
         
         public static function setPlatformData(_data:PlatformData):Void {
-             Native_Bgfx.setPlatformData(_data.__inst);
+             Native_Bgfx.setPlatformData(_data.__ptr != null ? cast _data.__ptr : _data.__inst);
         }
         
         
-        public static function getInternalData():cpp.ConstStar<bgfx.InternalData.Native_InternalData> {
-            return Native_Bgfx.getInternalData();
+        public static function getInternalData():InternalData {
+            final res = Type.createEmptyInstance(InternalData);
+            res.__ptr = cast Native_Bgfx.getInternalData();
+            return res;
         }
         
         
@@ -2892,8 +2912,8 @@ extern class Native_Bgfx {
         }
         
         
-        public static function setMarker(_name:cpp.ConstPointer<cpp.Char>, _len:cpp.Int32):Void {
-             Native_Bgfx.setMarker(cast cpp.Pointer.addressOf(_name), _len);
+        public static function setMarker(_name:String, _len:cpp.Int32):Void {
+             Native_Bgfx.setMarker(_name, _len);
         }
         
         
@@ -2923,7 +2943,7 @@ extern class Native_Bgfx {
         
         
         public static function setTransform(_mtx:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):cpp.UInt32 {
-            return Native_Bgfx.setTransform(cast cpp.Pointer.addressOf(_mtx), _num);
+            return Native_Bgfx.setTransform(cast _mtx, _num);
         }
         
         
@@ -2933,12 +2953,12 @@ extern class Native_Bgfx {
         
         
         public static function allocTransform(_transform:Transform, _num:cpp.UInt16):cpp.UInt32 {
-            return Native_Bgfx.allocTransform(_transform.__inst, _num);
+            return Native_Bgfx.allocTransform(_transform.__ptr != null ? cast _transform.__ptr : _transform.__inst, _num);
         }
         
         
         public static function setUniform(_handle:UniformHandle, _value:cpp.ConstPointer<cpp.Void>, _num:cpp.UInt16):Void {
-             Native_Bgfx.setUniform(_handle.__inst, cast cpp.Pointer.addressOf(_value), _num);
+             Native_Bgfx.setUniform(_handle.__inst, cast _value, _num);
         }
         
         
@@ -2953,7 +2973,7 @@ extern class Native_Bgfx {
         
         
         public static function setTransientIndexBuffer(_tib:TransientIndexBuffer, _firstIndex:cpp.UInt32, _numIndices:cpp.UInt32):Void {
-             Native_Bgfx.setTransientIndexBuffer(_tib.__inst, _firstIndex, _numIndices);
+             Native_Bgfx.setTransientIndexBuffer(_tib.__ptr != null ? cast _tib.__ptr : _tib.__inst, _firstIndex, _numIndices);
         }
         
         
@@ -2978,12 +2998,12 @@ extern class Native_Bgfx {
         
         
         public static function setTransientVertexBuffer(_stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32):Void {
-             Native_Bgfx.setTransientVertexBuffer(_stream, _tvb.__inst, _startVertex, _numVertices);
+             Native_Bgfx.setTransientVertexBuffer(_stream, _tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _startVertex, _numVertices);
         }
         
         
         public static function setTransientVertexBufferWithLayout(_stream:cpp.UInt8, _tvb:TransientVertexBuffer, _startVertex:cpp.UInt32, _numVertices:cpp.UInt32, _layoutHandle:VertexLayoutHandle):Void {
-             Native_Bgfx.setTransientVertexBufferWithLayout(_stream, _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
+             Native_Bgfx.setTransientVertexBufferWithLayout(_stream, _tvb.__ptr != null ? cast _tvb.__ptr : _tvb.__inst, _startVertex, _numVertices, _layoutHandle.__inst);
         }
         
         
@@ -2993,7 +3013,7 @@ extern class Native_Bgfx {
         
         
         public static function setInstanceDataBuffer(_idb:InstanceDataBuffer, _start:cpp.UInt32, _num:cpp.UInt32):Void {
-             Native_Bgfx.setInstanceDataBuffer(_idb.__inst, _start, _num);
+             Native_Bgfx.setInstanceDataBuffer(_idb.__ptr != null ? cast _idb.__ptr : _idb.__inst, _start, _num);
         }
         
         

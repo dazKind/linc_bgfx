@@ -29,11 +29,17 @@ extern class Native_VertexLayout {
         
         public var offset(get, set):cpp.Pointer<cpp.UInt16>;
         function set_offset(_v:cpp.Pointer<cpp.UInt16>):cpp.Pointer<cpp.UInt16> return null;
-        function get_offset():cpp.Pointer<cpp.UInt16> return __ptr == null ? cast __inst.offset : cast __ptr.ref.offset;
+        function get_offset():cpp.Pointer<cpp.UInt16> {
+            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.offset);
+            else return cpp.Pointer.fromRaw(__ptr.ref.offset);
+        }
         
         public var attributes(get, set):cpp.Pointer<cpp.UInt16>;
         function set_attributes(_v:cpp.Pointer<cpp.UInt16>):cpp.Pointer<cpp.UInt16> return null;
-        function get_attributes():cpp.Pointer<cpp.UInt16> return __ptr == null ? cast __inst.attributes : cast __ptr.ref.attributes;
+        function get_attributes():cpp.Pointer<cpp.UInt16> {
+            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.attributes);
+            else return cpp.Pointer.fromRaw(__ptr.ref.attributes);
+        }
         
         
     }

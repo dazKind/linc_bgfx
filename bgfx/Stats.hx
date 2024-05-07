@@ -173,7 +173,10 @@ extern class Native_Stats {
         
         public var numPrims(get, set):cpp.Pointer<cpp.UInt32>;
         function set_numPrims(_v:cpp.Pointer<cpp.UInt32>):cpp.Pointer<cpp.UInt32> return null;
-        function get_numPrims():cpp.Pointer<cpp.UInt32> return __ptr == null ? cast __inst.numPrims : cast __ptr.ref.numPrims;
+        function get_numPrims():cpp.Pointer<cpp.UInt32> {
+            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.numPrims);
+            else return cpp.Pointer.fromRaw(__ptr.ref.numPrims);
+        }
         
         public var gpuMemoryMax(get, set):cpp.Int64;
         function set_gpuMemoryMax(_v:cpp.Int64):cpp.Int64 return __ptr == null ? __inst.gpuMemoryMax = _v : __ptr.ref.gpuMemoryMax = _v;

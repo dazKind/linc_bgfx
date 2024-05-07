@@ -355,9 +355,21 @@ class ApiGenMacros {
                     buf.add('        public var ${m.name}(get, set):${tt};\n');
                     if (dt.isArray)
                         buf.add('        function set_${m.name}(_v:${tt}):${tt} return null;\n');
-                    else
-                        buf.add('        function set_${m.name}(_v:${tt}):${tt} return __ptr == null ? cast __inst.${m.name} = cast _v : cast __ptr.ref.${m.name} = cast _v;\n');
-                    buf.add('        function get_${m.name}():${tt} return __ptr == null ? cast __inst.${m.name} : cast __ptr.ref.${m.name};\n');
+                    else {
+                        buf.add('        function set_${m.name}(_v:${tt}):${tt} {\n');
+                        buf.add('            if (__ptr == null)\n');
+                        buf.add('                __inst.${m.name} = cast _v;\n');
+                        buf.add('            else\n');
+                        buf.add('                __ptr.ref.${m.name} = cast _v;\n');
+                        buf.add('            return _v;\n');
+                        buf.add('        }\n');
+                    }
+                    buf.add('        function get_${m.name}():${tt} {\n');
+
+                    var conv = (getHaxeType(m.data_type).result.toString().contains("RawPointer")) ? 'fromRaw' : 'fromStar';
+                    buf.add('            if (__ptr == null) return cpp.Pointer.$conv(__inst.${m.name});\n');
+                    buf.add('            else return cpp.Pointer.$conv(__ptr.ref.${m.name});\n');
+                    buf.add('        }\n');
                 } else {
                     var tt = getHaxeType(m.data_type).result.toString();
                     buf.add('        public var ${m.name}(get, set):${tt};\n');
@@ -464,7 +476,10 @@ class ApiGenMacros {
                     var ac = a.comment.split('\n').join('\n    @param: ');
                     buf.add('    @param: ${a.cname} : ${at.result.toString()} - $ac\n');
                 }
-                args.push('${a.cname}:${at.result.toString()}');
+                if (at.result.toString() == "cpp.ConstStar<cpp.Char>")
+                    args.push('${a.cname}:String');
+                else
+                    args.push('${a.cname}:${at.result.toString()}');
             }
             buf.add('    **/\n');
 
@@ -498,19 +513,35 @@ class ApiGenMacros {
             for (a in cast(f.arguments, Array<Dynamic>)) {
                 var at = getHaxeType(a.data_type);
                 // trace(at);
-                if (at.isStruct) {
-                    args.push('${a.cname}:${at.name}');
-                    callArgs.push('${a.cname}.__inst');
-                }
-                else if (at.isPointer) {
+                if (at.isPointer) {
                     var tt = at.result.toString();
                     if (tt.contains("Star"))
                         tt = tt.replace("Star", "Pointer");
                     else if (tt.contains("RawPointer"))
                         tt = tt.replace("RawPointer", "Pointer");
-                    args.push('${a.cname}:${tt}');
-                    callArgs.push('cast cpp.Pointer.addressOf(${a.cname})');
-                } 
+
+                    if (at.isEnum) {
+                        args.push('${a.cname}:${at.name}');
+                        callArgs.push('cast cpp.RawPointer.addressOf(${a.cname})');
+                    }
+                    else if (at.isStruct) {
+                        args.push('${a.cname}:${at.name}');
+                        callArgs.push('${a.cname}.__ptr != null ? cast ${a.cname}.__ptr : ${a.cname}.__inst');  
+                    } else {
+                        if (tt == "cpp.ConstPointer<cpp.Char>") {
+                            args.push('${a.cname}:String');
+                            callArgs.push('${a.cname}');
+                        }
+                        else {
+                            args.push('${a.cname}:${tt}');
+                            callArgs.push('cast ${a.cname}');
+                        }
+                    }
+                }
+                else if (at.isStruct) {
+                    args.push('${a.cname}:${at.name}');
+                    callArgs.push('${a.cname}.__inst');
+                }                
                 else if (at.isEnum) {
                     args.push('${a.cname}:${at.name}');
                     callArgs.push('cast ${a.cname}');
@@ -536,6 +567,24 @@ class ApiGenMacros {
                 buf.add('            final res = Type.createEmptyInstance(${ft.name});\n');
                 buf.add('            res.__inst = Native_Bgfx.$fname(${callArgs.join(", ")});\n');
                 buf.add('            $ret res;\n');
+                buf.add('        }\n');
+                buf.add('        \n');
+                buf.add('        \n');
+            }
+            else if (ft.isStruct && ft.isPointer) {
+                // make sure we wrap structs correctly
+                trace(ft);
+                buf.add('        public static function $fname(${args.join(", ")}):${ft.name} {\n');
+                buf.add('            final res = Type.createEmptyInstance(${ft.name});\n');
+                buf.add('            res.__ptr = cast Native_Bgfx.$fname(${callArgs.join(", ")});\n');
+                buf.add('            $ret res;\n');
+                buf.add('        }\n');
+                buf.add('        \n');
+                buf.add('        \n');
+            }
+            else if (ft.isEnum){
+                buf.add('        public static function $fname(${args.join(", ")}):${ft.name} {\n');
+                buf.add('            $ret cast Native_Bgfx.$fname(${callArgs.join(", ")});\n');
                 buf.add('        }\n');
                 buf.add('        \n');
                 buf.add('        \n');

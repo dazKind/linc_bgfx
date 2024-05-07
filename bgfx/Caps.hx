@@ -63,7 +63,10 @@ extern class Native_Caps {
         
         public var formats(get, set):cpp.Pointer<cpp.UInt16>;
         function set_formats(_v:cpp.Pointer<cpp.UInt16>):cpp.Pointer<cpp.UInt16> return null;
-        function get_formats():cpp.Pointer<cpp.UInt16> return __ptr == null ? cast __inst.formats : cast __ptr.ref.formats;
+        function get_formats():cpp.Pointer<cpp.UInt16> {
+            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.formats);
+            else return cpp.Pointer.fromRaw(__ptr.ref.formats);
+        }
         
         
     }

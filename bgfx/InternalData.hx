@@ -22,8 +22,17 @@ extern class Native_InternalData {
         function get_caps():Caps { final res = Type.createEmptyInstance(Caps); res.__inst = cpp.Pointer.fromStar(__inst.caps).ref; return res; }
         
         public var context(get, set):cpp.Pointer<cpp.Void>;
-        function set_context(_v:cpp.Pointer<cpp.Void>):cpp.Pointer<cpp.Void> return __ptr == null ? cast __inst.context = cast _v : cast __ptr.ref.context = cast _v;
-        function get_context():cpp.Pointer<cpp.Void> return __ptr == null ? cast __inst.context : cast __ptr.ref.context;
+        function set_context(_v:cpp.Pointer<cpp.Void>):cpp.Pointer<cpp.Void> {
+            if (__ptr == null)
+                __inst.context = cast _v;
+            else
+                __ptr.ref.context = cast _v;
+            return _v;
+        }
+        function get_context():cpp.Pointer<cpp.Void> {
+            if (__ptr == null) return cpp.Pointer.fromStar(__inst.context);
+            else return cpp.Pointer.fromStar(__ptr.ref.context);
+        }
         
         
     }
