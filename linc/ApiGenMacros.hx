@@ -508,11 +508,23 @@ class ApiGenMacros {
             else
                 funcMap.set(f.name, 1);
 
+            if (f.comment != null) {
+                var comment = f.comment.split('\n').join('\n        ');
+                buf.add('        /**\n');
+                buf.add('        $comment\n');
+            } else {
+                buf.add('        /**\n');
+                buf.add('        ${f.name}\n');
+            }
+
             var args = [];
             var callArgs = [];
             for (a in cast(f.arguments, Array<Dynamic>)) {
                 var at = getHaxeType(a.data_type);
-                // trace(at);
+                if (a.comment != null) {
+                    var ac = a.comment.split('\n').join('\n        @param: ');
+                    buf.add('        @param: ${a.cname} : ${at.result.toString()} - $ac\n');
+                }
                 if (at.isPointer) {
                     var tt = at.result.toString();
                     if (tt.contains("Star"))
@@ -551,6 +563,7 @@ class ApiGenMacros {
                     callArgs.push(a.cname);
                 }
             }
+            buf.add('        **/\n');
 
             var fname = funcMap.get(f.name) > 1 ? '${f.name}${funcMap.get(f.name)}' : '${f.name}';
             var ft = getHaxeType(f.return_type);
