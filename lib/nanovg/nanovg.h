@@ -560,6 +560,8 @@ int nvgCreateFont(NVGcontext* ctx, const char* name, const char* filename);
 // Returns handle to the font.
 int nvgCreateFontMem(NVGcontext* ctx, const char* name, unsigned char* data, int ndata, int freeData);
 
+bool nvgFreeFont(NVGcontext* ctx, int font);
+
 // Finds a loaded font of specified name, and returns handle to it, or -1 if the font is not found.
 int nvgFindFont(NVGcontext* ctx, const char* name);
 

@@ -969,6 +969,18 @@ error:
 	return FONS_INVALID;
 }
 
+bool fonsFreeFontMem(FONScontext* stash, int idx) {
+	if (idx < 0 || idx >= stash->nfonts) goto error;
+
+	FONSfont* font = stash->fonts[idx];
+	fons__freeFont(font);
+	stash->nfonts--;
+
+	return true;
+error:
+	return false;
+}
+
 int fonsGetFontByName(FONScontext* s, const char* name)
 {
 	int i;

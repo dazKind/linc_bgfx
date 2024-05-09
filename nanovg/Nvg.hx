@@ -423,6 +423,9 @@ extern class Native_Nvg {
         return _createFontMem(_ctx, _name, cast ptr, _data.length, 0);
     }
 
+    @:native("nvgFreeFont")
+    public static function freeFont(_ctx:cpp.Star<Native_NvgContext>, _font:Int):Bool;
+
     @:native("nvgFindFont")
     public static function findFont(_ctx:cpp.Star<Native_NvgContext>, _name:String):Int;
 

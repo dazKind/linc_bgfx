@@ -2283,12 +2283,15 @@ int nvgCreateFontMem(NVGcontext* ctx, const char* name, unsigned char* data, int
 	return fonsAddFontMem(ctx->fs, name, data, ndata, freeData);
 }
 
+bool nvgFreeFont(NVGcontext* ctx, int font) {
+	return fonsFreeFontMem(ctx->fs, font);
+}
+
 int nvgFindFont(NVGcontext* ctx, const char* name)
 {
 	if (name == NULL) return -1;
 	return fonsGetFontByName(ctx->fs, name);
 }
-
 
 int nvgAddFallbackFontId(NVGcontext* ctx, int baseFont, int fallbackFont)
 {
