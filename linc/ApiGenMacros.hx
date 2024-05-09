@@ -139,10 +139,10 @@ class ApiGenMacros {
             }
         };
 
-        if (_t == "const char*") {
-            trace(val);
-            trace(resultType);
-        }
+        // if (_t == "const char*") {
+        //     trace(val);
+        //     trace(resultType);
+        // }
         return {
             isArray: isArray,
             isPointer: isPointer,
@@ -235,6 +235,8 @@ class ApiGenMacros {
         var dt = hxt.result;
         var isInt64 = hxt.name.contains("int64");
         // trace(hxt);
+        if (isInt64)
+            dt = macro : cpp.Int64;
 
         // generate class
         var cls = macro class $name  {
@@ -575,7 +577,7 @@ class ApiGenMacros {
             }
             if (ft.isStruct && !ft.isPointer) {
                 // make sure we wrap structs correctly
-                trace(ft);
+                // trace(ft);
                 buf.add('        public static function $fname(${args.join(", ")}):${ft.name} {\n');
                 buf.add('            final res = Type.createEmptyInstance(${ft.name});\n');
                 buf.add('            res.__inst = Native_Bgfx.$fname(${callArgs.join(", ")});\n');
@@ -586,7 +588,7 @@ class ApiGenMacros {
             }
             else if (ft.isStruct && ft.isPointer) {
                 // make sure we wrap structs correctly
-                trace(ft);
+                // trace(ft);
                 buf.add('        public static function $fname(${args.join(", ")}):${ft.name} {\n');
                 buf.add('            final res = Type.createEmptyInstance(${ft.name});\n');
                 buf.add('            res.__ptr = cast Native_Bgfx.$fname(${callArgs.join(", ")});\n');
