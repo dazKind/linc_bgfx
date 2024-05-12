@@ -4,6 +4,7 @@ package bgfx;
 
 @:structAccess
 @:unreflective
+@:include('linc_bgfx.h')
 @:include('bgfx/c99/bgfx.h')
 @:native('bgfx_encoder_t')
 extern class Native_Encoder {

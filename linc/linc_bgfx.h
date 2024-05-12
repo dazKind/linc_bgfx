@@ -8,6 +8,8 @@
 
 struct NVGcontext;
 
+struct bgfx_encoder_s {};
+
 namespace linc_bgfx {
 	extern bgfx_callback_interface_t* getBgfxCallback();	
 }
