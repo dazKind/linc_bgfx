@@ -150,6 +150,7 @@ class LincCppia {
         var newFields = (macro class {
             public function new() {}
 
+            public var __ptr:cpp.Pointer<$ctPath> = null;
             @:allow($v{modulePath})
             public var __inst:$ctPath = new $typePath();
 
@@ -175,6 +176,13 @@ class LincCppia {
             var setBody = macro return __inst.$propName = _v;
 
             // if (propName == 'myPtr') continue;
+            var skip = false;
+            for (m in f.meta.get()) {
+                if (m.name == ':linc_ignore')
+                    skip = true;
+            }
+            if (skip)
+                continue;
 
             var def = getCppiaLinkDef(f.type);
             if (def != null) {

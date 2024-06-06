@@ -65,6 +65,11 @@ namespace linc_bgfx {
     bgfx_callback_interface_t * getBgfxCallback() {
         return &s_callback;
     }
+
+    bimg::ImageContainer* bimgImageParse(const void* _data, uint32_t _size, uint32_t _format) {
+        bx::DefaultAllocator defaultAllocator;
+        return bimg::imageParse(&defaultAllocator, (const void*)_data, _size, (bimg::TextureFormat::Enum)_format);
+    }
 }
 
 namespace linc_nanovg {
@@ -143,6 +148,5 @@ namespace linc_nanovg {
 
         return texId;
     }
-    
 }
 
