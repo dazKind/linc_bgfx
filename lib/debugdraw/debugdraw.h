@@ -183,10 +183,10 @@ struct DebugDrawEncoder
 	void drawQuad(const bx::Vec3& _normal, const bx::Vec3& _center, float _size);
 
 	///
-	void drawQuad(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size);
+	void drawQuadSprite(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size);
 
 	///
-	void drawQuad(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size);
+	void drawQuadTexture(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size);
 
 	///
 	void drawCone(const bx::Vec3& _from, const bx::Vec3& _to, float _radius);

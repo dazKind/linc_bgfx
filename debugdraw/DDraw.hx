@@ -1,5 +1,7 @@
 package debugdraw;
 
+import bgfx.TextureHandle;
+
 @:unreflective
 @:notNull
 @:runtimeValue
@@ -135,12 +137,20 @@ extern class Native_DebugDrawEncoder {
     @:native('close')
     public function close():Void;
 
+    // @:native('drawQuad')
+    inline public function drawQuad(_handle:cpp.Reference<Native_SpriteHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.drawQuadSprite((SpriteHandle){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
+            ref, _handle, cpp.NativeArray.address(_normal, 0), cpp.NativeArray.address(_center, 0), _size);
+    }
+
     @:native('drawAxis')
     public function drawAxis(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _length:cpp.Float32, _highlight:Native_Axis, _thickness:cpp.Float32):Void;
 
     inline public function drawGrid(_axis:Axis, _pos:Array<cpp.Float32>, _size:cpp.Float32 = 128, _step:cpp.Float32 = 1.0):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
         untyped __cpp__('{0}.drawGrid((Axis::Enum){1}, *(bx::Vec3*)(float*){2}, {3}, {4})', 
-            this, _axis, cpp.NativeArray.address(_pos, 0), _size, _step);
+            ref, _axis, cpp.NativeArray.address(_pos, 0), _size, _step);
     }
 
     @:native('drawOrb')
@@ -205,6 +215,9 @@ extern class Native_DebugDrawEncoder {
         public function close():Void
             __inst.close();
 
+        public function drawQuad(_handle:DSpriteHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
+            __inst.drawQuad(_handle.__inst, _normal, _center, _size);
+
         public function drawAxis(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _length:cpp.Float32, _highlight:Axis, _thickness:cpp.Float32):Void
             __inst.drawAxis(_x, _y, _z, _length, cast _highlight, _thickness);
 
@@ -230,10 +243,32 @@ extern class Native_DebugDraw {
 
     @:native("ddShutdown")
     extern public static function shutdown():Void;
+
+    @:native('ddCreateSprite')
+    extern public static function createSprite(_w:cpp.UInt16, _h:cpp.UInt16, _data:cpp.ConstStar<cpp.Void>):Native_SpriteHandle;
+
+    @:native('ddDestroy')
+    extern public static function destroySprite(_h:Native_SpriteHandle):Void;
 }
 #if (scriptable || cppia)
-    @:build(linc.LincCppia.wrapMainExtern('Native_DebugDraw'))
-    class DDraw {}
+    // @:build(linc.LincCppia.wrapMainExtern('Native_DebugDraw'))
+    class CppiaDDraw {
+        public static function init()
+            Native_DebugDraw.init();
+
+        public static function shutdown()
+            Native_DebugDraw.shutdown();
+
+        public static function createSprite(_w:cpp.UInt16, _h:cpp.UInt16, _data:cpp.ConstPointer<cpp.Void>):DSpriteHandle {
+            var res = Type.createEmptyInstance(DSpriteHandle);
+            res.__inst = Native_DebugDraw.createSprite(_w, _h, cast _data);
+            return res;
+        }
+
+        public static function destroySprite(_h:DSpriteHandle):Void
+            Native_DebugDraw.destroySprite(_h.__inst);
+    }
+    typedef DDraw = CppiaDDraw;
 #else
     typedef DDraw = Native_DebugDraw;
 #end
