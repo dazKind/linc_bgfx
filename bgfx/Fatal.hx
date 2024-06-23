@@ -12,7 +12,7 @@ extern enum abstract Native_Fatal(Native_FatalImpl) {
     var UnableToCreateTexture;
     @:native("bgfx_fatal_t::BGFX_FATAL_DEVICELOST")
     var DeviceLost;
-    @:native("bgfx_fatal_t::bgfx_fatal_t::BGFX_FATAL_COUNT")
+    @:native("bgfx_fatal_t::BGFX_FATAL_COUNT")
     var Count;
 }
 @:unreflective

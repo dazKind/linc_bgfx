@@ -191,6 +191,55 @@
             "arguments":
             [
                 {
+                    "cname": "_this",
+                    "data_type": "VertexLayout*"
+                },
+                {
+                    "cname": "_attrib",
+                    "comment": "Attribute semantics. See: `bgfx::Attrib`",
+                    "data_type": "Attrib::Enum"
+                }
+            ],
+            "cname": "bgfx_vertex_layout_get_offset",
+            "comment": "Returns relative attribute offset from the vertex.",
+            "name": "vertexLayoutGetOffset",
+            "return_type": "uint16_t"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "VertexLayout*"
+                }
+            ],
+            "cname": "bgfx_vertex_layout_get_stride",
+            "comment": "Returns vertex stride.",
+            "name": "vertexLayoutGetStride",
+            "return_type": "uint16_t"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "VertexLayout*"
+                },
+                {
+                    "cname": "_num",
+                    "comment": "Number of vertices.",
+                    "data_type": "uint32_t"
+                }
+            ],
+            "cname": "bgfx_vertex_layout_get_size",
+            "comment": "Returns size of vertex buffer for number of vertices.",
+            "name": "vertexLayoutGetSize",
+            "return_type": "uint32_t"
+        },
+        {
+            "arguments":
+            [
+                {
                     "cname": "_input",
                     "comment": "Value to be packed into vertex stream.",
                     "data_type": "const float"
@@ -2889,6 +2938,24 @@
                     "cname": "_handle",
                     "comment": "Index buffer.",
                     "data_type": "IndexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_encoder_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "encoderSetIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Index buffer.",
+                    "data_type": "IndexBufferHandle"
                 },
                 {
                     "cname": "_firstIndex",
@@ -2899,6 +2966,24 @@
                     "cname": "_numIndices",
                     "comment": "Number of indices to render.",
                     "data_type": "uint32_t"
+                }
+            ],
+            "cname": "bgfx_encoder_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "encoderSetIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Dynamic index buffer.",
+                    "data_type": "DynamicIndexBufferHandle"
                 }
             ],
             "cname": "bgfx_encoder_set_index_buffer",
@@ -2945,6 +3030,24 @@
                     "cname": "_tib",
                     "comment": "Transient index buffer.",
                     "data_type": "const TransientIndexBuffer*"
+                }
+            ],
+            "cname": "bgfx_encoder_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "encoderSetIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_tib",
+                    "comment": "Transient index buffer.",
+                    "data_type": "const TransientIndexBuffer*"
                 },
                 {
                     "cname": "_firstIndex",
@@ -2960,6 +3063,29 @@
             "cname": "bgfx_encoder_set_transient_index_buffer",
             "comment": "Set index buffer for draw primitive.",
             "name": "encoderSetTransientIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Vertex buffer.",
+                    "data_type": "VertexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_encoder_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "encoderSetVertexBuffer",
             "return_type": "void"
         },
         {
@@ -3049,6 +3175,29 @@
                     "cname": "_handle",
                     "comment": "Dynamic vertex buffer.",
                     "data_type": "DynamicVertexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_encoder_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "encoderSetVertexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Dynamic vertex buffer.",
+                    "data_type": "DynamicVertexBufferHandle"
                 },
                 {
                     "cname": "_startVertex",
@@ -3101,6 +3250,29 @@
             ],
             "cname": "bgfx_encoder_set_dynamic_vertex_buffer_with_layout",
             "name": "encoderSetDynamicVertexBufferWithLayout",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_tvb",
+                    "comment": "Transient vertex buffer.",
+                    "data_type": "const TransientVertexBuffer*"
+                }
+            ],
+            "cname": "bgfx_encoder_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "encoderSetVertexBuffer",
             "return_type": "void"
         },
         {
@@ -3190,6 +3362,24 @@
             "cname": "bgfx_encoder_set_vertex_count",
             "comment": "Set number of vertices for auto generated vertices use in conjunction\nwith gl_VertexID.\n@attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.",
             "name": "encoderSetVertexCount",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_idb",
+                    "comment": "Transient instance data buffer.",
+                    "data_type": "const InstanceDataBuffer*"
+                }
+            ],
+            "cname": "bgfx_encoder_set_instance_data_buffer",
+            "comment": "Set instance data buffer for draw primitive.",
+            "name": "encoderSetInstanceDataBuffer",
             "return_type": "void"
         },
         {
@@ -3821,6 +4011,64 @@
                     "data_type": "TextureHandle"
                 },
                 {
+                    "cname": "_dstX",
+                    "comment": "Destination texture X position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_dstY",
+                    "comment": "Destination texture Y position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_src",
+                    "comment": "Source texture handle.",
+                    "data_type": "TextureHandle"
+                },
+                {
+                    "cname": "_srcX",
+                    "comment": "Source texture X position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_srcY",
+                    "comment": "Source texture Y position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_width",
+                    "comment": "Width of region.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_height",
+                    "comment": "Height of region.",
+                    "data_type": "uint16_t"
+                }
+            ],
+            "cname": "bgfx_encoder_blit",
+            "comment": "Blit 2D texture region between two 2D textures.\n@attention Destination texture must be created with `BGFX_TEXTURE_BLIT_DST` flag.\n@attention Availability depends on: `BGFX_CAPS_TEXTURE_BLIT`.",
+            "name": "encoderBlit",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_this",
+                    "data_type": "Encoder*"
+                },
+                {
+                    "cname": "_id",
+                    "comment": "View id.",
+                    "data_type": "ViewId"
+                },
+                {
+                    "cname": "_dst",
+                    "comment": "Destination texture handle.",
+                    "data_type": "TextureHandle"
+                },
+                {
                     "cname": "_dstMip",
                     "comment": "Destination texture mip level.",
                     "data_type": "uint8_t"
@@ -4206,6 +4454,20 @@
                     "cname": "_handle",
                     "comment": "Index buffer.",
                     "data_type": "IndexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "setIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_handle",
+                    "comment": "Index buffer.",
+                    "data_type": "IndexBufferHandle"
                 },
                 {
                     "cname": "_firstIndex",
@@ -4216,6 +4478,20 @@
                     "cname": "_numIndices",
                     "comment": "Number of indices to render.",
                     "data_type": "uint32_t"
+                }
+            ],
+            "cname": "bgfx_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "setIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_handle",
+                    "comment": "Dynamic index buffer.",
+                    "data_type": "DynamicIndexBufferHandle"
                 }
             ],
             "cname": "bgfx_set_index_buffer",
@@ -4254,6 +4530,20 @@
                     "cname": "_tib",
                     "comment": "Transient index buffer.",
                     "data_type": "const TransientIndexBuffer*"
+                }
+            ],
+            "cname": "bgfx_set_index_buffer",
+            "comment": "Set index buffer for draw primitive.",
+            "name": "setIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_tib",
+                    "comment": "Transient index buffer.",
+                    "data_type": "const TransientIndexBuffer*"
                 },
                 {
                     "cname": "_firstIndex",
@@ -4269,6 +4559,25 @@
             "cname": "bgfx_set_transient_index_buffer",
             "comment": "Set index buffer for draw primitive.",
             "name": "setTransientIndexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Vertex buffer.",
+                    "data_type": "VertexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "setVertexBuffer",
             "return_type": "void"
         },
         {
@@ -4346,6 +4655,25 @@
                     "cname": "_handle",
                     "comment": "Dynamic vertex buffer.",
                     "data_type": "DynamicVertexBufferHandle"
+                }
+            ],
+            "cname": "bgfx_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "setVertexBuffer",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_handle",
+                    "comment": "Dynamic vertex buffer.",
+                    "data_type": "DynamicVertexBufferHandle"
                 },
                 {
                     "cname": "_startVertex",
@@ -4395,6 +4723,25 @@
             "cname": "bgfx_set_dynamic_vertex_buffer_with_layout",
             "comment": "Set vertex buffer for draw primitive.",
             "name": "setDynamicVertexBufferWithLayout",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_stream",
+                    "comment": "Vertex stream.",
+                    "data_type": "uint8_t"
+                },
+                {
+                    "cname": "_tvb",
+                    "comment": "Transient vertex buffer.",
+                    "data_type": "const TransientVertexBuffer*"
+                }
+            ],
+            "cname": "bgfx_set_vertex_buffer",
+            "comment": "Set vertex buffer for draw primitive.",
+            "name": "setVertexBuffer",
             "return_type": "void"
         },
         {
@@ -4472,6 +4819,20 @@
             "cname": "bgfx_set_vertex_count",
             "comment": "Set number of vertices for auto generated vertices use in conjunction\nwith gl_VertexID.\n@attention Availability depends on: `BGFX_CAPS_VERTEX_ID`.",
             "name": "setVertexCount",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_idb",
+                    "comment": "Transient instance data buffer.",
+                    "data_type": "const InstanceDataBuffer*"
+                }
+            ],
+            "cname": "bgfx_set_instance_data_buffer",
+            "comment": "Set instance data buffer for draw primitive.",
+            "name": "setInstanceDataBuffer",
             "return_type": "void"
         },
         {
@@ -5007,6 +5368,60 @@
             "cname": "bgfx_discard",
             "comment": "Discard previously set state for draw or compute call.",
             "name": "discard",
+            "return_type": "void"
+        },
+        {
+            "arguments":
+            [
+                {
+                    "cname": "_id",
+                    "comment": "View id.",
+                    "data_type": "ViewId"
+                },
+                {
+                    "cname": "_dst",
+                    "comment": "Destination texture handle.",
+                    "data_type": "TextureHandle"
+                },
+                {
+                    "cname": "_dstX",
+                    "comment": "Destination texture X position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_dstY",
+                    "comment": "Destination texture Y position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_src",
+                    "comment": "Source texture handle.",
+                    "data_type": "TextureHandle"
+                },
+                {
+                    "cname": "_srcX",
+                    "comment": "Source texture X position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_srcY",
+                    "comment": "Source texture Y position.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_width",
+                    "comment": "Width of region.",
+                    "data_type": "uint16_t"
+                },
+                {
+                    "cname": "_height",
+                    "comment": "Height of region.",
+                    "data_type": "uint16_t"
+                }
+            ],
+            "cname": "bgfx_blit",
+            "comment": "Blit 2D texture region between two 2D textures.\n@attention Destination texture must be created with `BGFX_TEXTURE_BLIT_DST` flag.\n@attention Availability depends on: `BGFX_CAPS_TEXTURE_BLIT`.",
+            "name": "blit",
             "return_type": "void"
         },
         {
@@ -6735,7 +7150,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_fatal_t::BGFX_FATAL_COUNT"
+                    "native": "BGFX_FATAL_COUNT"
                 }
             ]
         },
@@ -6798,7 +7213,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_renderer_type_t::BGFX_RENDERER_TYPE_COUNT"
+                    "native": "BGFX_RENDERER_TYPE_COUNT"
                 }
             ]
         },
@@ -6826,7 +7241,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_access_t::BGFX_ACCESS_COUNT"
+                    "native": "BGFX_ACCESS_COUNT"
                 }
             ]
         },
@@ -6929,7 +7344,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_attrib_t::BGFX_ATTRIB_COUNT"
+                    "native": "BGFX_ATTRIB_COUNT"
                 }
             ]
         },
@@ -6967,7 +7382,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_attrib_type_t::BGFX_ATTRIB_TYPE_COUNT"
+                    "native": "BGFX_ATTRIB_TYPE_COUNT"
                 }
             ]
         },
@@ -7400,7 +7815,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_texture_format_t::BGFX_TEXTURE_FORMAT_COUNT"
+                    "native": "BGFX_TEXTURE_FORMAT_COUNT"
                 }
             ]
         },
@@ -7438,7 +7853,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_uniform_type_t::BGFX_UNIFORM_TYPE_COUNT"
+                    "native": "BGFX_UNIFORM_TYPE_COUNT"
                 }
             ]
         },
@@ -7481,7 +7896,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_backbuffer_ratio_t::BGFX_BACKBUFFER_RATIO_COUNT"
+                    "native": "BGFX_BACKBUFFER_RATIO_COUNT"
                 }
             ]
         },
@@ -7509,7 +7924,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_occlusion_query_result_t::BGFX_OCCLUSION_QUERY_RESULT_COUNT"
+                    "native": "BGFX_OCCLUSION_QUERY_RESULT_COUNT"
                 }
             ]
         },
@@ -7547,7 +7962,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_topology_t::BGFX_TOPOLOGY_COUNT"
+                    "native": "BGFX_TOPOLOGY_COUNT"
                 }
             ]
         },
@@ -7585,7 +8000,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_topology_convert_t::BGFX_TOPOLOGY_CONVERT_COUNT"
+                    "native": "BGFX_TOPOLOGY_CONVERT_COUNT"
                 }
             ]
         },
@@ -7646,7 +8061,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_topology_sort_t::BGFX_TOPOLOGY_SORT_COUNT"
+                    "native": "BGFX_TOPOLOGY_SORT_COUNT"
                 }
             ]
         },
@@ -7679,7 +8094,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_view_mode_t::BGFX_VIEW_MODE_COUNT"
+                    "native": "BGFX_VIEW_MODE_COUNT"
                 }
             ]
         },
@@ -7702,7 +8117,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_native_window_handle_type_t::BGFX_NATIVE_WINDOW_HANDLE_TYPE_COUNT"
+                    "native": "BGFX_NATIVE_WINDOW_HANDLE_TYPE_COUNT"
                 }
             ]
         },
@@ -7735,7 +8150,7 @@
                 },
                 {
                     "name": "Count",
-                    "native": "bgfx_render_frame_t::BGFX_RENDER_FRAME_COUNT"
+                    "native": "BGFX_RENDER_FRAME_COUNT"
                 }
             ]
         },

@@ -27,7 +27,7 @@ extern enum abstract Native_Topology(Native_TopologyImpl) {
     **/
     @:native("bgfx_topology_t::BGFX_TOPOLOGY_POINTLIST")
     var PointList;
-    @:native("bgfx_topology_t::bgfx_topology_t::BGFX_TOPOLOGY_COUNT")
+    @:native("bgfx_topology_t::BGFX_TOPOLOGY_COUNT")
     var Count;
 }
 @:unreflective

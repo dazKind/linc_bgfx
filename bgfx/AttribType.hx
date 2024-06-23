@@ -27,7 +27,7 @@ extern enum abstract Native_AttribType(Native_AttribTypeImpl) {
     **/
     @:native("bgfx_attrib_type_t::BGFX_ATTRIB_TYPE_FLOAT")
     var Float;
-    @:native("bgfx_attrib_type_t::bgfx_attrib_type_t::BGFX_ATTRIB_TYPE_COUNT")
+    @:native("bgfx_attrib_type_t::BGFX_ATTRIB_TYPE_COUNT")
     var Count;
 }
 @:unreflective

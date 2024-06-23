@@ -26,7 +26,7 @@ extern enum abstract Native_TopologySort(Native_TopologySortImpl) {
     var DistanceBackToFrontAvg;
     @:native("bgfx_topology_sort_t::BGFX_TOPOLOGY_SORT_DISTANCEBACKTOFRONTMAX")
     var DistanceBackToFrontMax;
-    @:native("bgfx_topology_sort_t::bgfx_topology_sort_t::BGFX_TOPOLOGY_SORT_COUNT")
+    @:native("bgfx_topology_sort_t::BGFX_TOPOLOGY_SORT_COUNT")
     var Count;
 }
 @:unreflective

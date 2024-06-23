@@ -17,7 +17,7 @@ extern enum abstract Native_Access(Native_AccessImpl) {
     **/
     @:native("bgfx_access_t::BGFX_ACCESS_READWRITE")
     var ReadWrite;
-    @:native("bgfx_access_t::bgfx_access_t::BGFX_ACCESS_COUNT")
+    @:native("bgfx_access_t::BGFX_ACCESS_COUNT")
     var Count;
 }
 @:unreflective

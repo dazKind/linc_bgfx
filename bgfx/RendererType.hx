@@ -52,7 +52,7 @@ extern enum abstract Native_RendererType(Native_RendererTypeImpl) {
     **/
     @:native("bgfx_renderer_type_t::BGFX_RENDERER_TYPE_VULKAN")
     var Vulkan;
-    @:native("bgfx_renderer_type_t::bgfx_renderer_type_t::BGFX_RENDERER_TYPE_COUNT")
+    @:native("bgfx_renderer_type_t::BGFX_RENDERER_TYPE_COUNT")
     var Count;
 }
 @:unreflective

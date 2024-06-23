@@ -302,7 +302,7 @@ extern enum abstract Native_TextureFormat(Native_TextureFormatImpl) {
     var D32F;
     @:native("bgfx_texture_format_t::BGFX_TEXTURE_FORMAT_D0S8")
     var D0S8;
-    @:native("bgfx_texture_format_t::bgfx_texture_format_t::BGFX_TEXTURE_FORMAT_COUNT")
+    @:native("bgfx_texture_format_t::BGFX_TEXTURE_FORMAT_COUNT")
     var Count;
 }
 @:unreflective

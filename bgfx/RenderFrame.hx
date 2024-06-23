@@ -22,7 +22,7 @@ extern enum abstract Native_RenderFrame(Native_RenderFrameImpl) {
     **/
     @:native("bgfx_render_frame_t::BGFX_RENDER_FRAME_EXITING")
     var Exiting;
-    @:native("bgfx_render_frame_t::bgfx_render_frame_t::BGFX_RENDER_FRAME_COUNT")
+    @:native("bgfx_render_frame_t::BGFX_RENDER_FRAME_COUNT")
     var Count;
 }
 @:unreflective

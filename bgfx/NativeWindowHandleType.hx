@@ -12,7 +12,7 @@ extern enum abstract Native_NativeWindowHandleType(Native_NativeWindowHandleType
     **/
     @:native("bgfx_native_window_handle_type_t::BGFX_NATIVE_WINDOW_HANDLE_TYPE_WAYLAND")
     var Wayland;
-    @:native("bgfx_native_window_handle_type_t::bgfx_native_window_handle_type_t::BGFX_NATIVE_WINDOW_HANDLE_TYPE_COUNT")
+    @:native("bgfx_native_window_handle_type_t::BGFX_NATIVE_WINDOW_HANDLE_TYPE_COUNT")
     var Count;
 }
 @:unreflective

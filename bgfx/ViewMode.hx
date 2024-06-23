@@ -22,7 +22,7 @@ extern enum abstract Native_ViewMode(Native_ViewModeImpl) {
     **/
     @:native("bgfx_view_mode_t::BGFX_VIEW_MODE_DEPTHDESCENDING")
     var DepthDescending;
-    @:native("bgfx_view_mode_t::bgfx_view_mode_t::BGFX_VIEW_MODE_COUNT")
+    @:native("bgfx_view_mode_t::BGFX_VIEW_MODE_COUNT")
     var Count;
 }
 @:unreflective

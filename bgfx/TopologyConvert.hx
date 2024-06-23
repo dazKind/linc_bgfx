@@ -27,7 +27,7 @@ extern enum abstract Native_TopologyConvert(Native_TopologyConvertImpl) {
     **/
     @:native("bgfx_topology_convert_t::BGFX_TOPOLOGY_CONVERT_LINESTRIPTOLINELIST")
     var LineStripToLineList;
-    @:native("bgfx_topology_convert_t::bgfx_topology_convert_t::BGFX_TOPOLOGY_CONVERT_COUNT")
+    @:native("bgfx_topology_convert_t::BGFX_TOPOLOGY_CONVERT_COUNT")
     var Count;
 }
 @:unreflective

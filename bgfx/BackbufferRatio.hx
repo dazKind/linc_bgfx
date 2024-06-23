@@ -32,7 +32,7 @@ extern enum abstract Native_BackbufferRatio(Native_BackbufferRatioImpl) {
     **/
     @:native("bgfx_backbuffer_ratio_t::BGFX_BACKBUFFER_RATIO_DOUBLE")
     var Double;
-    @:native("bgfx_backbuffer_ratio_t::bgfx_backbuffer_ratio_t::BGFX_BACKBUFFER_RATIO_COUNT")
+    @:native("bgfx_backbuffer_ratio_t::BGFX_BACKBUFFER_RATIO_COUNT")
     var Count;
 }
 @:unreflective

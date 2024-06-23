@@ -27,7 +27,7 @@ extern enum abstract Native_UniformType(Native_UniformTypeImpl) {
     **/
     @:native("bgfx_uniform_type_t::BGFX_UNIFORM_TYPE_MAT4")
     var Mat4;
-    @:native("bgfx_uniform_type_t::bgfx_uniform_type_t::BGFX_UNIFORM_TYPE_COUNT")
+    @:native("bgfx_uniform_type_t::BGFX_UNIFORM_TYPE_COUNT")
     var Count;
 }
 @:unreflective

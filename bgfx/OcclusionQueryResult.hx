@@ -17,7 +17,7 @@ extern enum abstract Native_OcclusionQueryResult(Native_OcclusionQueryResultImpl
     **/
     @:native("bgfx_occlusion_query_result_t::BGFX_OCCLUSION_QUERY_RESULT_NORESULT")
     var NoResult;
-    @:native("bgfx_occlusion_query_result_t::bgfx_occlusion_query_result_t::BGFX_OCCLUSION_QUERY_RESULT_COUNT")
+    @:native("bgfx_occlusion_query_result_t::BGFX_OCCLUSION_QUERY_RESULT_COUNT")
     var Count;
 }
 @:unreflective

@@ -92,7 +92,7 @@ extern enum abstract Native_Attrib(Native_AttribImpl) {
     **/
     @:native("bgfx_attrib_t::BGFX_ATTRIB_TEXCOORD7")
     var TexCoord7;
-    @:native("bgfx_attrib_t::bgfx_attrib_t::BGFX_ATTRIB_COUNT")
+    @:native("bgfx_attrib_t::BGFX_ATTRIB_COUNT")
     var Count;
 }
 @:unreflective
