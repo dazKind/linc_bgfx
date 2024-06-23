@@ -172,8 +172,8 @@ class LincCppia {
             };
             var getPropName = 'get_$propName';
             var setPropName = 'set_$propName';
-            var getBody = macro return __inst.$propName;
-            var setBody = macro return __inst.$propName = _v;
+            var getBody = macro return __ptr != null ? __ptr.ref.$propName : __inst.$propName;
+            var setBody = macro return __ptr != null ? __ptr.ref.$propName = _v : __inst.$propName = _v;
 
             // if (propName == 'myPtr') continue;
             var skip = false;
@@ -189,25 +189,27 @@ class LincCppia {
                 switch (def.linkType) {
                 	case 'dynamic': {
                         propType = macro : Dynamic;
-                        getBody = macro return (cast __inst.$propName: Dynamic);
+                        getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: Dynamic) : (cast __inst.$propName: Dynamic);
                         setBody = macro {
                             return null;
                         };
                     }
                     case 'string': {
                     	propType = macro : String;
-                        getBody = macro return (cast __inst.$propName: String);
+                        getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: String) : (cast __inst.$propName: String);
                         setBody = macro {
-                            __inst.$propName = (cast _v: $propTypeOriginal);
+                            if (__ptr != null) __ptr.ref.$propName = (cast _v: $propTypeOriginal);
+                            else __inst.$propName = (cast _v: $propTypeOriginal);
                             return _v;
                         };
                     }
                     case 'enum': {
                         propTypeName = def.linkClass;
                         propType = moduleMap.get(propTypeName).toComplexType();
-                        getBody = macro return (cast __inst.$propName: $propType);
+                        getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: $propType) : (cast __inst.$propName: $propType);
                         setBody = macro {
-                            __inst.$propName = (cast _v: $propTypeOriginal);
+                            if (__ptr != null) __ptr.ref.$propName = (cast _v: $propTypeOriginal);
+                            else __inst.$propName = (cast _v: $propTypeOriginal);
                             return _v;
                         };
                     }
