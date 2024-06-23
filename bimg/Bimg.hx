@@ -302,7 +302,7 @@ extern enum abstract Native_TextureFormat(Native_TextureFormatImpl) {
     var D32F;
     @:native("bimg::TextureFormat::Enum::D0S8")
     var D0S8;
-    @:native("bimg::TextureFormat::Enum::bimg::TextureFormat::Enum::Count")
+    @:native("bimg::TextureFormat::Enum::Count")
     var Count;
 }
 @:unreflective
@@ -377,14 +377,19 @@ extern class Native_ImageContainer {
         }
 
         public var m_format(get, set):TextureFormat;
-        function set_m_format(_v:TextureFormat):TextureFormat { __inst.m_format = (cast _v:Native_TextureFormat); return _v; }
-        function get_m_format():TextureFormat return cast(__inst.m_format, TextureFormat);
+        function set_m_format(_v:TextureFormat):TextureFormat { 
+            if (__ptr != null) __ptr.ref.m_format = (cast _v:Native_TextureFormat); 
+            else __inst.m_format = (cast _v:Native_TextureFormat); 
+            return _v; 
+        }
+        function get_m_format():TextureFormat {
+            return __ptr != null ? cast(__ptr.ref.m_format, TextureFormat) : cast(__inst.m_format, TextureFormat);
+        }
     }
     typedef ImageContainer = CppiaImageContainer;
 #else
     typedef ImageContainer = Native_ImageContainer;
 #end
-
 
 @:include("linc_bgfx.h")
 extern class Native_Bimg {
@@ -409,7 +414,7 @@ extern class Native_Bimg {
     class CppiaBimg {
     	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainer {
     		final res = Type.createEmptyInstance(ImageContainer);
-    		res.__inst = Native_Bimg.imageParse(_src, _size, _format);
+    		res.__ptr = cpp.Pointer.fromStar(Native_Bimg.imageParse(_src, _size, _format));
     		return res;
         }
 

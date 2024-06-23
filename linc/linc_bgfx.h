@@ -5,6 +5,7 @@
 
 #include "bgfx/c99/bgfx.h"
 #include "bx/bx.h"
+#include "bx/allocator.h"
 #include "bimg/bimg.h"
 
 struct NVGcontext;
@@ -12,6 +13,7 @@ struct NVGcontext;
 struct bgfx_encoder_s {};
 
 namespace linc_bgfx {
+    extern bx::DefaultAllocator defaultAllocator;
 	extern bgfx_callback_interface_t* getBgfxCallback();	
     bimg::ImageContainer* bimgImageParse(const void* _data, uint32_t _size, uint32_t _format);
 }

@@ -1,11 +1,11 @@
 #include <hxcpp.h>
 
 #include "linc_bgfx.h"
-#include <bx/allocator.h>
-#include <bimg/decode.h>
+#include "bimg/decode.h"
 #include "nanovg.h"
 
 namespace linc_bgfx {
+    bx::DefaultAllocator defaultAllocator;
 
     void bgfx_fatal(bgfx_callback_interface_t* _this, const char* _filePath, uint16_t _line, bgfx_fatal_t _code, const char* _str) {
         bx::debugPrintf("Fatal error: 0x%08x: %s", _code, _str);
@@ -67,7 +67,6 @@ namespace linc_bgfx {
     }
 
     bimg::ImageContainer* bimgImageParse(const void* _data, uint32_t _size, uint32_t _format) {
-        bx::DefaultAllocator defaultAllocator;
         return bimg::imageParse(&defaultAllocator, (const void*)_data, _size, (bimg::TextureFormat::Enum)_format);
     }
 }
@@ -139,8 +138,7 @@ namespace linc_nanovg {
     }
 
     int32_t nvgCreateImageMem(NVGcontext* _ctx, uint32_t _imageFlags, void* _data, uint32_t _size) {
-        bx::DefaultAllocator defaultAllocator;
-        bimg::ImageContainer* imageContainer = bimg::imageParse(&defaultAllocator, (const void*)_data, _size, bimg::TextureFormat::RGBA8);
+        bimg::ImageContainer* imageContainer = bimg::imageParse(&linc_bgfx::defaultAllocator, (const void*)_data, _size, bimg::TextureFormat::RGBA8);
 
         int32_t texId = nvgCreateImageRGBA(_ctx, imageContainer->m_width, imageContainer->m_height, _imageFlags, (const uint8_t*)imageContainer->m_data);
 
