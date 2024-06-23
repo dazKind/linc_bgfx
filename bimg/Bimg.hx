@@ -369,9 +369,9 @@ extern class Native_ImageContainer {
 #if (scriptable || cppia)
     @:build(linc.LincCppia.wrapStructExtern('Native_ImageContainer'))
     class CppiaImageContainer {
-    	public var m_data(get, set):cpp.Pointer<Void>;
-        function set_m_data(_v:cpp.Pointer<Void>):cpp.Pointer<Void> return null;
-        function get_m_data():cpp.Pointer<Void> {
+    	public var m_data(get, set):cpp.Pointer<cpp.Void>;
+        function set_m_data(_v:cpp.Pointer<cpp.Void>):cpp.Pointer<cpp.Void> return null;
+        function get_m_data():cpp.Pointer<cpp.Void> {
             if (__ptr == null) return cast cpp.Pointer.fromStar(__inst.m_data);
             else return cast cpp.Pointer.fromStar(__ptr.ref.m_data);
         }

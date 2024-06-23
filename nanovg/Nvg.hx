@@ -323,6 +323,9 @@ extern class Native_Nvg {
         var ptr:cpp.RawPointer<cpp.UInt8> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
         return _createImageRGBA(_ctx, _w, _h, _imageFlags, cast ptr);
     }
+    inline public static function createImageRGBAFromPtr(_ctx:cpp.Star<Native_NvgContext>, _w:Int, _h:Int, _imageFlags:cpp.Int32, _data:cpp.Star<cpp.Void>):Int {
+        return _createImageRGBA(_ctx, _w, _h, _imageFlags, cast _data);
+    }
 
     @:native("nvgUpdateImage")
     private static function _updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:cpp.RawPointer<cpp.UInt8>):Void;
