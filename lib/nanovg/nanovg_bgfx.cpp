@@ -1044,7 +1044,7 @@ _cleanup:
 	}
 
 	static void nvgRenderTriangles(void* _userPtr, struct NVGpaint* paint, NVGcompositeOperationState compositeOperation, struct NVGscissor* scissor,
-									   const struct NVGvertex* verts, int nverts)
+									   const struct NVGvertex* verts, int nverts, float fringe)
 	{
 		struct GLNVGcontext* gl = (struct GLNVGcontext*)_userPtr;
 		glnvg__flushIfNeeded(gl, nverts);
@@ -1064,7 +1064,7 @@ _cleanup:
 		// Fill shader
 		call->uniformOffset = glnvg__allocFragUniforms(gl, 1);
 		frag = nvg__fragUniformPtr(gl, call->uniformOffset);
-		glnvg__convertPaint(gl, frag, paint, scissor, 1.0f, 1.0f);
+		glnvg__convertPaint(gl, frag, paint, scissor, 1.0f, fringe);
 		frag->type = NSVG_SHADER_IMG;
 	}
 

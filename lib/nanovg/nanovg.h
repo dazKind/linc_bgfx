@@ -40,15 +40,14 @@ extern "C" {
 #define NVG_INIT_POINTS_SIZE 128
 #define NVG_INIT_PATHS_SIZE 16
 #define NVG_INIT_VERTS_SIZE 256
+
+#ifndef NVG_MAX_STATES
 #define NVG_MAX_STATES 32
+#endif
 
 #define NVG_KAPPA90 0.5522847493f	// Length proportional to radius of a cubic bezier handle for 90deg arcs.
 
 #define NVG_COUNTOF(arr) (sizeof(arr) / sizeof(0[arr]))
-
-// typedef struct NVGcontext NVGcontext;
-struct NVGcontext;
-
 
 struct NVGcolor {
 	union {
@@ -154,7 +153,7 @@ struct NVGtextRow {
 typedef struct NVGtextRow NVGtextRow;
 
 enum NVGimageFlags {
-	NVG_IMAGE_GENERATE_MIPMAPS	= 1<<0,     // Generate mipmaps during creation of the image.
+    NVG_IMAGE_GENERATE_MIPMAPS	= 1<<0,     // Generate mipmaps during creation of the image.
 	NVG_IMAGE_REPEATX			= 1<<1,		// Repeat image in X direction.
 	NVG_IMAGE_REPEATY			= 1<<2,		// Repeat image in Y direction.
 	NVG_IMAGE_FLIPY				= 1<<3,		// Flips (inverses) image in Y direction when rendered.
@@ -385,6 +384,14 @@ float nvgRadToDeg(float rad);
 // In addition you can upload your own image. The image loading is provided by stb_image.
 // The parameter imageFlags is combination of flags defined in NVGimageFlags.
 
+// Creates image by loading it from the disk from specified file name.
+// Returns handle to the image.
+int nvgCreateImage(NVGcontext* ctx, const char* filename, int imageFlags);
+
+// Creates image by loading it from the specified chunk of memory.
+// Returns handle to the image.
+int nvgCreateImageMem(NVGcontext* ctx, int imageFlags, unsigned char* data, int ndata);
+
 // Creates image from specified image data.
 // Returns handle to the image.
 int nvgCreateImageRGBA(NVGcontext* ctx, int w, int h, int imageFlags, const unsigned char* data);
@@ -547,7 +554,7 @@ void nvgStroke(NVGcontext* ctx);
 //		const char* txt = "Text me up.";
 //		nvgTextBounds(vg, x,y, txt, NULL, bounds);
 //		nvgBeginPath(vg);
-//		nvgRoundedRect(vg, bounds[0],bounds[1], bounds[2]-bounds[0], bounds[3]-bounds[1]);
+//		nvgRect(vg, bounds[0],bounds[1], bounds[2]-bounds[0], bounds[3]-bounds[1]);
 //		nvgFill(vg);
 //
 // Note: currently only solid color fill is supported for text.
@@ -556,9 +563,15 @@ void nvgStroke(NVGcontext* ctx);
 // Returns handle to the font.
 int nvgCreateFont(NVGcontext* ctx, const char* name, const char* filename);
 
+// fontIndex specifies which font face to load from a .ttf/.ttc file.
+int nvgCreateFontAtIndex(NVGcontext* ctx, const char* name, const char* filename, const int fontIndex);
+
 // Creates font by loading it from the specified memory chunk.
 // Returns handle to the font.
 int nvgCreateFontMem(NVGcontext* ctx, const char* name, unsigned char* data, int ndata, int freeData);
+
+// fontIndex specifies which font face to load from a .ttf/.ttc file.
+int nvgCreateFontMemAtIndex(NVGcontext* ctx, const char* name, unsigned char* data, int ndata, int freeData, const int fontIndex);
 
 bool nvgFreeFont(NVGcontext* ctx, int font);
 
@@ -570,6 +583,12 @@ int nvgAddFallbackFontId(NVGcontext* ctx, int baseFont, int fallbackFont);
 
 // Adds a fallback font by name.
 int nvgAddFallbackFont(NVGcontext* ctx, const char* baseFont, const char* fallbackFont);
+
+// Resets fallback fonts by handle.
+void nvgResetFallbackFontsId(NVGcontext* ctx, int baseFont);
+
+// Resets fallback fonts by name.
+void nvgResetFallbackFonts(NVGcontext* ctx, const char* baseFont);
 
 // Sets the font size of current text style.
 void nvgFontSize(NVGcontext* ctx, float size);
@@ -670,11 +689,10 @@ struct NVGparams {
 	void (*renderFlush)(void* uptr);
 	void (*renderFill)(void* uptr, NVGpaint* paint, NVGcompositeOperationState compositeOperation, NVGscissor* scissor, float fringe, const float* bounds, const NVGpath* paths, int npaths);
 	void (*renderStroke)(void* uptr, NVGpaint* paint, NVGcompositeOperationState compositeOperation, NVGscissor* scissor, float fringe, float strokeWidth, const NVGpath* paths, int npaths);
-	void (*renderTriangles)(void* uptr, NVGpaint* paint, NVGcompositeOperationState compositeOperation, NVGscissor* scissor, const NVGvertex* verts, int nverts);
+	void (*renderTriangles)(void* uptr, NVGpaint* paint, NVGcompositeOperationState compositeOperation, NVGscissor* scissor, const NVGvertex* verts, int nverts, float fringe);
 	void (*renderDelete)(void* uptr);
 };
 typedef struct NVGparams NVGparams;
-
 
 struct NVGstate {
 	NVGcompositeOperationState compositeOperation;
