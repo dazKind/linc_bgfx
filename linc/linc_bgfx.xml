@@ -31,6 +31,7 @@
     <section if="windows">
         <compiler exe="cl.exe" id="MSVC">
             <flag value="/Zc:__cplusplus"/>
+            <flag value="/Zc:preprocessor"/>
             <flag value="/std:c++17"/>
             <flag if="debug" value="-DBX_CONFIG_DEBUG=1"/>
             <flag unless="debug" value="-DBX_CONFIG_DEBUG=0"/>
