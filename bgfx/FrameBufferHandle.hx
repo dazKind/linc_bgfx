@@ -9,6 +9,8 @@ package bgfx;
 extern class Native_FrameBufferHandle {
     public function new();
     var idx:cpp.UInt16; // uint16
+
+    inline function isValid():Bool return idx != 65535;
 }
 #if (scriptable || cppia)
     class CppiaFrameBufferHandle {
@@ -20,7 +22,7 @@ extern class Native_FrameBufferHandle {
         function set_idx(_v:cpp.UInt16):cpp.UInt16 return __ptr == null ? __inst.idx = _v : __ptr.ref.idx = _v;
         function get_idx():cpp.UInt16 return __ptr == null ? __inst.idx : __ptr.ref.idx;
         
-        
+        inline function isValid():Bool return idx != 65535;
     }
     typedef FrameBufferHandle = CppiaFrameBufferHandle;
 #else

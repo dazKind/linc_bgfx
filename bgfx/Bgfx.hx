@@ -8,6 +8,8 @@ import bgfx.*;
 @:build(linc.Linc.xml("bgfx"))
 extern class Native_Bgfx {
 
+    inline public static var INVALID = 65535;
+
     @:include("linc_bgfx.h")
     @:native("linc_bgfx::getBgfxCallback")
     extern public static function getCallback():cpp.Star<cpp.Void>;
@@ -2117,6 +2119,8 @@ extern class Native_Bgfx {
 #if (scriptable || cppia)
     class CppiaBgfx {
 
+        inline public static var INVALID = 65535;
+
         public static function getCallback():cpp.Pointer<cpp.Void> { return cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }
 
         /**
@@ -2948,7 +2952,7 @@ extern class Native_Bgfx {
         **/
         public static function createTexture2d(_width:cpp.UInt16, _height:cpp.UInt16, _hasMips:Bool, _numLayers:cpp.UInt16, _format:TextureFormat, _flags:cpp.UInt64, _mem:Memory):TextureHandle {
             final res = Type.createEmptyInstance(TextureHandle);
-            res.__inst = Native_Bgfx.createTexture2d(_width, _height, _hasMips, _numLayers, cast _format, _flags, _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst);
+            res.__inst = Native_Bgfx.createTexture2d(_width, _height, _hasMips, _numLayers, cast _format, _flags, _mem != null ? _mem.__ptr != null ? cast _mem.__ptr : _mem.__inst : untyped __cpp__('nullptr'));
             return res;
         }
         
@@ -3203,9 +3207,13 @@ extern class Native_Bgfx {
         @param: _destroyTexture : Bool - If true, textures will be destroyed when
         @param: frame buffer is destroyed.
         **/
-        public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:Attachment, _destroyTexture:Bool):FrameBufferHandle {
+        public static function createFrameBufferFromAttachment(_num:cpp.UInt8, _attachment:cpp.Pointer<bgfx.Attachment.Native_Attachment>, _destroyTexture:Bool):FrameBufferHandle {
             final res = Type.createEmptyInstance(FrameBufferHandle);
-            res.__inst = Native_Bgfx.createFrameBufferFromAttachment(_num, _attachment.__ptr != null ? cast _attachment.__ptr : _attachment.__inst, _destroyTexture);
+            res.__inst = Native_Bgfx.createFrameBufferFromAttachment(
+                _num,
+                cast _attachment,
+                _destroyTexture
+            );
             return res;
         }
         

@@ -48,8 +48,10 @@ extern class Native_Attachment {
         
     }
     typedef Attachment = CppiaAttachment;
+    typedef AttachmentArray = Array<Attachment>;
 #else
     typedef Attachment = Native_Attachment;
+    typedef AttachmentArray = Array<cpp.Struct<Attachment>>;
 #end
 
 
