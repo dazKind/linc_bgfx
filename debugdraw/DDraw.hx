@@ -228,8 +228,10 @@ extern class Native_DebugDrawEncoder {
             __inst.drawOrb(_x, _y, _z, _radius, cast _highlight);
     }
     typedef DDrawEncoder = CppiaDebugDrawEncoder;
+    typedef DDrawEncoderRef = CppiaDebugDrawEncoder;
 #else
     typedef DDrawEncoder = Native_DebugDrawEncoder;
+    typedef DDrawEncoderRef = cpp.Reference<Native_DebugDrawEncoder>;
 #end
 
 
