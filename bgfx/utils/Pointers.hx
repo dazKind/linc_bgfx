@@ -26,6 +26,10 @@ class Pointers {
         return cast cpp.NativeArray.getBase(_ar).getBase();
 
     #if !(cppia || scriptable) inline #end
+    public static function float32ArrayToConstVoidPtr(_ar:Array<cpp.Float32>):cpp.ConstStar<cpp.Void>
+        return cast cpp.NativeArray.getBase(_ar).getBase();
+
+    #if !(cppia || scriptable) inline #end
     public static function float32ArrayToVoidPointer(_ar:Array<cpp.Float32>):cpp.Pointer<cpp.Void>
         return cast cpp.Pointer.fromStar(cpp.NativeArray.getBase(_ar).getBase());
 

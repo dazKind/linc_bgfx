@@ -44,8 +44,10 @@ extern class Native_VertexLayout {
         
     }
     typedef VertexLayout = CppiaVertexLayout;
+    typedef VertexLayoutStruct = VertexLayout;
 #else
     typedef VertexLayout = Native_VertexLayout;
+    typedef VertexLayoutStruct = cpp.Struct<Native_VertexLayout>;
 #end
 
 

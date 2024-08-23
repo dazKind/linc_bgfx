@@ -366,35 +366,8 @@ extern class Native_ImageContainer {
 	var m_pvr3:Bool;
 	var m_srgb:Bool;
 }
-#if (scriptable || cppia)
-    @:build(linc.LincCppia.wrapStructExtern('Native_ImageContainer'))
-    class CppiaImageContainer {
-    	public var m_data(get, set):cpp.Pointer<cpp.Void>;
-        function set_m_data(_v:cpp.Pointer<cpp.Void>):cpp.Pointer<cpp.Void> return null;
-        function get_m_data():cpp.Pointer<cpp.Void> {
-            if (__ptr == null) return cast cpp.Pointer.fromStar(__inst.m_data);
-            else return cast cpp.Pointer.fromStar(__ptr.ref.m_data);
-        }
+typedef ImageContainerPtr = cpp.Pointer<Native_ImageContainer>;
 
-        public var m_format(get, set):TextureFormat;
-        function set_m_format(_v:TextureFormat):TextureFormat { 
-            if (__ptr != null) __ptr.ref.m_format = (cast _v:Native_TextureFormat); 
-            else __inst.m_format = (cast _v:Native_TextureFormat); 
-            return _v; 
-        }
-        function get_m_format():TextureFormat {
-            return __ptr != null ? cast(__ptr.ref.m_format, TextureFormat) : cast(__inst.m_format, TextureFormat);
-        }
-    }
-    typedef ImageContainer = CppiaImageContainer;
-#else
-    /*
-        mib: using pointers here caused such a brainfuck! 
-        But given that we only use this in a limited scope below when we load & release 
-        the image, we keep it since it's a valid solution albeit completely different types...
-    */
-    typedef ImageContainer = cpp.Star<Native_ImageContainer>;
-#end
 
 @:include("linc_bgfx.h")
 extern class Native_Bimg {
@@ -417,14 +390,12 @@ extern class Native_Bimg {
 #if (scriptable || cppia)
     // @:build(linc.LincCppia.wrapMainExtern('Native_Bimg'))
     class CppiaBimg {
-    	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainer {
-    		final res = Type.createEmptyInstance(ImageContainer);
-    		res.__ptr = Native_Bimg.imageParse(_src, _size, _format);
-    		return res;
+    	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainerPtr {
+    		return Native_Bimg.imageParse(_src, _size, _format);
         }
 
-        public static function imageFree(_imgCon:ImageContainer):Void
-        	Native_Bimg.imageFree(_imgCon.__ptr);
+        public static function imageFree(_imgCon:ImageContainerPtr):Void
+        	Native_Bimg.imageFree(_imgCon);
 
         public static function imageCheckerboard(_dst:cpp.Pointer<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void
         	Native_Bimg.imageCheckerboard(cast _dst, _w, _h, _step, _c0, _c1);

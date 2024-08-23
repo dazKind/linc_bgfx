@@ -8,7 +8,10 @@ package bgfx;
 @:native('bgfx_uniform_info_t')
 extern class Native_UniformInfo {
     public function new();
-    var name:cpp.RawPointer<cpp.Char>; // char[256]
+    private var name:cpp.RawPointer<cpp.Char>; // char[256]
+    
+    inline public function getName():String return cpp.NativeString.fromPointer(cast name);
+
     var type:bgfx.UniformType.Native_UniformType; // UniformType::Enum
     var num:cpp.UInt16; // uint16_t
 }
@@ -18,12 +21,13 @@ extern class Native_UniformInfo {
         public var __inst:Native_UniformInfo = new Native_UniformInfo();
         public function new() {}
         
-        public var name(get, set):cpp.Pointer<cpp.Char>;
-        function set_name(_v:cpp.Pointer<cpp.Char>):cpp.Pointer<cpp.Char> return null;
-        function get_name():cpp.Pointer<cpp.Char> {
-            if (__ptr == null) return cpp.Pointer.fromRaw(__inst.name);
-            else return cpp.Pointer.fromRaw(__ptr.ref.name);
-        }
+        // public var name(get, set):String;
+        // function set_name(_v:String):String return null;
+        // function get_name():String {
+        //     if (__ptr == null) return __inst.getName();
+        //     else return __ptr.ref.getName();
+        // }
+        public function getName():String return __ptr == null ? __inst.getName() : __ptr.ref.getName();
         
         public var type(get, set):UniformType;
         function set_type(_v:UniformType):UniformType { __inst.type = (cast _v:bgfx.UniformType.Native_UniformType); return _v; }

@@ -567,8 +567,28 @@ extern class Native_Bgfx {
     @param: _uniforms : cpp.Star<bgfx.UniformHandle.Native_UniformHandle> - UniformHandle array where data will be stored.
     @param: _max : cpp.UInt16 - Maximum capacity of array.
     **/
-    @:native("bgfx_get_shader_uniforms")
-    extern public static function getShaderUniforms(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _uniforms:cpp.Star<bgfx.UniformHandle.Native_UniformHandle>, _max:cpp.UInt16):cpp.UInt16;
+    // @:native("bgfx_get_shader_uniforms")
+    // extern public static function getShaderUniforms(_handle:bgfx.ShaderHandle.Native_ShaderHandle, _uniforms:cpp.Star<bgfx.UniformHandle.Native_UniformHandle>, _max:cpp.UInt16):cpp.UInt16;
+
+
+    /**
+    Returns an array of uniforms handles used inside a shader.
+    @remarks
+      Only non-predefined uniforms are returned.
+    @param: _handle : bgfx.ShaderHandle.Native_ShaderHandle - Shader handle.
+    **/
+    inline public static function getShaderUniforms(_handle:bgfx.ShaderHandle.Native_ShaderHandle):Array<cpp.Struct<bgfx.UniformHandle.Native_UniformHandle>> {
+        var count:cpp.UInt16 = 0;
+        var result:Array<cpp.Struct<bgfx.UniformHandle.Native_UniformHandle>> = [];
+        untyped __cpp__("
+            bgfx_uniform_handle_t __handles[64];
+            {0} = bgfx_get_shader_uniforms({1}, __handles, 64);
+            for (int i = 0; i < {0}; i++) {
+                {2}->push(::cpp::Struct<bgfx_uniform_handle_t>(__handles[i]));
+            }
+            ", count, _handle, result);
+        return result;
+    }
 
     /**
     Set shader debug name.
@@ -2805,15 +2825,20 @@ extern class Native_Bgfx {
         
         
         /**
-        Returns the number of uniforms and uniform handles used inside a shader.
+        Returns the uniforms handles used inside a shader.
         @remarks
           Only non-predefined uniforms are returned.
         @param: _handle : bgfx.ShaderHandle.Native_ShaderHandle - Shader handle.
-        @param: _uniforms : cpp.Star<bgfx.UniformHandle.Native_UniformHandle> - UniformHandle array where data will be stored.
-        @param: _max : cpp.UInt16 - Maximum capacity of array.
         **/
-        public static function getShaderUniforms(_handle:ShaderHandle, _uniforms:UniformHandle, _max:cpp.UInt16):cpp.UInt16 {
-            return Native_Bgfx.getShaderUniforms(_handle.__inst, _uniforms.__ptr != null ? cast _uniforms.__ptr : _uniforms.__inst, _max);
+        public static function getShaderUniforms(_handle:ShaderHandle):Array<UniformHandle> {
+            var tmp = Native_Bgfx.getShaderUniforms(_handle.__inst);
+            var res = [];
+            for (t in tmp) {
+                var r = new UniformHandle();
+                r.__inst = t;
+                res.push(r);
+            }
+            return res;
         }
         
         

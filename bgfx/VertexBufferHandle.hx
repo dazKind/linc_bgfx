@@ -24,7 +24,7 @@ extern class Native_VertexBufferHandle {
     }
     typedef VertexBufferHandle = CppiaVertexBufferHandle;
 #else
-    typedef VertexBufferHandle = Native_VertexBufferHandle;
+    typedef VertexBufferHandle = cpp.Struct<Native_VertexBufferHandle>;
 #end
 
 

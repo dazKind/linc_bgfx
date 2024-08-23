@@ -38,5 +38,5 @@ extern class Native_UniformTypeImpl { }
     @:build(linc.LincCppia.wrapEnumExtern('Native_UniformType'))
     enum abstract UniformType(Int) from Int to Int {}
 #else
-    typedef UniformType = Native_UniformType;
+    typedef UniformType = cpp.Struct<Native_UniformType>;
 #end

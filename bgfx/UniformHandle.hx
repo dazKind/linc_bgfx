@@ -23,8 +23,10 @@ extern class Native_UniformHandle {
         
     }
     typedef UniformHandle = CppiaUniformHandle;
+    typedef UniformHandleStruct = CppiaUniformHandle;
 #else
     typedef UniformHandle = Native_UniformHandle;
+    typedef UniformHandleStruct = cpp.Struct<Native_UniformHandle>;
 #end
 
 

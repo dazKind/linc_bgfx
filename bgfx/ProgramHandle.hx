@@ -9,6 +9,8 @@ package bgfx;
 extern class Native_ProgramHandle {
     public function new();
     var idx:cpp.UInt16; // uint16
+
+    inline public function isValid():Bool return idx != 65535;
 }
 #if (scriptable || cppia)
     class CppiaProgramHandle {
@@ -20,11 +22,13 @@ extern class Native_ProgramHandle {
         function set_idx(_v:cpp.UInt16):cpp.UInt16 return __ptr == null ? __inst.idx = _v : __ptr.ref.idx = _v;
         function get_idx():cpp.UInt16 return __ptr == null ? __inst.idx : __ptr.ref.idx;
         
-        
+        inline public function isValid():Bool return idx != 65535;
     }
     typedef ProgramHandle = CppiaProgramHandle;
+    typedef ProgramHandleStruct = CppiaProgramHandle;
 #else
     typedef ProgramHandle = Native_ProgramHandle;
+    typedef ProgramHandleStruct = cpp.Struct<Native_ProgramHandle>;
 #end
 
 

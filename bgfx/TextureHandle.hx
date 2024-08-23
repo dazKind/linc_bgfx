@@ -23,8 +23,10 @@ extern class Native_TextureHandle {
         
     }
     typedef TextureHandle = CppiaTextureHandle;
+    typedef TextureHandleStruct = CppiaTextureHandle;
 #else
     typedef TextureHandle = Native_TextureHandle;
+    typedef TextureHandleStruct = cpp.Struct<Native_TextureHandle>;
 #end
 
 

@@ -23,8 +23,10 @@ extern class Native_ShaderHandle {
         
     }
     typedef ShaderHandle = CppiaShaderHandle;
+    typedef ShaderHandleStruct = ShaderHandle;
 #else
     typedef ShaderHandle = Native_ShaderHandle;
+    typedef ShaderHandleStruct = cpp.Struct<Native_ShaderHandle>;
 #end
 
 
