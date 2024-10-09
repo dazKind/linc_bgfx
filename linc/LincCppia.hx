@@ -43,7 +43,7 @@ class LincCppia {
                 if (_t.get().name.contains("Star"))
                     _t.get().name;
                 else
-                    null;
+                    return null;
             case TInst(_t, _p):
                 if (_t.get().name.contains("Star"))
                     _t.get().name;
@@ -74,7 +74,9 @@ class LincCppia {
             var classMeta = _class.meta;
 
             // fail if we are lacking the metadata
-            if (classMeta.has(':lincCppiaDef') == false)
+            if (classMeta.has(':lincCppiaIgnore'))
+                return null;
+            else if (classMeta.has(':lincCppiaDef') == false)
                 Context.fatalError("missing metadata :lincCppiaDef on " + _class.name, Context.currentPos());
 
             var meta = classMeta.extract(':lincCppiaDef')[0];

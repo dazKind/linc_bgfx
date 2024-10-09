@@ -110,8 +110,8 @@ namespace linc_nanovg {
         return outArray;
     }
 
-    Array<Array<Float>> nvgTextGlyphPositionsHelper(NVGcontext* ctx, float _x, float _y, String _string, int _maxPositions) {
-        Array<Array<Float>> outArray = Array_obj<Array<Float>>::__new(0, 1);
+    Array<Array<float>> nvgTextGlyphPositionsHelper(NVGcontext* ctx, float _x, float _y, String _string, int _maxPositions) {
+        Array<Array<float>> outArray = Array_obj<Array<float>>::__new(0, 1);
         NVGglyphPosition *positions = (NVGglyphPosition*)calloc(_maxPositions, sizeof(NVGglyphPosition));
         size_t length = _hx_utf8_length(_string);
         const char* start = _string.c_str();
@@ -119,7 +119,7 @@ namespace linc_nanovg {
         int res = nvgTextGlyphPositions(ctx, _x, _y, start, end, positions, _maxPositions);
         for (int i = 0; i < length; i++) {
             NVGglyphPosition p = positions[i];
-            Array<Float> out = Array_obj<Float>::__new(0, 1);
+            Array<float> out = Array_obj<float>::__new(0, 1);
             out->push(p.x);
             out->push(p.minx);
             out->push(p.maxx);

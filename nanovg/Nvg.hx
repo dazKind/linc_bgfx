@@ -57,6 +57,13 @@ class NvgImageFlags {
     inline public static var IMAGE_NODELETE:Int         = 1<<16;
 }
 
+@:lincCppiaIgnore
+class TextMetrics { 
+    public var ascender:cpp.Float32 = 0.0;
+    public var descender:cpp.Float32 = 0.0;
+    public var lineh:cpp.Float32 = 0.0;
+    public function new() {}
+}
 
 @:include("nanovg.h")
 @:unreflective
@@ -66,10 +73,12 @@ extern class Native_NvgContext {
     public function new();
 }
 #if (scriptable || cppia)
+    typedef NvgContextPointer = cpp.Pointer<Native_NvgContext>;
     typedef NvgContextPtr = cpp.Pointer<Native_NvgContext>;
     @:build(linc.LincCppia.wrapStructExtern('Native_NvgContext'))
     class NvgContext {}
 #else
+    typedef NvgContextPointer = cpp.Pointer<Native_NvgContext>;
     typedef NvgContextPtr = cpp.Star<Native_NvgContext>;
     typedef NvgContext = Native_NvgContext;
 #end
@@ -117,25 +126,39 @@ extern class Native_NvgPaint {
     typedef NvgPaint = Native_NvgPaint;
 #end
 
+@:forward
+abstract NvgGlyphPosition(Array<cpp.Float32>) from Array<cpp.Float32> to Array<cpp.Float32> {
+    public var x(get, set):cpp.Float32;
+    inline function get_x() return this[0];
+    inline function set_x(_v:cpp.Float32) {this[0] = _v; return _v;}
 
-@:include("nanovg.h")
-@:structAccess
-@:unreflective
-@:native("NVGglyphPosition")
-@:lincCppiaDef('NvgGlyphPosition', 'struct')
-extern class Native_NvgGlyphPosition {
-    public function new();
-    public var str:cpp.ConstCharStar;
-    public var x:cpp.Float32;
-    public var minx:cpp.Float32;
-    public var maxx:cpp.Float32;
+    public var minx(get, set):cpp.Float32;
+    inline function get_minx() return this[1];
+    inline function set_minx(_v:cpp.Float32) {this[1] = _v; return _v;}
+
+    public var maxx(get, set):cpp.Float32;
+    inline function get_maxx() return this[2];
+    inline function set_maxx(_v:cpp.Float32) {this[2] = _v; return _v;}
 }
-#if (scriptable || cppia)
-    @:build(linc.LincCppia.wrapStructExtern('Native_NvgGlyphPosition'))
-    class NvgGlyphPosition {}
-#else
-    typedef NvgGlyphPosition = Native_NvgGlyphPosition;
-#end
+
+// @:include("nanovg.h")
+// @:structAccess
+// @:unreflective
+// @:native("NVGglyphPosition")
+// @:lincCppiaDef('NvgGlyphPosition', 'struct')
+// extern class Native_NvgGlyphPosition {
+//     public function new();
+//     public var str:cpp.ConstCharStar;
+//     public var x:cpp.Float32;
+//     public var minx:cpp.Float32;
+//     public var maxx:cpp.Float32;
+// }
+// #if (scriptable || cppia)
+//     @:build(linc.LincCppia.wrapStructExtern('Native_NvgGlyphPosition'))
+//     class NvgGlyphPosition {}
+// #else
+//     typedef NvgGlyphPosition = Native_NvgGlyphPosition;
+// #end
 
 @:include("nanovg.h")
 @:structAccess
@@ -484,14 +507,20 @@ extern class Native_Nvg {
     // Measured values are returned in local coordinate space.
     // @:native("nvgTextGlyphPositions")
     // public static function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _end:String, _positions:cpp.Star<Native_NvgGlyphPosition>, _maxPositions:Int):Int;
-    public static inline function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _maxPositions:Int):Array<Array<Float>> {
+    public static inline function textGlyphPositions(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _string:String, _maxPositions:Int):Array<NvgGlyphPosition> {
         return untyped __cpp__('linc_nanovg::nvgTextGlyphPositionsHelper({0}, {1}, {2}, {3}, {4})', _ctx, _x, _y, _string, _maxPositions);
     }
 
     // Returns the vertical metrics based on the current text style.
     // Measured values are returned in local coordinate space.
-    @:native("nvgTextMetrics")
-    public static function textMetrics(_ctx:cpp.Star<Native_NvgContext>, _ascender:cpp.Star<cpp.Float32>, _descender:cpp.Star<cpp.Float32>, _lineh:cpp.Star<cpp.Float32>):Void;
+    public static inline function textMetrics(_ctx:cpp.Star<Native_NvgContext>):TextMetrics {
+        final res = new TextMetrics();
+        var a = cpp.Pointer.addressOf(res.ascender);
+        var d = cpp.Pointer.addressOf(res.descender);
+        var l = cpp.Pointer.addressOf(res.lineh);
+        untyped __cpp__('nvgTextMetrics({0}, {1}, {2}, {3})', _ctx, a, d, l);
+        return res;
+    }
 
     // Breaks the specified text into lines. If end is specified only the sub-string will be used.
     // White space is stripped at the beginning of the rows, the text is split at word boundaries or when new-line characters are encountered.
