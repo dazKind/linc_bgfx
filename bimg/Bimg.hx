@@ -318,7 +318,7 @@ extern class Native_TextureFormatImpl { }
 
 @:unreflective
 extern enum abstract Native_Orientation(Native_OrientationImpl) {
-    
+
     @:native("Orientation::Enum::R0") var R0;
     @:native("Orientation::Enum::R90") var R90;
     @:native("Orientation::Enum::R180") var R180;
@@ -327,7 +327,7 @@ extern enum abstract Native_Orientation(Native_OrientationImpl) {
     @:native("Orientation::Enum::HFlipR90") var HFlipR90;
     @:native("Orientation::Enum::HFlipR270") var HFlipR270;
     @:native("Orientation::Enum::VFlip") var VFlip;
-    
+
 }
 @:unreflective
 @:native('Orientation::Enum')
@@ -345,28 +345,125 @@ extern class Native_OrientationImpl { }
 @:structAccess
 @:unreflective
 @:native("::bimg::ImageContainer")
-@:lincCppiaDef('ImageContainer', 'struct')
 extern class Native_ImageContainer {
     public function new();
     // bx::AllocatorI* m_allocator;
-	@:linc_ignore var m_data:cpp.Star<cpp.Void>;
-	@:linc_ignore var m_format:Native_TextureFormat;
-	var m_orientation:Native_Orientation;
-	var m_size:cpp.UInt32;
-	var m_offset:cpp.UInt32;
-	var m_width:cpp.UInt32;
-	var m_height:cpp.UInt32;
-	var m_depth:cpp.UInt32;
-	var m_numLayers:cpp.UInt16;
-	var m_numMips:cpp.UInt8;
-	var m_hasAlpha:Bool;
-	var m_cubeMap:Bool;
-	var m_ktx:Bool;
-	var m_ktxLE:Bool;
-	var m_pvr3:Bool;
-	var m_srgb:Bool;
+    var m_data:cpp.Star<cpp.Void>;
+    var m_format:Native_TextureFormat;
+    var m_orientation:Native_Orientation;
+    var m_size:cpp.UInt32;
+    var m_offset:cpp.UInt32;
+    var m_width:cpp.UInt32;
+    var m_height:cpp.UInt32;
+    var m_depth:cpp.UInt32;
+    var m_numLayers:cpp.UInt16;
+    var m_numMips:cpp.UInt8;
+    var m_hasAlpha:Bool;
+    var m_cubeMap:Bool;
+    var m_ktx:Bool;
+    var m_ktxLE:Bool;
+    var m_pvr3:Bool;
+    var m_srgb:Bool;
+
 }
-typedef ImageContainerPtr = cpp.Pointer<Native_ImageContainer>;
+#if (scriptable || cppia)
+    class CppiaImageContainer {
+        public var __ptr:cpp.Pointer<Native_ImageContainer> = null;
+        public var __inst:Native_ImageContainer = new Native_ImageContainer();
+        public function new() {}
+
+        public var m_data(get, set):cpp.Pointer<cpp.Void>;
+        function set_m_data(_v:cpp.Pointer<cpp.Void>):cpp.Pointer<cpp.Void> {
+            // return __ptr == null ? __inst.m_data = cast(_v, cpp.Star<cpp.Void>) : __ptr.ref.m_data = cast _v;
+            if (__ptr == null)
+                __inst.m_data = cast _v;
+            else
+                __ptr.ref.m_data = cast _v;
+            return _v;
+        }
+        function get_m_data():cpp.Pointer<cpp.Void> return __ptr == null ? cast __inst.m_data : cast __ptr.ref.m_data;
+
+
+        public var m_format(get, set):TextureFormat;
+        function set_m_format(_v:TextureFormat):TextureFormat {
+            if (__ptr == null)
+                __inst.m_format = cast _v;
+            else
+                __ptr.ref.m_format = cast _v;
+            return _v;
+        }
+        function get_m_format():TextureFormat
+            return __ptr == null ? cast(__inst.m_format, TextureFormat) : cast(__ptr.ref.m_format, TextureFormat);
+
+        public var m_orientation(get, set):Orientation;
+        function set_m_orientation(_v:Orientation):Orientation {
+            if (__ptr == null)
+                __inst.m_orientation = cast _v;
+            else
+                __ptr.ref.m_orientation = cast _v;
+            return _v;
+        }
+        function get_m_orientation():Orientation
+            return __ptr == null ? cast(__inst.m_orientation, Orientation) : cast(__ptr.ref.m_orientation, Orientation);
+
+        public var m_size(get, set):Int;
+        function set_m_size(_v:Int):Int return __ptr == null ? __inst.m_size = _v : __ptr.ref.m_size = _v;
+        function get_m_size():Int return __ptr == null ? __inst.m_size : __ptr.ref.m_size;
+
+        public var m_offset(get, set):Int;
+        function set_m_offset(_v:Int):Int return __ptr == null ? __inst.m_offset = _v : __ptr.ref.m_offset = _v;
+        function get_m_offset():Int return __ptr == null ? __inst.m_offset : __ptr.ref.m_offset;
+
+        public var m_width(get, set):Int;
+        function set_m_width(_v:Int):Int return __ptr == null ? __inst.m_width = _v : __ptr.ref.m_width = _v;
+        function get_m_width():Int return __ptr == null ? __inst.m_width : __ptr.ref.m_width;
+
+        public var m_height(get, set):Int;
+        function set_m_height(_v:Int):Int return __ptr == null ? __inst.m_height = _v : __ptr.ref.m_height = _v;
+        function get_m_height():Int return __ptr == null ? __inst.m_height : __ptr.ref.m_height;
+
+        public var m_depth(get, set):Int;
+        function set_m_depth(_v:Int):Int return __ptr == null ? __inst.m_depth = _v : __ptr.ref.m_depth = _v;
+        function get_m_depth():Int return __ptr == null ? __inst.m_depth : __ptr.ref.m_depth;
+
+        public var m_numLayers(get, set):Int;
+        function set_m_numLayers(_v:Int):Int return __ptr == null ? __inst.m_numLayers = _v : __ptr.ref.m_numLayers = _v;
+        function get_m_numLayers():Int return __ptr == null ? __inst.m_numLayers : __ptr.ref.m_numLayers;
+
+        public var m_numMips(get, set):Int;
+        function set_m_numMips(_v:Int):Int return __ptr == null ? __inst.m_numMips = _v : __ptr.ref.m_numMips = _v;
+        function get_m_numMips():Int return __ptr == null ? __inst.m_numMips : __ptr.ref.m_numMips;
+
+        public var m_hasAlpha(get, set):Bool;
+        function set_m_hasAlpha(_v:Bool):Bool return __ptr == null ? __inst.m_hasAlpha = _v : __ptr.ref.m_hasAlpha = _v;
+        function get_m_hasAlpha():Bool return __ptr == null ? __inst.m_hasAlpha : __ptr.ref.m_hasAlpha;
+
+        public var m_cubeMap(get, set):Bool;
+        function set_m_cubeMap(_v:Bool):Bool return __ptr == null ? __inst.m_cubeMap = _v : __ptr.ref.m_cubeMap = _v;
+        function get_m_cubeMap():Bool return __ptr == null ? __inst.m_cubeMap : __ptr.ref.m_cubeMap;
+
+        public var m_ktx(get, set):Bool;
+        function set_m_ktx(_v:Bool):Bool return __ptr == null ? __inst.m_ktx = _v : __ptr.ref.m_ktx = _v;
+        function get_m_ktx():Bool return __ptr == null ? __inst.m_ktx : __ptr.ref.m_ktx;
+
+        public var m_ktxLE(get, set):Bool;
+        function set_m_ktxLE(_v:Bool):Bool return __ptr == null ? __inst.m_ktxLE = _v : __ptr.ref.m_ktxLE = _v;
+        function get_m_ktxLE():Bool return __ptr == null ? __inst.m_ktxLE : __ptr.ref.m_ktxLE;
+
+        public var m_pvr3(get, set):Bool;
+        function set_m_pvr3(_v:Bool):Bool return __ptr == null ? __inst.m_pvr3 = _v : __ptr.ref.m_pvr3 = _v;
+        function get_m_pvr3():Bool return __ptr == null ? __inst.m_pvr3 : __ptr.ref.m_pvr3;
+
+        public var m_srgb(get, set):Bool;
+        function set_m_srgb(_v:Bool):Bool return __ptr == null ? __inst.m_srgb = _v : __ptr.ref.m_srgb = _v;
+        function get_m_srgb():Bool return __ptr == null ? __inst.m_srgb : __ptr.ref.m_srgb;
+    }
+    typedef ImageContainer = CppiaImageContainer;
+    typedef ImageContainerStruct = CppiaImageContainer;
+#else
+    typedef ImageContainer = cpp.Star<Native_ImageContainer>;
+    typedef ImageContainerStruct = cpp.Struct<Native_ImageContainer>;
+#end
 
 
 @:include("linc_bgfx.h")
@@ -374,28 +471,29 @@ extern class Native_Bimg {
 
 	@:native("linc_bgfx::bimgImageParse")
     private static function _imageParse(_src:cpp.ConstStar<cpp.Void>, _size:cpp.Int32, _format:cpp.UInt32):cpp.Star<Native_ImageContainer>;
-    inline public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):cpp.Pointer<Native_ImageContainer> {
+    inline public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):cpp.Star<Native_ImageContainer> {
     	var ab = cpp.NativeArray.getBase(_src);
         var ptr:cpp.RawPointer<cpp.Void> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
-        return cpp.Pointer.fromStar(_imageParse(cast ptr, _size, (cast _format:cpp.UInt32)));
+        return _imageParse(cast ptr, _size, (cast _format:cpp.UInt32));
     }
 
 	@:native("bimg::imageFree")
-	extern public static function imageFree(_imgCon:cpp.Pointer<Native_ImageContainer>):Void;
+	extern public static function imageFree(_imgCon:cpp.Star<Native_ImageContainer>):Void;
 
 	@:native("bimg::imageCheckerboard")
 	extern public static function imageCheckerboard(_dst:cpp.Star<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void;
 }
 
 #if (scriptable || cppia)
-    // @:build(linc.LincCppia.wrapMainExtern('Native_Bimg'))
     class CppiaBimg {
-    	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainerPtr {
-    		return Native_Bimg.imageParse(_src, _size, _format);
+    	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainer {
+            var res = new ImageContainer();
+            res.__ptr = cpp.Pointer.fromStar(Native_Bimg.imageParse(_src, _size, _format));
+    		return res;
         }
 
-        public static function imageFree(_imgCon:ImageContainerPtr):Void
-        	Native_Bimg.imageFree(_imgCon);
+        public static function imageFree(_imgCon:ImageContainer):Void
+        	Native_Bimg.imageFree(cast _imgCon.__ptr);
 
         public static function imageCheckerboard(_dst:cpp.Pointer<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void
         	Native_Bimg.imageCheckerboard(cast _dst, _w, _h, _step, _c0, _c1);

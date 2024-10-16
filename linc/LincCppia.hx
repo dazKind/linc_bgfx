@@ -180,7 +180,7 @@ class LincCppia {
             // if (propName == 'myPtr') continue;
             var skip = false;
             for (m in f.meta.get()) {
-                if (m.name == ':linc_ignore')
+                if (m.name == ':lincCppiaIgnore')
                     skip = true;
             }
             if (skip)
@@ -300,9 +300,9 @@ class LincCppia {
 
 
         for (f in clsImpl.statics.get()) {
-            // trace(f.name);
+            // trace(f);
 
-            if (!f.isPublic) continue;
+            if (!f.isPublic || f.meta.has(":lincCppiaIgnore")) continue;
 
             switch (f.type) {
             	case TLazy(_):

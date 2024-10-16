@@ -141,25 +141,6 @@ abstract NvgGlyphPosition(Array<cpp.Float32>) from Array<cpp.Float32> to Array<c
     inline function set_maxx(_v:cpp.Float32) {this[2] = _v; return _v;}
 }
 
-// @:include("nanovg.h")
-// @:structAccess
-// @:unreflective
-// @:native("NVGglyphPosition")
-// @:lincCppiaDef('NvgGlyphPosition', 'struct')
-// extern class Native_NvgGlyphPosition {
-//     public function new();
-//     public var str:cpp.ConstCharStar;
-//     public var x:cpp.Float32;
-//     public var minx:cpp.Float32;
-//     public var maxx:cpp.Float32;
-// }
-// #if (scriptable || cppia)
-//     @:build(linc.LincCppia.wrapStructExtern('Native_NvgGlyphPosition'))
-//     class NvgGlyphPosition {}
-// #else
-//     typedef NvgGlyphPosition = Native_NvgGlyphPosition;
-// #end
-
 @:include("nanovg.h")
 @:structAccess
 @:unreflective
@@ -350,6 +331,13 @@ extern class Native_Nvg {
         return _createImageRGBA(_ctx, _w, _h, _imageFlags, cast _data);
     }
 
+    @:lincCppiaIgnore
+    inline public static function createBgfxTexture(_ctx:cpp.Star<Native_NvgContext>, _handle:bgfx.TextureHandle.Native_TextureHandle, _w:Int, _h:Int, _flags:Int):Int {
+        final res:Int = untyped __cpp__('nvgCreateBgfxTexture({0}, *(bgfx::TextureHandle*)&{1}, {2}, {3}, {4})',
+            _ctx, _handle, _w, _h, _flags);
+        return res;
+    }
+
     @:native("nvgUpdateImage")
     private static function _updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:cpp.RawPointer<cpp.UInt8>):Void;
     inline public static function updateImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int, _data:haxe.io.BytesData):Void {
@@ -367,7 +355,6 @@ extern class Native_Nvg {
 
     @:native("nvgDeleteImage")
     public static function deleteImage(_ctx:cpp.Star<Native_NvgContext>, _image:Int):Void;
-
 
     @:native("nvgLinearGradient")
     public static function linearGradient(_ctx:cpp.Star<Native_NvgContext>, _sx:cpp.Float32, _sy:cpp.Float32, _ex:cpp.Float32, _ey:cpp.Float32, _icol:Native_NvgColor, _ocol:Native_NvgColor):Native_NvgPaint;
@@ -541,7 +528,10 @@ extern class Native_Nvg {
 
 #if (scriptable || cppia)
     @:build(linc.LincCppia.wrapMainExtern('Native_Nvg'))
-    class Nvg {}
+    class Nvg {
+        public static function createBgfxTexture(_ctx:NvgContextPointer, _handle:bgfx.TextureHandle, _w:Int, _h:Int, _flags:Int):Int
+            return Native_Nvg.createBgfxTexture(cast _ctx, _handle.__inst, _w, _h, _flags);
+    }
 #else
     typedef Nvg = Native_Nvg;
 #end
