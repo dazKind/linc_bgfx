@@ -57,6 +57,34 @@ class NvgImageFlags {
     inline public static var IMAGE_NODELETE:Int         = 1<<16;
 }
 
+class NVGblendFactor {
+    inline public static var ZERO                   = 1<<0;
+    inline public static var ONE                    = 1<<1;
+    inline public static var SRC_COLOR              = 1<<2;
+    inline public static var ONE_MINUS_SRC_COLOR    = 1<<3;
+    inline public static var DST_COLOR              = 1<<4;
+    inline public static var ONE_MINUS_DST_COLOR    = 1<<5;
+    inline public static var SRC_ALPHA              = 1<<6;
+    inline public static var ONE_MINUS_SRC_ALPHA    = 1<<7;
+    inline public static var DST_ALPHA              = 1<<8;
+    inline public static var ONE_MINUS_DST_ALPHA    = 1<<9;
+    inline public static var SRC_ALPHA_SATURATE     = 1<<10;
+}
+
+class NVGcompositeOperation {
+    inline public static var SOURCE_OVER            = 0;
+    inline public static var SOURCE_IN              = 1;
+    inline public static var SOURCE_OUT             = 2;
+    inline public static var ATOP                   = 3;
+    inline public static var DESTINATION_OVER       = 4;
+    inline public static var DESTINATION_IN         = 5;
+    inline public static var DESTINATION_OUT        = 6;
+    inline public static var DESTINATION_ATOP       = 7;
+    inline public static var LIGHTER                = 8;
+    inline public static var COPY                   = 9;
+    inline public static var XOR                    = 10;
+}
+
 @:lincCppiaIgnore
 class TextMetrics { 
     public var ascender:cpp.Float32 = 0.0;
@@ -187,6 +215,15 @@ extern class Native_Nvg {
 
     @:native("nvgEndFrame")
     public static function endFrame(_ctx:cpp.Star<Native_NvgContext>):Void;
+
+    @:native("nvgGlobalCompositeOperation")
+    public static function globalCompositeOperation(_ctx:cpp.Star<Native_NvgContext>, _op:Int):Void;
+
+    @:native("nvgGlobalCompositeBlendFunc")
+    public static function globalCompositeBlendFunc(_ctx:cpp.Star<Native_NvgContext>, _sfactor:Int, _dfactor:Int):Void;
+
+    @:native("nvgGlobalCompositeBlendFuncSeparate")
+    public static function globalCompositeBlendFuncSeparate(_ctx:cpp.Star<Native_NvgContext>, _srcRGB:Int, _dstRGB:Int, _srcAlpha:Int, _dstAlpha:Int):Void;
 
     @:native("nvgRGB")
     public static function rgb(_r:UInt8, _g:UInt8, _b:UInt8):Native_NvgColor;
