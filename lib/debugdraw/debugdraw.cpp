@@ -1847,7 +1847,7 @@ struct DebugDrawEncoderImpl
 		}
 	}
 
-	void drawQuadSprite(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
+	void drawQuad(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
 	{
 		if (!isValid(_handle) )
 		{
@@ -1911,7 +1911,7 @@ struct DebugDrawEncoderImpl
 		++vertex;
 	}
 
-	void drawQuadTexture(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
+	void drawQuad(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
 	{
 		BX_UNUSED(_handle, _normal, _center, _size);
 	}
@@ -2508,14 +2508,14 @@ void DebugDrawEncoder::drawQuad(const bx::Vec3& _normal, const bx::Vec3& _center
 	DEBUG_DRAW_ENCODER(drawQuad(_normal, _center, _size) );
 }
 
-void DebugDrawEncoder::drawQuadSprite(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
+void DebugDrawEncoder::drawQuad(SpriteHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
 {
-	DEBUG_DRAW_ENCODER(drawQuadSprite(_handle, _normal, _center, _size) );
+	DEBUG_DRAW_ENCODER(drawQuad(_handle, _normal, _center, _size) );
 }
 
-void DebugDrawEncoder::drawQuadTexture(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
+void DebugDrawEncoder::drawQuad(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
 {
-	DEBUG_DRAW_ENCODER(drawQuadTexture(_handle, _normal, _center, _size) );
+	DEBUG_DRAW_ENCODER(drawQuad(_handle, _normal, _center, _size) );
 }
 
 void DebugDrawEncoder::drawCone(const bx::Vec3& _from, const bx::Vec3& _to, float _radius)

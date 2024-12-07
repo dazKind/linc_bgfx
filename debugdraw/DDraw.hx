@@ -140,7 +140,7 @@ extern class Native_DebugDrawEncoder {
     // @:native('drawQuad')
     inline public function drawQuad(_handle:cpp.Reference<Native_SpriteHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
         var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
-        untyped __cpp__('{0}.drawQuadSprite((SpriteHandle){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
+        untyped __cpp__('{0}.drawQuad((SpriteHandle){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
             ref, _handle, cpp.NativeArray.address(_normal, 0), cpp.NativeArray.address(_center, 0), _size);
     }
 
