@@ -21,6 +21,9 @@
 
 #define FONS_INVALID -1
 
+#include <vector>
+#include <list>
+
 enum FONSflags {
 	FONS_ZERO_TOPLEFT = 1,
 	FONS_ZERO_BOTTOMLEFT = 2,
@@ -281,10 +284,11 @@ struct FONScontext
 	float itw,ith;
 	unsigned char* texData;
 	int dirtyRect[4];
-	FONSfont** fonts;
+
+	std::vector<FONSfont*> *fonts;
+	std::list<int> *freeFonts;
+
 	FONSatlas* atlas;
-	int cfonts;
-	int nfonts;
 	float verts[FONS_VERTEX_COUNT*2];
 	float tcoords[FONS_VERTEX_COUNT*2];
 	unsigned int colors[FONS_VERTEX_COUNT];
@@ -298,6 +302,14 @@ struct FONScontext
 #ifdef FONS_USE_FREETYPE
 	FT_Library ftLibrary;
 #endif
+
+	std::vector<FONSfont*>& getFonts() {
+		return *fonts;
+	}
+
+	std::list<int>& getFreeFonts() {
+		return *freeFonts;
+	}
 };
 
 #ifdef FONS_USE_FREETYPE
@@ -757,12 +769,8 @@ FONScontext* fonsCreateInternal(FONSparams* params)
 	stash->atlas = fons__allocAtlas(stash->params.width, stash->params.height, FONS_INIT_ATLAS_NODES);
 	if (stash->atlas == NULL) goto error;
 
-	// Allocate space for fonts.
-	stash->fonts = (FONSfont**)malloc(sizeof(FONSfont*) * FONS_INIT_FONTS);
-	if (stash->fonts == NULL) goto error;
-	memset(stash->fonts, 0, sizeof(FONSfont*) * FONS_INIT_FONTS);
-	stash->cfonts = FONS_INIT_FONTS;
-	stash->nfonts = 0;
+	stash->fonts = new std::vector<FONSfont*>();
+	stash->freeFonts = new std::list<int>();
 
 	// Create texture for the cache.
 	stash->itw = 1.0f/stash->params.width;
@@ -796,7 +804,7 @@ static FONSstate* fons__getState(FONScontext* stash)
 
 int fonsAddFallbackFont(FONScontext* stash, int base, int fallback)
 {
-	FONSfont* baseFont = stash->fonts[base];
+	FONSfont* baseFont = stash->getFonts()[base];
 	if (baseFont->nfallbacks < FONS_MAX_FALLBACKS) {
 		baseFont->fallbacks[baseFont->nfallbacks++] = fallback;
 		return 1;
@@ -808,7 +816,7 @@ void fonsResetFallbackFont(FONScontext* stash, int base)
 {
 	int i;
 
-	FONSfont* baseFont = stash->fonts[base];
+	FONSfont* baseFont = stash->getFonts()[base];
 	baseFont->nfallbacks = 0;
 	baseFont->nglyphs = 0;
 	for (i = 0; i < FONS_HASH_LUT_SIZE; i++)
@@ -886,16 +894,9 @@ static void fons__freeFont(FONSfont* font)
 	free(font);
 }
 
-static int fons__allocFont(FONScontext* stash)
+static FONSfont* fons__allocFont(FONScontext* stash)
 {
-	FONSfont* font = NULL;
-	if (stash->nfonts+1 > stash->cfonts) {
-		stash->cfonts = stash->cfonts == 0 ? 8 : stash->cfonts * 2;
-		stash->fonts = (FONSfont**)realloc(stash->fonts, sizeof(FONSfont*) * stash->cfonts);
-		if (stash->fonts == NULL)
-			return -1;
-	}
-	font = (FONSfont*)malloc(sizeof(FONSfont));
+	FONSfont* font = (FONSfont*)malloc(sizeof(FONSfont));
 	if (font == NULL) goto error;
 	memset(font, 0, sizeof(FONSfont));
 
@@ -904,13 +905,10 @@ static int fons__allocFont(FONScontext* stash)
 	font->cglyphs = FONS_INIT_GLYPHS;
 	font->nglyphs = 0;
 
-	stash->fonts[stash->nfonts++] = font;
-	return stash->nfonts-1;
-
+	return font;
 error:
 	fons__freeFont(font);
-
-	return FONS_INVALID;
+	return NULL;
 }
 
 int fonsAddFont(FONScontext* stash, const char* name, const char* path, int fontIndex)
@@ -944,13 +942,21 @@ error:
 int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, int dataSize, int freeData, int fontIndex)
 {
 	int i, ascent, descent, fh, lineGap;
-	FONSfont* font;
 
-	int idx = fons__allocFont(stash);
-	if (idx == FONS_INVALID)
-		return FONS_INVALID;
+	FONSfont* font = fons__allocFont(stash);
 
-	font = stash->fonts[idx];
+	int idx = -1;
+	if (stash->getFreeFonts().size() > 0) {
+		idx = stash->getFreeFonts().back();
+		stash->getFreeFonts().pop_back();
+	}
+	if (idx >= 0)
+		stash->getFonts()[idx] = font;
+	else {
+		stash->getFonts().push_back(font);
+		idx = stash->getFonts().size()-1;
+	}
+	// font = stash->getFonts()[idx];
 
 	strncpy(font->name, name, sizeof(font->name));
 	font->name[sizeof(font->name)-1] = '\0';
@@ -981,16 +987,17 @@ int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, in
 
 error:
 	fons__freeFont(font);
-	stash->nfonts--;
+	stash->getFreeFonts().push_back(idx);
 	return FONS_INVALID;
 }
 
 bool fonsFreeFontMem(FONScontext* stash, int idx) {
-	if (idx < 0 || idx >= stash->nfonts) goto error;
+	if (idx < 0 || idx >= stash->getFonts().size()) goto error;
 
-	FONSfont* font = stash->fonts[idx];
+	FONSfont* font = stash->getFonts()[idx];
 	fons__freeFont(font);
-	stash->nfonts--;
+	stash->getFonts()[idx] = nullptr;
+	stash->getFreeFonts().push_back(idx);
 
 	return true;
 error:
@@ -1000,8 +1007,9 @@ error:
 int fonsGetFontByName(FONScontext* s, const char* name)
 {
 	int i;
-	for (i = 0; i < s->nfonts; i++) {
-		if (strcmp(s->fonts[i]->name, name) == 0)
+	auto fonts = s->getFonts();
+	for (i = 0; i < fonts.size(); i++) {
+		if (strcmp(fonts[i]->name, name) == 0)
 			return i;
 	}
 	return FONS_INVALID;
@@ -1125,7 +1133,7 @@ static FONSglyph* fons__getGlyph(FONScontext* stash, FONSfont* font, unsigned in
 	// Try to find the glyph in fallback fonts.
 	if (g == 0) {
 		for (i = 0; i < font->nfallbacks; ++i) {
-			FONSfont* fallbackFont = stash->fonts[font->fallbacks[i]];
+			FONSfont* fallbackFont = stash->getFonts()[font->fallbacks[i]];
 			int fallbackIndex = fons__tt_getGlyphIndex(&fallbackFont->font, codepoint);
 			if (fallbackIndex != 0) {
 				g = fallbackIndex;
@@ -1348,8 +1356,8 @@ float fonsDrawText(FONScontext* stash,
 	float width;
 
 	if (stash == NULL) return x;
-	if (state->font < 0 || state->font >= stash->nfonts) return x;
-	font = stash->fonts[state->font];
+	if (state->font < 0 || state->font >= stash->getFonts().size()) return x;
+	font = stash->getFonts()[state->font];
 	if (font->data == NULL) return x;
 
 	scale = fons__tt_getPixelHeightScale(&font->font, (float)isize/10.0f);
@@ -1404,8 +1412,8 @@ int fonsTextIterInit(FONScontext* stash, FONStextIter* iter,
 	memset(iter, 0, sizeof(*iter));
 
 	if (stash == NULL) return 0;
-	if (state->font < 0 || state->font >= stash->nfonts) return 0;
-	iter->font = stash->fonts[state->font];
+	if (state->font < 0 || state->font >= stash->getFonts().size()) return 0;
+	iter->font = stash->getFonts()[state->font];
 	if (iter->font->data == NULL) return 0;
 
 	iter->isize = (short)(state->size*10.0f);
@@ -1536,8 +1544,8 @@ float fonsTextBounds(FONScontext* stash,
 	float minx, miny, maxx, maxy;
 
 	if (stash == NULL) return 0;
-	if (state->font < 0 || state->font >= stash->nfonts) return 0;
-	font = stash->fonts[state->font];
+	if (state->font < 0 || state->font >= stash->getFonts().size()) return 0;
+	font = stash->getFonts()[state->font];
 	if (font->data == NULL) return 0;
 
 	scale = fons__tt_getPixelHeightScale(&font->font, (float)isize/10.0f);
@@ -1602,8 +1610,8 @@ void fonsVertMetrics(FONScontext* stash,
 	short isize;
 
 	if (stash == NULL) return;
-	if (state->font < 0 || state->font >= stash->nfonts) return;
-	font = stash->fonts[state->font];
+	if (state->font < 0 || state->font >= stash->getFonts().size()) return;
+	font = stash->getFonts()[state->font];
 	isize = (short)(state->size*10.0f);
 	if (font->data == NULL) return;
 
@@ -1622,8 +1630,8 @@ void fonsLineBounds(FONScontext* stash, float y, float* miny, float* maxy)
 	short isize;
 
 	if (stash == NULL) return;
-	if (state->font < 0 || state->font >= stash->nfonts) return;
-	font = stash->fonts[state->font];
+	if (state->font < 0 || state->font >= stash->getFonts().size()) return;
+	font = stash->getFonts()[state->font];
 	isize = (short)(state->size*10.0f);
 	if (font->data == NULL) return;
 
@@ -1672,11 +1680,12 @@ void fonsDeleteInternal(FONScontext* stash)
 	if (stash->params.renderDelete)
 		stash->params.renderDelete(stash->params.userPtr);
 
-	for (i = 0; i < stash->nfonts; ++i)
-		fons__freeFont(stash->fonts[i]);
+	for (i = 0; i < stash->getFonts().size(); ++i)
+		fons__freeFont(stash->getFonts()[i]);
 
 	if (stash->atlas) fons__deleteAtlas(stash->atlas);
-	if (stash->fonts) free(stash->fonts);
+	if (stash->fonts) delete stash->fonts;
+	if (stash->freeFonts) delete stash->freeFonts;
 	if (stash->texData) free(stash->texData);
 	if (stash->scratch) free(stash->scratch);
 	fons__tt_done(stash);
@@ -1782,8 +1791,8 @@ int fonsResetAtlas(FONScontext* stash, int width, int height)
 	stash->dirtyRect[3] = 0;
 
 	// Reset cached glyphs
-	for (i = 0; i < stash->nfonts; i++) {
-		FONSfont* font = stash->fonts[i];
+	for (i = 0; i < stash->getFonts().size(); i++) {
+		FONSfont* font = stash->getFonts()[i];
 		font->nglyphs = 0;
 		for (j = 0; j < FONS_HASH_LUT_SIZE; j++)
 			font->lut[j] = -1;
