@@ -107,6 +107,7 @@ int fonsResetAtlas(FONScontext* stash, int width, int height);
 // Add fonts
 int fonsAddFont(FONScontext* s, const char* name, const char* path, int fontIndex);
 int fonsAddFontMem(FONScontext* s, const char* name, unsigned char* data, int ndata, int freeData, int fontIndex);
+bool fonsFreeFontMem(FONScontext* stash, int idx);
 int fonsGetFontByName(FONScontext* s, const char* name);
 
 // State handling
@@ -953,8 +954,8 @@ int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, in
 	if (idx >= 0)
 		stash->getFonts()[idx] = font;
 	else {
+		idx = stash->getFonts().size();
 		stash->getFonts().push_back(font);
-		idx = stash->getFonts().size()-1;
 	}
 	// font = stash->getFonts()[idx];
 
@@ -998,6 +999,7 @@ bool fonsFreeFontMem(FONScontext* stash, int idx) {
 	fons__freeFont(font);
 	stash->getFonts()[idx] = nullptr;
 	stash->getFreeFonts().push_back(idx);
+    stash->nscratch = 0;
 
 	return true;
 error:
@@ -1006,10 +1008,12 @@ error:
 
 int fonsGetFontByName(FONScontext* s, const char* name)
 {
-	int i;
-	auto fonts = s->getFonts();
-	for (i = 0; i < fonts.size(); i++) {
-		if (strcmp(fonts[i]->name, name) == 0)
+    int i;
+    auto fonts = s->getFonts();
+    for (int i = 0; i < fonts.size(); i++) {
+        FONSfont* n = fonts[i];
+        if (n == nullptr) continue;
+		if (strcmp(n->name, name) == 0)
 			return i;
 	}
 	return FONS_INVALID;
