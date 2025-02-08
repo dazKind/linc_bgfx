@@ -37,6 +37,13 @@
             <flag unless="debug" value="-DBX_CONFIG_DEBUG=0"/>
         </compiler>
     </section>
+    <section if="emscripten">
+        <compiler id="emscripten" exe="emcc">
+            <cppflag value="-std=c++17" />
+            <flag if="debug" value="-DBX_CONFIG_DEBUG=1"/>
+            <flag unless="debug" value="-DBX_CONFIG_DEBUG=0"/>
+        </compiler>
+    </section>
     <target id="haxe">
         <section if="windows">
             <lib name="gdi32.lib"/>
@@ -56,6 +63,20 @@
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_encodeDebug.lib"/>
                 <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
             </section>
+        </section>
+        <section if="emscripten">
+            <!-- <section if="debug">
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bgfxRelease.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimgRelease.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimg_decodeRelease.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bxRelease.bc"/>
+            </section>
+            <section if="debug">
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bgfxDebug.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimgDebug.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimg_decodeDebug.bc"/>
+                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bxDebug.bc"/>
+            </section> -->
         </section>
     </target>
 </xml>

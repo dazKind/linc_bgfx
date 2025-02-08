@@ -129,10 +129,22 @@ extern class Native_DebugDrawEncoder {
     public function popTransform():Void;
 
     @:native('moveTo')
-    public function moveTo(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void;
+    public function moveToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void;
+
+    inline public function moveTo(_pos:Array<cpp.Float32>):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.moveTo(*(bx::Vec3*)(float*){1})',
+            ref,cpp.NativeArray.address(_pos, 0));
+    }
 
     @:native('lineTo')
-    public function lineTo(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void;
+    public function lineToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void;
+
+    inline public function lineTo(_pos:Array<cpp.Float32>):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.lineTo(*(bx::Vec3*)(float*){1})',
+            ref,cpp.NativeArray.address(_pos, 0));
+    }
 
     @:native('close')
     public function close():Void;
@@ -155,6 +167,36 @@ extern class Native_DebugDrawEncoder {
 
     @:native('drawOrb')
     public function drawOrb(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _radius:cpp.Float32, _highlight:Native_Axis = Native_Axis.Count):Void;
+
+    inline public function drawObb(_mat:Array<cpp.Float32>):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Obb __tmp = {};
+            memcpy(&__tmp.mtx, {1}, 16*sizeof(float)); 
+            {0}.draw(__tmp);',  
+            ref, 
+            cpp.NativeArray.address(_mat, 0)
+        );
+    }
+
+    inline public function drawFrustum(_invProj:Array<cpp.Float32>):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.drawFrustum({1});',
+            ref, 
+            cpp.NativeArray.address(_invProj, 0)
+        );
+    }
+
+    inline public function drawSphere(_pos:Array<cpp.Float32>, _radius:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Sphere __tmp = {*(bx::Vec3*)(float*){1}, {2}};
+            {0}.draw(__tmp);',
+            ref, 
+            cpp.NativeArray.address(_pos, 0),
+            _radius
+        );
+    }
 }
 #if (scriptable || cppia)
     class CppiaDebugDrawEncoder {
@@ -206,11 +248,17 @@ extern class Native_DebugDrawEncoder {
         public function popTransform():Void
             __inst.popTransform();
 
-        public function moveTo(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
-            __inst.moveTo(_x, _y, _z);
+        public function moveToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
+            __inst.moveToXYZ(_x, _y, _z);
 
-        public function lineTo(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
-            __inst.lineTo(_x, _y, _z);
+        public function moveTo(_pos:Array<cpp.Float32>):Void
+            __inst.moveTo(_pos);
+
+        public function lineToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
+            __inst.lineToXYZ(_x, _y, _z);
+
+        public function lineTo(_pos:Array<cpp.Float32>):Void
+            __inst.lineTo(_pos);
 
         public function close():Void
             __inst.close();
@@ -226,6 +274,15 @@ extern class Native_DebugDrawEncoder {
 
         public function drawOrb(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _radius:cpp.Float32, _highlight:Axis):Void
             __inst.drawOrb(_x, _y, _z, _radius, cast _highlight);
+
+        public function drawObb(_mat:Array<cpp.Float32>):Void
+            __inst.drawObb(_mat);
+
+        public function drawFrustum(_invProj:Array<cpp.Float32>):Void
+            __inst.drawFrustum(_invProj);
+
+        public function drawSphere(_pos:Array<cpp.Float32>, _radius:cpp.Float32):Void 
+            __inst.drawSphere(_pos, _radius);
     }
     typedef DDrawEncoder = CppiaDebugDrawEncoder;
     typedef DDrawEncoderRef = CppiaDebugDrawEncoder;

@@ -993,7 +993,7 @@ error:
 }
 
 bool fonsFreeFontMem(FONScontext* stash, int idx) {
-	if (idx < 0 || idx >= stash->getFonts().size()) goto error;
+	if (idx < 0 || idx >= stash->getFonts().size()) return false;
 
 	FONSfont* font = stash->getFonts()[idx];
 	fons__freeFont(font);
@@ -1002,8 +1002,6 @@ bool fonsFreeFontMem(FONScontext* stash, int idx) {
     stash->nscratch = 0;
 
 	return true;
-error:
-	return false;
 }
 
 int fonsGetFontByName(FONScontext* s, const char* name)
