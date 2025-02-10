@@ -1,16 +1,381 @@
 <xml>
+    <files id="linc-bgfx-depends">
+
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/allocator.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/bounds.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/bx.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/commandline.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/config.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/constants.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/cpu.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/debug.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/easing.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/endian.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/error.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/file.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/filepath.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/float4x4_t.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/handlealloc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/hash.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/macros.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/math.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/mpscqueue.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/mutex.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/os.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/pixelformat.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/platform.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/process.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/readerwriter.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/ringbuffer.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/rng.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/semaphore.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/settings.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/simd_t.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/sort.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/spscqueue.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/string.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/thread.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/timer.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/typetraits.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/uint32_t.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/url.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/alloca.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/dirent.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/malloc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/signal.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/ios/malloc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/linux/sal.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/alloca.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/dirent.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/sal.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/salieri.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/specstrings_strict.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/specstrings_undef.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/alloca.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/dirent.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/inttypes.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/stdbool.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/pre1600/stdint.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/osx/malloc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/allocator.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/buffer.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/hash.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/hash_base.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/new.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/stddef.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/string.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/traits.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/unordered_map.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/unordered_set.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/vector.h" />
+
+
+        <depend name="${LINC_BGFX_PATH}lib/bimg/include/bimg/bimg.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/include/bimg/decode.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_diagnostic_trace.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_internal.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_internal_entry.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_mathlib.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib_avx2_8.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib_common_4.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib_neon_4.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib_none_4.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_vecmathlib_sse_4.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/deps/miniz/miniz.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/tinyexr.h" />
+
+        <depend name="${LINC_BGFX_PATH}lib/bimg/include/bimg/encode.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/alpha.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/clusterfit.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourblock.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourfit.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourset.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/config.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/maths.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/rangefit.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/simd.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/simd_float.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/singlecolourfit.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/squish.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/edtaa3/edtaa3func.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc1/etc1.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/Math.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/ProcessCommon.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/ProcessRGB.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/Tables.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/Types.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/Vector.hpp" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvtt.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/bits.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/shapes_two.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/tile.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zoh.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zoh_utils.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_utils.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/bits.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/endpts.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/shapes_three.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/shapes_two.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/tile.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/array.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/debug.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/defsgnucdarwin.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/defsgnuclinux.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/defsgnucwin32.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/defsvcwin32.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/foreach.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/hash.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/memory.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/nvcore.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/posh.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/stdstream.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/stream.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/strlib.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvcore/utils.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/fitting.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/matrix.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/nvmath.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/plane.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/vector.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/AlphaBitmap.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/Bitmap.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/BitScale.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/BitUtility.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/ColorRgba.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/Interval.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/MortonTable.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/Point2.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcDecoder.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcEncoder.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcPacket.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/RgbaBitmap.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/RgbBitmap.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/tinyexr.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/deps/miniz/miniz.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/convolve.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/decimate.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/iqa.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/iqa_os.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/math_utils.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include/ssim.h" />
+
+
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/include/bgfx/bgfx.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/include/bgfx/defines.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/include/bgfx/embedded_shader.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/include/bgfx/platform.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/include/bgfx/c99/bgfx.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/bgfx_p.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/charset.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/config.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/debug_renderdoc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/dxgi.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/emscripten.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/glcontext_egl.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/glcontext_html5.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/glcontext_wgl.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/glimports.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/nvapi.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d11.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d12.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_gl.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_mtl.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/renderer_vk.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/shader.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/shader_dxbc.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/shader_spirv.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/topology.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/version.h" />
+        <depend name="${LINC_BGFX_PATH}lib/bgfx/src/vertexlayout.h" />
+    </files>
+
+    <files id="linc-bgfx" tags="" >
+        <cache value="1" />
+        <depend files="linc-bgfx-depends" />
+
+        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="debug"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
+
+        <section if="windows">
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
+            <compilerflag value="/Zc:__cplusplus"/>
+            <compilerflag value="/Zc:preprocessor"/>
+            <!-- <compilerflag value="/std:c++17"/> -->
+            <compilerflag value="-D__STDC_LIMIT_MACROS" />
+            <compilerflag value="-D__STDC_FORMAT_MACROS" />
+            <compilerflag value="-D__STDC_CONSTANT_MACROS" />
+        </section>
+
+        <section if="emscripten">
+            <compilerflag value="-DBX_PLATFORM_EMSCRIPTEN=1"/>
+        </section>
+
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/3rdparty"/>
+
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/3rdparty"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/deps/miniz"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt"/>
+
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include/bgfx"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty"/>
+
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty/directx-headers/include/directx"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty/khronos"/>
+
+        <file name='${LINC_BGFX_PATH}lib/bx/src/bounds.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/bx.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/commandline.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/crtnone.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/debug.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/dtoa.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/easing.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/file.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/filepath.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/hash.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/math.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/mutex.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/os.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/process.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/semaphore.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/settings.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/sort.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/string.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/thread.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/timer.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/url.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bx/src/allocator.cpp' />
+
+        <file name='${LINC_BGFX_PATH}lib/bimg/src/image.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/src/image_gnf.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_averages_and_directions.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_block_sizes.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_color_quantize.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_color_unquantize.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_compress_symbolic.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_compute_variance.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_decompress_symbolic.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_diagnostic_trace.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_entry.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_find_best_partitioning.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_ideal_endpoints_and_weights.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_image.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_integer_sequence.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_mathlib.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_mathlib_softfloat.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_partition_tables.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_percentile_tables.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_pick_best_endpoint_format.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_quantization.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_symbolic_physical.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_weight_align.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/astc-encoder/source/astcenc_weight_quant_xfer_tables.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/tinyexr/deps/miniz/miniz.c' />
+
+        <file name='${LINC_BGFX_PATH}lib/bimg/src/image_decode.cpp' />
+
+        <file name='${LINC_BGFX_PATH}lib/bimg/src/image_encode.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/src/image_cubemap_filter.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/alpha.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/clusterfit.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourblock.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourfit.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/colourset.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/maths.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/rangefit.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/singlecolourfit.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/libsquish/squish.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/edtaa3/edtaa3func.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/etc1/etc1.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/ProcessRGB.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/etc2/Tables.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvtt.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zoh.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zohone.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zohtwo.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc6h/zoh_utils.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode0.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode1.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode2.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode3.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode4.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode5.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode6.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_mode7.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/bc7/avpcl_utils.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/nvtt/nvmath/fitting.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/BitScale.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/MortonTable.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcDecoder.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcEncoder.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/pvrtc/PvrTcPacket.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/convolve.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/decimate.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/math_utils.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/mse.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/ms_ssim.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/psnr.c' />
+        <file name='${LINC_BGFX_PATH}lib/bimg/3rdparty/iqa/source/ssim.c' />
+
+
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/bgfx.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/debug_renderdoc.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/dxgi.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/glcontext_egl.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/glcontext_html5.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/glcontext_wgl.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/nvapi.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_agc.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d11.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d12.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_gl.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_gnm.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_noop.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_nvn.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_vk.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/shader.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/shader_dxbc.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/shader_spirv.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/topology.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/vertexlayout.cpp' />
+    </files>
+
     <files id="haxe">
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include/bgfx"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty"/>
+
         <compilerflag value="-I${LINC_BGFX_PATH}lib/nanovg"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/>
         <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
 
-        <compilerflag if="windows" value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
+
         <compilerflag if="mac" value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="debug"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
+
+        <section if="windows">
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
+            <compilerflag value="/Zc:__cplusplus"/>
+            <compilerflag value="/Zc:preprocessor"/>
+            <!-- <compilerflag value="/std:c++17"/> -->
+        </section>
+
+        <section if="emscripten">
+            <compilerflag value="-DBX_PLATFORM_EMSCRIPTEN=1"/>
+        </section>
+
 
         <file name='${LINC_BGFX_PATH}linc/Dynamic2.cpp'/>
         <file name='${LINC_BGFX_PATH}linc/linc_bgfx.cpp'/>
@@ -18,7 +383,8 @@
         <file name='${LINC_BGFX_PATH}lib/nanovg/nanovg_bgfx.cpp'/>
         <file name='${LINC_BGFX_PATH}lib/debugdraw/debugdraw.cpp'/>
     </files>
-    <files id="__main__">
+
+    <!-- <files id="__lib__">
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
@@ -27,56 +393,45 @@
         <compilerflag value="-I${LINC_BGFX_PATH}lib/nanovg"/>
         <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/>
         <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
+    </files> -->
+
+    <files id="__main__">
+        <!-- <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bimg/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/include/bgfx"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/nanovg"/>
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/>
+        <compilerflag value='-I${LINC_BGFX_PATH}linc'/> -->
     </files>
-    <section if="windows">
+
+     <!-- <section if="windows">
         <compiler exe="cl.exe" id="MSVC">
-            <flag value="/Zc:__cplusplus"/>
             <flag value="/Zc:preprocessor"/>
-            <flag value="/std:c++17"/>
-            <flag if="debug" value="-DBX_CONFIG_DEBUG=1"/>
-            <flag unless="debug" value="-DBX_CONFIG_DEBUG=0"/>
         </compiler>
-    </section>
+    </section> -->
     <section if="emscripten">
-        <compiler id="emscripten" exe="emcc">
-            <cppflag value="-std=c++17" />
-            <flag if="debug" value="-DBX_CONFIG_DEBUG=1"/>
-            <flag unless="debug" value="-DBX_CONFIG_DEBUG=0"/>
-        </compiler>
+        <linker id="exe" exe="emcc">
+            <flag name="-s" value="MAX_WEBGL_VERSION=2" />
+            <flag name="-s" value="USE_WEBGL2=1" />
+            <flag name="-s" value="USE_SDL=2" />
+            <flag name="--preload-file" value="../.cortex-build@.cortex-build" />
+        </linker>
     </section>
+
     <target id="haxe">
+        <files id="linc-bgfx" />
+
         <section if="windows">
             <lib name="gdi32.lib"/>
             <lib name="kernel32.lib"/>
             <lib name="psapi.lib"/>
-            <section unless="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bgfxRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimgRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_decodeRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_encodeRelease.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bxRelease.lib"/>
-            </section>
-            <section if="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bgfxDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimgDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_decodeDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bimg_encodeDebug.lib"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/win64_vs2022/bin/bxDebug.lib"/>
-            </section>
         </section>
-        <section if="emscripten">
-            <!-- <section if="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bgfxRelease.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimgRelease.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimg_decodeRelease.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bxRelease.bc"/>
-            </section>
-            <section if="debug">
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bgfxDebug.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimgDebug.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bimg_decodeDebug.bc"/>
-                <lib if="HXCPP_M64" name="${LINC_BGFX_PATH}lib/bgfx/.build/wasm/bin/bxDebug.bc"/>
-            </section> -->
-        </section>
+
+        <!-- <section if="emscripten"> -->
+            <!-- <flag value="-s MAX_WEBGL_VERSION=2" /> -->
+        <!-- </section> -->
+
     </target>
 </xml>
