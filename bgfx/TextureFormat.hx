@@ -306,6 +306,7 @@ extern enum abstract Native_TextureFormat(Native_TextureFormatImpl) {
     var Count;
 }
 @:unreflective
+@:include("linc_bgfx.h")
 @:native('bgfx_texture_format_t')
 @:lincCppiaDef('TextureFormat', 'enum')
 extern class Native_TextureFormatImpl { }

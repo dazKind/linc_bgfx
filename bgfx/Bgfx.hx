@@ -2141,7 +2141,7 @@ extern class Native_Bgfx {
 
         inline public static var INVALID = 65535;
 
-        public static function getCallback():cpp.Pointer<cpp.Void> { return cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }
+        public static function getCallback():cpp.Pointer<cpp.Void> { return cast cpp.Pointer.fromStar(Native_Bgfx.getCallback()); }
 
         /**
         Init attachment.

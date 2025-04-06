@@ -89,7 +89,7 @@ namespace linc_nanovg {
                 int length = 1;
                 const char* cur = row.start;
                 while(cur != row.end) { length++; cur++; }
-                const char* foo = (const char*)malloc(length); 
+                const char* foo = (const char*)malloc(length);
                 memcpy((void*)foo, (void*)row.start, length);
                 memset((void*)(foo+length-1), '\0', 1);
                 result->Add(HX_CSTRING("line"), ::String(foo));
