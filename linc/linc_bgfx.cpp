@@ -113,11 +113,8 @@ namespace linc_nanovg {
     Array<Array<float>> nvgTextGlyphPositionsHelper(NVGcontext* ctx, float _x, float _y, String _string, int _maxPositions) {
         Array<Array<float>> outArray = Array_obj<Array<float>>::__new(0, 1);
         NVGglyphPosition *positions = (NVGglyphPosition*)calloc(_maxPositions, sizeof(NVGglyphPosition));
-        size_t length = _hx_utf8_length(_string);
-        const char* start = _string.c_str();
-        const char* end = start + length;
-        int res = nvgTextGlyphPositions(ctx, _x, _y, start, end, positions, _maxPositions);
-        for (int i = 0; i < length; i++) {
+        int res = nvgTextGlyphPositions(ctx, _x, _y, _string.c_str(), NULL, positions, _maxPositions);
+        for (int i = 0; i < _string.length; i++) {
             NVGglyphPosition p = positions[i];
             Array<float> out = Array_obj<float>::__new(0, 1);
             out->push(p.x);
@@ -130,7 +127,7 @@ namespace linc_nanovg {
     }
 
     float nvgTextBoundsHelper(NVGcontext* _ctx, float _x, float _y, String _string, String _end, float* _outArray) {
-        return nvgTextBounds(_ctx, _x, _y, _string, _end, _outArray);
+        return nvgTextBounds(_ctx, _x, _y, _string.c_str(), _end.c_str(), _outArray);
     }
 
     void nvgTextBoxBoundsHelper(NVGcontext* _ctx, float _x, float _y, float _breakRowWidth, String _string, String _end, float* _outArray) {
