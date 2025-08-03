@@ -208,7 +208,7 @@
         <section if="linux">
             <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN=1"/>
             <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGL=1"/>
-            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>
+            <!--<compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>-->
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/linux"/>
         </section>
 
@@ -383,7 +383,7 @@
         <section if="linux">
             <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN=1"/>
             <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGL=1"/>
-            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>
+            <!--<compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>-->
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/linux"/>
         </section>
 
