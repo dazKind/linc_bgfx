@@ -15,3 +15,12 @@ genie --with-examples --with-tools <your compiler>
 ```
 
 
+```bash
+make linux-gcc-release64
+
+# link tools into your linux, e.g.
+ln -s lib/bgfx/.build/linux-gcc-release64/bin/geometrycRelease /usr/local/bin/geometryc
+ln -s lib/bgfx/.build/linux-gcc-release64/bin/geometryvRelease /usr/local/bin/geometryv
+```
+
+

@@ -197,8 +197,20 @@
         <cache value="1" />
         <depend files="linc-bgfx-depends" />
 
-        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="debug"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" if="debug"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
+        <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
+
+        <section if="mac">
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
+        </section>
+
+        <section if="linux">
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN=1"/>
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGL=1"/>
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/linux"/>
+        </section>
 
         <section if="windows">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
@@ -335,8 +347,8 @@
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/glcontext_wgl.cpp' />
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/nvapi.cpp' />
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_agc.cpp' />
-        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d11.cpp' />
-        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d12.cpp' />
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d11.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_d3d12.cpp'/>
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_gl.cpp' />
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_gnm.cpp' />
         <file name='${LINC_BGFX_PATH}lib/bgfx/src/renderer_noop.cpp' />
@@ -360,10 +372,20 @@
         <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/>
         <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
 
-
-        <compilerflag if="mac" value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
-        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="debug"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" if="debug"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
+        <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
+
+        <section if="mac">
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
+        </section>
+
+        <section if="linux">
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN=1"/>
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGL=1"/>
+            <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGLES=1"/>
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/linux"/>
+        </section>
 
         <section if="windows">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/msvc"/>
@@ -372,9 +394,15 @@
             <!-- <compilerflag value="/std:c++17"/> -->
         </section>
 
+        <!--
         <section if="emscripten">
             <compilerflag value="-DBX_PLATFORM_EMSCRIPTEN=1"/>
         </section>
+
+        <section if="android">
+            <compilerflag value="-DBX_PLATFORM_ANDROID=1"/>
+        </section>
+        -->
 
 
         <file name='${LINC_BGFX_PATH}linc/Dynamic2.cpp'/>
@@ -422,6 +450,12 @@
 
     <target id="haxe">
         <files id="linc-bgfx" />
+
+        <section if="linux">
+            <lib name="-lX11"/>
+            <lib name="-lGL"/>
+            <lib name="-lpthread"/>
+        </section>
 
         <section if="windows">
             <lib name="gdi32.lib"/>

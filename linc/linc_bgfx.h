@@ -1,7 +1,9 @@
 #ifndef _LINC_BGFX_H_
 #define _LINC_BGFX_H_
 
+#ifndef HXCPP_H
 #include <hxcpp.h>
+#endif
 
 #include "bgfx/c99/bgfx.h"
 #include "bx/bx.h"
