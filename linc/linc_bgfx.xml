@@ -197,9 +197,8 @@
         <cache value="1" />
         <depend files="linc-bgfx-depends" />
 
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" if="debug"/>
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
-        <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
+        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
 
         <section if="mac">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
@@ -372,8 +371,10 @@
         <compilerflag value="-I${LINC_BGFX_PATH}lib/debugdraw"/>
         <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
 
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" if="debug"/>
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="debug"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
+        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
 
         <section if="mac">
