@@ -47,31 +47,38 @@ class LincCppia {
             case TInst(_t, _p):
                 if (_t.get().name.contains("Star"))
                     _t.get().name;
-                else if (_t.get().name.contains("Array"))
-                	return null;
+                else if (_t.get().name.contains("Array") || _t.get().name.contains("String"))
+                    return null;
                 else
                     null;
             case TDynamic(_): return {
-	                linkClass: null,
-	                linkType: 'dynamic',
-	                linkPtrType: null
-	            };
+                    linkClass: null,
+                    linkType: 'dynamic',
+                    linkPtrType: null
+                };
             default: null;
         };
 
         // trace(ptrType);
 
         switch ptrType {
-        	case 'ConstCharStar':
-        		return {
-	                linkClass: null,
-	                linkType: 'string',
-	                linkPtrType: null
-	            };
+            case 'Star': return {
+                    linkClass: null,
+                    linkType: 'voidptr',
+                    linkPtrType: null
+                };
+            case 'ConstCharStar':
+                return {
+                    linkClass: null,
+                    linkType: 'string',
+                    linkPtrType: null
+                };
         }
 
         function getLink(_class:MacroTypeClass) {
             var classMeta = _class.meta;
+
+            // trace(_class);
 
             // fail if we are lacking the metadata
             if (classMeta.has(':lincCppiaIgnore'))
@@ -107,7 +114,7 @@ class LincCppia {
         var moduleMap = getModuleMap(modulePath);
 
         var typeImpl:Type = moduleMap.get(_implementation);
-        
+
         var newFields = [];
         switch (typeImpl) {
             case TAbstract(_.get()=>ab, _): {
@@ -131,7 +138,7 @@ class LincCppia {
         return fields;
     }
 
-    macro public static function wrapStructExtern(_implementation:String):Array<Field> {
+    macro public static function wrapStructExtern(_implementation:String, ?_useStructType:Bool = false):Array<Field> {
         // build a wrapper class around a native struct
         var pos = Context.currentPos();
         var cls = Context.getLocalClass();
@@ -144,17 +151,23 @@ class LincCppia {
 
         var cname = clsImpl.name;
         var ctPath = moduleMap.get(cname).toComplexType();
+        // trace(ctPath);
         var typePath:TypePath = switch ctPath {
             case TPath(_p): _p;
             default: null;
         };
+
+        // if (_useStructType)
+        //     ctPath = TPath({sub: typePath.sub+"Struct", params: typePath.params, pack: typePath.pack, name: typePath.name});
+
 
         var newFields = (macro class {
             public function new() {}
 
             public var __ptr:cpp.Pointer<$ctPath> = null;
             @:allow($v{modulePath})
-            public var __inst:$ctPath = new $typePath();
+            public var __inst:cpp.Struct<$ctPath> = new $typePath();
+            // public var __inst:$ctPath = new $typePath();
 
         }).fields;
 
@@ -163,11 +176,12 @@ class LincCppia {
         for (f in clsImpl.fields.get()) {
             // trace(f);
 
+            var isAbstract = false;
             var propName = f.name;
             var propTypeOriginal = f.type.toComplexType();
             var propType = f.type.toComplexType();
             var propTypeName = switch f.type {
-                case TAbstract(_t, _): _t.get().name;
+                case TAbstract(_t, _): isAbstract = true; _t.get().name;
                 case TType(_t, _): _t.get().name;
                 case TInst(_t, _): _t.get().name;
                 default: "";
@@ -186,10 +200,27 @@ class LincCppia {
             if (skip)
                 continue;
 
+            // trace(propTypeName);
+
+            if (isAbstract && !propTypeName.contains("Star"))
+                f.type = Context.followWithAbstracts(f.type);
+
             var def = getCppiaLinkDef(f.type);
+
+            // trace(def);
+            var makeRef = false;
             if (def != null) {
                 switch (def.linkType) {
-                	case 'dynamic': {
+                    case 'voidptr': {
+                        propType = macro : cpp.Pointer<cpp.Void>;
+                        getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: cpp.Pointer<cpp.Void>) : (cast __inst.$propName: cpp.Pointer<cpp.Void>);
+                        setBody = macro {
+                            if (__ptr != null) __ptr.ref.$propName = (cast _v: $propTypeOriginal);
+                            else __inst.$propName = (cast _v: $propTypeOriginal);
+                            return _v;
+                        };
+                    }
+                    case 'dynamic': {
                         propType = macro : Dynamic;
                         getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: Dynamic) : (cast __inst.$propName: Dynamic);
                         setBody = macro {
@@ -197,7 +228,7 @@ class LincCppia {
                         };
                     }
                     case 'string': {
-                    	propType = macro : String;
+                        propType = macro : String;
                         getBody = macro return __ptr != null ? (cast __ptr.ref.$propName: String) : (cast __inst.$propName: String);
                         setBody = macro {
                             if (__ptr != null) __ptr.ref.$propName = (cast _v: $propTypeOriginal);
@@ -248,11 +279,12 @@ class LincCppia {
                                 res.__inst = __inst.$propName;
                                 return res;
                             }
-                        }                        
+                            makeRef = true;
+                        }
                     }
                 }
             }
-            
+
             var cls = macro class {
                 // create prop
                 public var $propName(get, set):$propType;
@@ -265,39 +297,8 @@ class LincCppia {
                 }
             };
 
-
-
             newFields = newFields.concat(cls.fields);
         }
-
-        // var printer = new haxe.macro.Printer();
-        // for (f2 in (cast newFields: Array<Dynamic>))
-        //     trace(printer.printField(f2));
-
-        fields = fields.concat(newFields);
-
-        return fields;
-    }
-
-    macro public static function wrapMainExtern(_implementation:String):Array<Field> {
-        // build wrapper functions for all static methods of the implementation class
-        var pos = Context.currentPos();
-        var cls = Context.getLocalClass();
-        var fields = Context.getBuildFields();
-        var modulePath = Context.getLocalModule();
-        var moduleMap = getModuleMap(modulePath);
-
-        // trace('moduleMap: $moduleMap');
-        // trace("//////////////////////////");
-        // trace("//////////////////////////");
-
-        var typeImpl:Type = moduleMap.get(_implementation);
-        var clsImpl = typeImpl.getClass();
-
-
-        // trace(typeImpl);
-        // trace(clsImpl);
-
 
         for (f in clsImpl.statics.get()) {
             // trace(f);
@@ -305,10 +306,10 @@ class LincCppia {
             if (!f.isPublic || f.meta.has(":lincCppiaIgnore")) continue;
 
             switch (f.type) {
-            	case TLazy(_):
-            		f.type = Context.follow(f.type);
-            		// trace(f.type);
-            	default:
+                case TLazy(_):
+                    f.type = Context.follow(f.type);
+                    // trace(f.type);
+                default:
             }
 
             switch (f.type) {
@@ -369,7 +370,7 @@ class LincCppia {
                                         }
                                     }
                                 } else {
-                                	argTp = a.t.toComplexType();
+                                    argTp = a.t.toComplexType();
                                     args.push({name:argName, type:argTp});
                                     argNames.push(macro $i{a.name});
                                 }
@@ -379,7 +380,8 @@ class LincCppia {
 
                                 // lookup the class
                                 var tmp = moduleMap.get(argType.name);
-                                if (tmp != null) {
+                                var def = tmp != null ? getCppiaLinkDef(tmp) : null;
+                                if (tmp != null && def != null) {
                                     var def = getCppiaLinkDef(tmp);
                                     argTp = moduleMap.get(def.linkClass).toComplexType();
                                     args.push({name:argName, type:argTp});
@@ -408,18 +410,18 @@ class LincCppia {
                                 }
                             }
                             default:
-                            	
+
                         }
 
                         // trace('$argName: $argTp');
                     }
 
                     // if (_args.length != args.length) {
-                    // 	trace(f.name);
-                    // 	trace([for (a in _args) a.name]);
-                    // 	trace([for (a in args) a.name]);
+                    //  trace(f.name);
+                    //  trace([for (a in _args) a.name]);
+                    //  trace([for (a in args) a.name]);
 
-                    // 	// throw '$argName: $argTp';
+                    //  // throw '$argName: $argTp';
                     // }
 
                     var hasReturn:Bool = true;
@@ -430,52 +432,293 @@ class LincCppia {
                                 hasReturn = false;
                             }
                             else if (_t.get().name.contains("Star")) {
-                            	// trace(Context.followWithAbstracts(_t.get().type));
-                            	var tmp = _ret.toComplexType();
-                            	switch tmp {
-			                    	case TPath(_t): 
-			                    		if (_t.name.contains('Star')) {
-		                            		_t.name = 'Pointer';
-		                            		_ret = tmp.toType();
-		                            		isPointer = true;
-		                            	}
-			                    	default:
-			                    }
+                                // trace(Context.followWithAbstracts(_t.get().type));
+                                var tmp = _ret.toComplexType();
+                                switch tmp {
+                                    case TPath(_t):
+                                        if (_t.name.contains('Star')) {
+                                            _t.name = 'Pointer';
+                                            _ret = tmp.toType();
+                                            isPointer = true;
+                                        }
+                                    default:
+                                }
                             }
-                        default: 
+                        default:
                     };
 
                     var fname = f.name;
                     var body = macro $i{clsImpl.name}.$fname($a{argNames});
                     if (hasReturn) {
-	                    if (isPointer)
-	                    	body = macro return cpp.Pointer.fromStar($i{clsImpl.name}.$fname($a{argNames}));
-	                    else {
-	                    	var def = getCppiaLinkDef(_ret);
-	                    	// trace(def);
-	                    	if (def != null) {
-	                    		switch (def.linkType) {
-	                    			case 'struct': { // we have a native struct, generate a proper wrapper function!
-	                    				var t = Context.getType(def.linkClass);
-	                    				var e = Context.parseInlineString('var res = Type.createEmptyInstance(${def.linkClass})', pos);
-		                    			body = macro {
-			                    			$e;
-			                    			res.__inst = $i{clsImpl.name}.$fname($a{argNames});
-			                    			return res;
-			                    		};
-			                    		_ret = t; // now override the return type
-			                    	}
-	                    			default: 
-	                    				body = macro return $i{clsImpl.name}.$fname($a{argNames});
-	                    		}
-	                    		
-	                    	} else
-	                    		body = macro return $i{clsImpl.name}.$fname($a{argNames});
-	                    }	                    	
+                        if (isPointer)
+                            body = macro return cpp.Pointer.fromStar($i{clsImpl.name}.$fname($a{argNames}));
+                        else {
+                            var def = getCppiaLinkDef(_ret);
+                            // trace(def);
+                            if (def != null) {
+                                switch (def.linkType) {
+                                    case 'struct': { // we have a native struct, generate a proper wrapper function!
+                                        var t = Context.getType(def.linkClass);
+                                        var e = Context.parseInlineString('var res = Type.createEmptyInstance(${def.linkClass})', pos);
+                                        body = macro {
+                                            $e;
+                                            res.__inst = $i{clsImpl.name}.$fname($a{argNames});
+                                            return res;
+                                        };
+                                        _ret = t; // now override the return type
+                                    }
+                                    default:
+                                        body = macro return $i{clsImpl.name}.$fname($a{argNames});
+                                }
+
+                            } else
+                                body = macro return $i{clsImpl.name}.$fname($a{argNames});
+                        }
                     }
 
                     // var printer = new haxe.macro.Printer();
-			        // trace(printer.printExpr(body));
+                    // trace(printer.printExpr(body));
+
+                    var f:Field = {
+                        name: fname,
+                        access: [APublic, AStatic],
+                        pos: Context.currentPos(),
+                        kind: FFun({
+                            args: args,
+                            expr: body,
+                            // expr: hasReturn ? isPointer ? macro {
+                            //     return cpp.Pointer.fromStar($i{clsImpl.name}.$fname($a{argNames}));
+                            // } : macro {
+                            //     return $i{clsImpl.name}.$fname($a{argNames});
+                            // } : macro {
+                            //     $i{clsImpl.name}.$fname($a{argNames});
+                            // },
+                            params: [],
+                            ret: _ret.toComplexType()
+                        })
+                    };
+
+
+
+                    fields.push(f);
+                }
+                default: // ignore
+            }
+
+        }
+
+        // var printer = new haxe.macro.Printer();
+        // for (f2 in (cast newFields: Array<Dynamic>))
+        //     trace(printer.printField(f2));
+
+        fields = fields.concat(newFields);
+
+        return fields;
+    }
+
+    macro public static function wrapMainExtern(_implementation:String):Array<Field> {
+        // build wrapper functions for all static methods of the implementation class
+        var pos = Context.currentPos();
+        var cls = Context.getLocalClass();
+        var fields = Context.getBuildFields();
+        var modulePath = Context.getLocalModule();
+        var moduleMap = getModuleMap(modulePath);
+
+        // trace('moduleMap: $moduleMap');
+        // trace("//////////////////////////");
+        // trace("//////////////////////////");
+
+        var typeImpl:Type = moduleMap.get(_implementation);
+        var clsImpl = typeImpl.getClass();
+
+
+        // trace(typeImpl);
+        // trace(clsImpl);
+
+
+        for (f in clsImpl.statics.get()) {
+            // trace(f);
+
+            if (!f.isPublic || f.meta.has(":lincCppiaIgnore")) continue;
+
+            switch (f.type) {
+                case TLazy(_):
+                    f.type = Context.follow(f.type);
+                    // trace(f.type);
+                default:
+            }
+
+            switch (f.type) {
+                case TFun(_args, _ret): {
+                    var args = [];
+                    var argNames = [];
+                    for (a in _args) {
+                        // trace("//////////////////////////");
+                        // trace(a.name + " : " + a.t);
+                        var argName = a.name;
+                        var argTp:ComplexType = null;
+
+                        switch a.t {
+                            case TType(_t, _p): {
+                                if (_t.get().name.contains("Star")) {
+
+                                    // trace(_t + " " + _p);
+
+                                    var argType:Dynamic = switch (_p[0]) {
+                                        case TInst(_t1, _p1): _t1.get();
+                                        case TAbstract(_t1, _p1): _t1.get();
+                                        default: null;
+                                    }
+
+                                    // trace(argType);
+
+                                    if (argType != null) {
+                                        if (argType.pack[0] == 'cpp') {
+                                            var tmp = Context.getType(argType.pack.join(".") + "." + argType.name);
+
+                                            var typePath = TPath({
+                                                sub: null,
+                                                params: [TPType(tmp.toComplexType())],
+                                                name: 'Pointer',
+                                                pack: ['cpp']
+                                            });
+
+                                            // trace(argType);
+                                            // trace(argTp);
+
+                                            args.push({name:argName, type:typePath});
+                                            argNames.push(macro cast $i{a.name});
+                                        } else {
+                                            // lookup the class
+                                            var tmp = moduleMap.get(argType.name);
+                                            if (tmp != null) {
+                                                var def = getCppiaLinkDef(tmp);
+                                                // argTp = moduleMap.get(def.linkClass).toComplexType();
+                                                var tmp = Context.getType(argType.name).toComplexType();
+                                                // argTp = Context.getType('cpp.Pointer<${tmp}>').toComplexType();
+                                                argTp = macro : cpp.Pointer<$tmp>;
+                                                // trace(argType);
+                                            } else
+                                                Context.fatalError(argType + " is a type we dont deal with in cpp.Star as argument yet!", pos);
+
+                                            args.push({name:argName, type:argTp});
+                                            argNames.push(macro cast $i{a.name});
+                                        }
+                                    }
+                                } else {
+                                    argTp = a.t.toComplexType();
+                                    args.push({name:argName, type:argTp});
+                                    argNames.push(macro $i{a.name});
+                                }
+                            }
+                            case TAbstract(_t, _p): {
+                                var argType = _t.get();
+
+                                // lookup the class
+                                var tmp = moduleMap.get(argType.name);
+                                if (tmp != null) {
+                                    var def = getCppiaLinkDef(Context.followWithAbstracts(tmp));
+                                    argTp = moduleMap.get(def.linkClass).toComplexType();
+                                    args.push({name:argName, type:argTp});
+                                    argNames.push(macro cast $i{a.name});
+                                } else {
+                                    argTp = a.t.toComplexType();
+                                    args.push({name:argName, type:argTp});
+                                    argNames.push(macro $i{a.name});
+                                }
+
+                            }
+                            case TInst(_t, _p): {
+                                var argType = _t.get();
+
+                                // lookup the class
+                                var tmp = moduleMap.get(argType.name);
+                                if (tmp != null) {
+                                    var def = getCppiaLinkDef(tmp);
+                                    if (def != null) {
+                                        argTp = moduleMap.get(def.linkClass).toComplexType();
+                                        args.push({name:argName, type:argTp});
+                                        argNames.push(macro $i{a.name}.__inst);
+                                    } else {
+                                        argTp = a.t.toComplexType();
+                                        args.push({name:argName, type:argTp});
+                                        argNames.push(macro $i{a.name});
+                                    }
+                                } else {
+                                    argTp = a.t.toComplexType();
+                                    args.push({name:argName, type:argTp});
+                                    argNames.push(macro $i{a.name});
+                                }
+                            }
+                            default:
+
+                        }
+
+                        // trace('$argName: $argTp');
+                    }
+
+                    // if (_args.length != args.length) {
+                    //  trace(f.name);
+                    //  trace([for (a in _args) a.name]);
+                    //  trace([for (a in args) a.name]);
+
+                    //  // throw '$argName: $argTp';
+                    // }
+
+                    var hasReturn:Bool = true;
+                    var isPointer = false;
+                    switch(_ret) {
+                        case TType(_t, _p):
+                            if (_t.get().name.contains("Void")) {
+                                hasReturn = false;
+                            }
+                            else if (_t.get().name.contains("Star")) {
+                                // trace(Context.followWithAbstracts(_t.get().type));
+                                var tmp = _ret.toComplexType();
+                                switch tmp {
+                                    case TPath(_t):
+                                        if (_t.name.contains('Star')) {
+                                            _t.name = 'Pointer';
+                                            _ret = tmp.toType();
+                                            isPointer = true;
+                                        }
+                                    default:
+                                }
+                            }
+                        default:
+                    };
+
+                    var fname = f.name;
+                    var body = macro $i{clsImpl.name}.$fname($a{argNames});
+                    if (hasReturn) {
+                        if (isPointer)
+                            body = macro return cpp.Pointer.fromStar($i{clsImpl.name}.$fname($a{argNames}));
+                        else {
+                            var def = getCppiaLinkDef(_ret);
+                            // trace(def);
+                            if (def != null) {
+                                switch (def.linkType) {
+                                    case 'struct': { // we have a native struct, generate a proper wrapper function!
+                                        var t = Context.getType(def.linkClass);
+                                        var e = Context.parseInlineString('var res = Type.createEmptyInstance(${def.linkClass})', pos);
+                                        body = macro {
+                                            $e;
+                                            res.__inst = $i{clsImpl.name}.$fname($a{argNames});
+                                            return res;
+                                        };
+                                        _ret = t; // now override the return type
+                                    }
+                                    default:
+                                        body = macro return $i{clsImpl.name}.$fname($a{argNames});
+                                }
+
+                            } else
+                                body = macro return $i{clsImpl.name}.$fname($a{argNames});
+                        }
+                    }
+
+                    // var printer = new haxe.macro.Printer();
+                    // trace(printer.printExpr(body));
 
                     var f:Field = {
                         name: fname,
@@ -508,7 +751,7 @@ class LincCppia {
         // var printer = new haxe.macro.Printer();
         // for (f2 in (cast fields: Array<Dynamic>))
         //     trace(printer.printField(f2));
-        
+
         return fields;
     }
 

@@ -199,6 +199,7 @@
 
         <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
+        <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
 
         <section if="mac">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
@@ -372,8 +373,6 @@
         <compilerflag value='-I${LINC_BGFX_PATH}linc'/>
 
         <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
-        <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
 

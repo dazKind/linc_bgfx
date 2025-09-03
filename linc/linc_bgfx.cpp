@@ -1,8 +1,12 @@
 #include <hxcpp.h>
+#include <hx/GC.h>
 
 #include "linc_bgfx.h"
 #include "bimg/decode.h"
 #include "nanovg.h"
+#include <iostream>
+
+using namespace std;
 
 namespace linc_bgfx {
     bx::DefaultAllocator defaultAllocator;
@@ -143,5 +147,96 @@ namespace linc_nanovg {
 
         return texId;
     }
+
+    static int UTF8Bytes(int c)
+    {
+          if( c <= 0x7F )
+             return 1;
+          else if( c <= 0x7FF )
+             return 2;
+          else if( c <= 0xFFFF )
+             return 3;
+          else
+             return 4;
+    }
+
+    static void UTF8EncodeAdvance(char * &ioPtr,int c)
+    {
+          if( c <= 0x7F )
+             *ioPtr++ = (c);
+          else if( c <= 0x7FF )
+          {
+             *ioPtr++ = ( 0xC0 | (c >> 6) );
+             *ioPtr++ = ( 0x80 | (c & 63) );
+          }
+          else if( c <= 0xFFFF )
+          {
+             *ioPtr++  = ( 0xE0 | (c >> 12) );
+             *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
+             *ioPtr++  = ( 0x80 | (c & 63) );
+          }
+          else
+          {
+             *ioPtr++  = ( 0xF0 | (c >> 18) );
+             *ioPtr++  = ( 0x80 | ((c >> 12) & 63) );
+             *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
+             *ioPtr++  = ( 0x80 | (c & 63) );
+          }
+    }
+
+    int stbGetWidth(IMSTB_TEXTEDIT_STRING* _ctx, int n, int i) {
+        char *end = (char*)_ctx->str.c_str();
+        for (int i=0; i < n+i; i++) _hx_utf8_decode_advance(end);
+        char* start = end;
+        _hx_utf8_decode_advance(end);
+        return (int)nvgTextBounds(_ctx->nvg, 0, 0, start, end, NULL);
+    }
+
+    void stbLayoutRow(void* vrow, IMSTB_TEXTEDIT_STRING* _ctx, int n) {
+        float bounds[4];
+        int num_chars = 0;
+        for (int i = n; i < _ctx->str.length; i++) {
+            num_chars++;
+            if (_ctx->str.cca(i) == STB_TEXTEDIT_NEWLINE) {
+                break;
+            }
+        }
+        String line = _ctx->str.substr(n, null()); // ugly
+        const char* cLine = line.c_str();
+        nvgTextBounds(_ctx->nvg, 0, 0, cLine, cLine+strlen(cLine), bounds);
+        StbTexteditRow* row = (StbTexteditRow*)vrow;
+        row->x0 = 0;
+        row->x1 = bounds[2]-bounds[0];
+        row->baseline_y_delta = 0 - bounds[1];
+        row->ymin = 0;
+        row->ymax = bounds[3] - bounds[1];
+        row->num_chars = num_chars;
+    }
+
+    void stbDeletechars(IMSTB_TEXTEDIT_STRING* _ctx, int i, int n) {
+        if (n > 0) {
+            String before = _ctx->str.substring(0, i);
+            String after = _ctx->str.substring(i+n, null());
+            _ctx->str = before+after;
+        }
+    }
+
+    int stbInsertchars(IMSTB_TEXTEDIT_STRING* _ctx, int i, char const* ch, int n) {
+        if (n > 0) {
+            
+            cout << ch << endl;
+
+            String before = _ctx->str.substring(0, i);
+            String after = _ctx->str.substring(i, null());
+
+            
+
+            _ctx->str = before + String(ch) + after;
+            return 1;
+        }
+        return 0;
+    }
+
+
 }
 
