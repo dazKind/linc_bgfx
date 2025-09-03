@@ -54,7 +54,6 @@ typedef struct {
 #define STB_TEXTEDIT_K_UNDO ( 90 | ( 1 << 29 ) )
 #define STB_TEXTEDIT_K_REDO ( 89 | ( 1 << 29 ) )
 #define STB_TEXTEDIT_K_INSERT 260
-#define STB_TEXTEDIT_IS_SPACE(ch) isspace(ch)
 #define STB_TEXTEDIT_K_WORDLEFT ( 263 | ( 1 << 29 ) )
 #define STB_TEXTEDIT_K_WORDRIGHT ( 262 | ( 1 << 29 ) )
 
@@ -70,8 +69,14 @@ namespace linc_nanovg {
     void stbLayoutRow(void* vrow, IMSTB_TEXTEDIT_STRING* str, int n);
     void stbDeletechars(IMSTB_TEXTEDIT_STRING* str, int i, int n);
     int stbInsertchars(IMSTB_TEXTEDIT_STRING* str, int i, char const* ch, int n);
+    int stbIsSpace(int c);
+    int stbGetWordStart(IMSTB_TEXTEDIT_STRING* str, int i);
+    int stbGetWordEnd(IMSTB_TEXTEDIT_STRING* str, int i);
 }
 
+#define STB_TEXTEDIT_IS_SPACE(ch) linc_nanovg::stbIsSpace(ch)
+#define STB_TEXTEDIT_MOVEWORDLEFT(str, i) linc_nanovg::stbGetWordStart(str, i)
+#define STB_TEXTEDIT_MOVEWORDRIGHT(str, i) linc_nanovg::stbGetWordEnd(str, i)
 #define STB_TEXTEDIT_GETWIDTH(obj,n,i) linc_nanovg::stbGetWidth(obj,n,i)
 #define STB_TEXTEDIT_LAYOUTROW(r,obj,n) linc_nanovg::stbLayoutRow(r, obj, n)
 #define STB_TEXTEDIT_DELETECHARS(obj,i,n) linc_nanovg::stbDeletechars(obj,i,n)

@@ -148,40 +148,78 @@ namespace linc_nanovg {
         return texId;
     }
 
-    static int UTF8Bytes(int c)
-    {
-          if( c <= 0x7F )
-             return 1;
-          else if( c <= 0x7FF )
-             return 2;
-          else if( c <= 0xFFFF )
-             return 3;
-          else
-             return 4;
-    }
+    // static int UTF8Bytes(int c)
+    // {
+    //       if( c <= 0x7F )
+    //          return 1;
+    //       else if( c <= 0x7FF )
+    //          return 2;
+    //       else if( c <= 0xFFFF )
+    //          return 3;
+    //       else
+    //          return 4;
+    // }
 
-    static void UTF8EncodeAdvance(char * &ioPtr,int c)
-    {
-          if( c <= 0x7F )
-             *ioPtr++ = (c);
-          else if( c <= 0x7FF )
-          {
-             *ioPtr++ = ( 0xC0 | (c >> 6) );
-             *ioPtr++ = ( 0x80 | (c & 63) );
-          }
-          else if( c <= 0xFFFF )
-          {
-             *ioPtr++  = ( 0xE0 | (c >> 12) );
-             *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
-             *ioPtr++  = ( 0x80 | (c & 63) );
-          }
-          else
-          {
-             *ioPtr++  = ( 0xF0 | (c >> 18) );
-             *ioPtr++  = ( 0x80 | ((c >> 12) & 63) );
-             *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
-             *ioPtr++  = ( 0x80 | (c & 63) );
-          }
+    // static void UTF8EncodeAdvance(char * &ioPtr,int c)
+    // {
+    //       if( c <= 0x7F )
+    //          *ioPtr++ = (c);
+    //       else if( c <= 0x7FF )
+    //       {
+    //          *ioPtr++ = ( 0xC0 | (c >> 6) );
+    //          *ioPtr++ = ( 0x80 | (c & 63) );
+    //       }
+    //       else if( c <= 0xFFFF )
+    //       {
+    //          *ioPtr++  = ( 0xE0 | (c >> 12) );
+    //          *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
+    //          *ioPtr++  = ( 0x80 | (c & 63) );
+    //       }
+    //       else
+    //       {
+    //          *ioPtr++  = ( 0xF0 | (c >> 18) );
+    //          *ioPtr++  = ( 0x80 | ((c >> 12) & 63) );
+    //          *ioPtr++  = ( 0x80 | ((c >> 6) & 63) );
+    //          *ioPtr++  = ( 0x80 | (c & 63) );
+    //       }
+    // }
+
+    int stbIsSpace(int c) {
+        int res = isspace(c);
+        switch (c) {
+            case ' ':
+            case '.':
+            case ',':
+            case '/':
+            case '\\':
+            case '(':
+            case ')':
+            case '\'':
+            case '-':
+            case ':':
+            case ';':
+            case '<':
+            case '>':
+            case '~':
+            case '!':
+            case '@':
+            case '#':
+            case '$':
+            case '%':
+            case '^':
+            case '&':
+            case '*':
+            case '|':
+            case '+':
+            case '=':
+            case '[':
+            case ']':
+            case '{':
+            case '}':
+            case '`':
+            case '?': res = 1; break;
+        }
+        return res;
     }
 
     int stbGetWidth(IMSTB_TEXTEDIT_STRING* _ctx, int n, int i) {
@@ -223,20 +261,29 @@ namespace linc_nanovg {
 
     int stbInsertchars(IMSTB_TEXTEDIT_STRING* _ctx, int i, char const* ch, int n) {
         if (n > 0) {
-            
-            cout << ch << endl;
-
             String before = _ctx->str.substring(0, i);
             String after = _ctx->str.substring(i, null());
-
-            
-
             _ctx->str = before + String(ch) + after;
             return 1;
         }
         return 0;
     }
 
+    int stbGetWordStart(IMSTB_TEXTEDIT_STRING* str, int i) {
+        if (i <= 0) return i;
+        int ret = i;
+        while(ret > 0 && stbIsSpace(STB_TEXTEDIT_GETCHAR(str, ret-1))) ret--;
+        while(ret > 0 && !stbIsSpace(STB_TEXTEDIT_GETCHAR(str, ret-1))) ret--;
+        return ret;
+    }
 
+    int stbGetWordEnd(IMSTB_TEXTEDIT_STRING* str, int i) {
+        int len = STB_TEXTEDIT_STRINGLEN(str);
+        if (i >= len) return i;
+        int ret = i;
+        while(ret < len && stbIsSpace(STB_TEXTEDIT_GETCHAR(str, ret))) ret++;
+        while(ret < len && !stbIsSpace(STB_TEXTEDIT_GETCHAR(str, ret))) ret++;
+        return ret;
+    }
 }
 
