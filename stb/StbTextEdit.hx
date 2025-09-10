@@ -55,17 +55,17 @@ extern class Native_StbTexteditRow {
 @:semantics(reference)
 @:include("linc_bgfx.h")
 @:native('::NvgTextEditString')
-extern class Native_NvgStbTextEditContext {
+extern class Native_NvgStbTexteditContext {
     public function new();
     public var str:String;
     public var nvg:cpp.Star<Native_NvgContext>;
 }
-typedef Native_NvgStbTextEditContextRef = cpp.Reference<Native_NvgStbTextEditContext>;
+typedef Native_NvgStbTexteditContextRef = cpp.Reference<Native_NvgStbTexteditContext>;
 
 #if (scriptable || cppia)
-    class NvgStbTextEditContext {
-        public var __ptr:cpp.Pointer<Native_NvgStbTextEditContext> = null;
-        public var __inst:Native_NvgStbTextEditContext = new Native_NvgStbTextEditContext();
+    class NvgStbTexteditContext {
+        public var __ptr:cpp.Pointer<Native_NvgStbTexteditContext> = null;
+        public var __inst:Native_NvgStbTexteditContext = new Native_NvgStbTexteditContext();
         public function new() {}
 
         public var str(get, set):String;
@@ -90,7 +90,7 @@ typedef Native_NvgStbTextEditContextRef = cpp.Reference<Native_NvgStbTextEditCon
         function get_nvg():cpp.Pointer<Native_NvgContext> return __ptr == null ? cast __inst.nvg : cast __ptr.ref.nvg;
     }
 #else
-    typedef NvgStbTextEditContext = Native_NvgStbTextEditContext;
+    typedef NvgStbTexteditContext = Native_NvgStbTexteditContext;
 #end
 
 @:include("linc_bgfx.h")
@@ -100,28 +100,36 @@ extern class Native_StbTextEdit {
         untyped __cpp__('stb_textedit_initialize_state(&{0},{1})', _state, _is_single_line);
 
     // void stb_textedit_click(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, float x, float y)
-    public static inline function click(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef, _x:cpp.Float32, _y:cpp.Float32):Void
+    public static inline function click(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef, _x:cpp.Float32, _y:cpp.Float32):Void
         untyped __cpp__('stb_textedit_click(&{0},&{1},{2},{3})', _ctx, _state, _x, _y);
 
     // void stb_textedit_drag(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, float x, float y)
-    public static inline function drag(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef, _x:cpp.Float32, _y:cpp.Float32):Void
+    public static inline function drag(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef, _x:cpp.Float32, _y:cpp.Float32):Void
         untyped __cpp__('stb_textedit_drag(&{0},&{1},{2},{3})', _ctx, _state, _x, _y);
 
     // int  stb_textedit_cut(STB_TEXTEDIT_STRING *str, STB_TexteditState *state)
-    public static inline function cut(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef):Int
+    public static inline function cut(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef):Int
         return untyped __cpp__('stb_textedit_cut(&{0}, &{1})', _ctx, _state);
 
     // int  stb_textedit_paste(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, STB_TEXTEDIT_CHARTYPE *text, int len)
-    public static inline function paste(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef, _text:String):Void
+    public static inline function paste(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef, _text:String):Void
         untyped __cpp__('stb_textedit_paste(&{0}, &{1}, (IMSTB_TEXTEDIT_CHARTYPE *)({2}.c_str()), {3})', _ctx, _state, _text, _text.length);
 
     // void stb_textedit_key(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, STB_TEXEDIT_KEYTYPE key)
-    public static inline function key(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef, _key:Int):Void
+    public static inline function key(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef, _key:Int):Void
         untyped __cpp__('stb_textedit_key(&{0}, &{1}, {2})', _ctx, _state, _key);
 
     // void stb_textedit_text(STB_TEXTEDIT_STRING *str, STB_TexteditState *state, STB_TEXTEDIT_CHARTYPE *text, int text_len)
-    public static inline function text(_ctx:Native_NvgStbTextEditContextRef, _state:Native_TexteditStateRef, _text:String):Void
+    public static inline function text(_ctx:Native_NvgStbTexteditContextRef, _state:Native_TexteditStateRef, _text:String):Void
         untyped __cpp__('stb_textedit_text(&{0}, &{1}, (IMSTB_TEXTEDIT_CHARTYPE *)({2}.c_str()), {3})', _ctx, _state, _text, _text.length);
+
+    // int stbGetWordStart(IMSTB_TEXTEDIT_STRING* str, int i);
+    public static inline function getWordStart(_ctx:Native_NvgStbTexteditContextRef, _index:Int):Int
+        return untyped __cpp__('linc_nanovg::stbGetWordStart(&{0},{1})', _ctx, _index);
+
+    // int stbGetWordEnd(IMSTB_TEXTEDIT_STRING* str, int i);
+    public static inline function getWordEnd(_ctx:Native_NvgStbTexteditContextRef, _index:Int):Int
+        return untyped __cpp__('linc_nanovg::stbGetWordEnd(&{0},{1})', _ctx, _index);
 }
 
 #if (scriptable || cppia)
@@ -129,23 +137,29 @@ extern class Native_StbTextEdit {
         public static function initialize_state(_state:StbTexteditState, _i:Int):Void
             Native_StbTextEdit.initialize_state(cast _state.__inst, _i);
 
-        public static function click(_ctx:NvgStbTextEditContext, _state:StbTexteditState, _x:Float, _y:Float):Void
+        public static function click(_ctx:NvgStbTexteditContext, _state:StbTexteditState, _x:Float, _y:Float):Void
             Native_StbTextEdit.click(_ctx.__inst, _state.__inst, _x, _y);
 
-        public static function drag(_ctx:NvgStbTextEditContext, _state:StbTexteditState, _x:Float, _y:Float):Void
+        public static function drag(_ctx:NvgStbTexteditContext, _state:StbTexteditState, _x:Float, _y:Float):Void
             Native_StbTextEdit.drag(_ctx.__inst, _state.__inst, _x, _y);
 
-        public static function cut(_ctx:NvgStbTextEditContext, _state:StbTexteditState):Int
+        public static function cut(_ctx:NvgStbTexteditContext, _state:StbTexteditState):Int
             return Native_StbTextEdit.cut(_ctx.__inst, _state.__inst);
 
-        public static function paste(_ctx:NvgStbTextEditContext, _state:StbTexteditState, _text:String):Void
+        public static function paste(_ctx:NvgStbTexteditContext, _state:StbTexteditState, _text:String):Void
             Native_StbTextEdit.paste(_ctx.__inst, _state.__inst, _text);
 
-        public static function key(_ctx:NvgStbTextEditContext, _state:StbTexteditState, _key:Int):Void
+        public static function key(_ctx:NvgStbTexteditContext, _state:StbTexteditState, _key:Int):Void
             Native_StbTextEdit.key(_ctx.__inst, _state.__inst, _key);
 
-        public static function text(_ctx:NvgStbTextEditContext, _state:StbTexteditState, _text:String):Void
+        public static function text(_ctx:NvgStbTexteditContext, _state:StbTexteditState, _text:String):Void
             Native_StbTextEdit.text(_ctx.__inst, _state.__inst, _text);
+
+        public static function getWordStart(_ctx:NvgStbTexteditContext, _index:Int):Int
+            return Native_StbTextEdit.getWordStart(_ctx.__inst, _index);
+
+        public static function getWordEnd(_ctx:NvgStbTexteditContext, _index:Int):Int
+            return Native_StbTextEdit.getWordEnd(_ctx.__inst, _index);
     }
 #else
     typedef StbTextEdit = Native_StbTextEdit;
