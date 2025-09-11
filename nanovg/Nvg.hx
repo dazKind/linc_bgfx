@@ -449,6 +449,9 @@ extern class Native_Nvg {
     @:native("nvgRoundedRect")
     public static function roundedRect(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _w:cpp.Float32, _h:cpp.Float32, _r:cpp.Float32):Void;
 
+    @:native("nvgRoundedRectVarying")
+    public static function roundedRectVarying(_ctx:cpp.Star<Native_NvgContext>, _x:cpp.Float32, _y:cpp.Float32, _w:cpp.Float32, _h:cpp.Float32, _radTopLeft:cpp.Float32, _radTopRight:cpp.Float32, _radBottomRight:cpp.Float32, _radBottomLeft:cpp.Float32):Void;
+
     @:native("nvgEllipse")
     public static function ellipse(_ctx:cpp.Star<Native_NvgContext>, _cx:cpp.Float32, _cy:cpp.Float32, _rx:cpp.Float32, _ry:cpp.Float32):Void;
 
