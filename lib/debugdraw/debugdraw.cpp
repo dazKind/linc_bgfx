@@ -1913,7 +1913,72 @@ struct DebugDrawEncoderImpl
 
 	void drawQuad(bgfx::TextureHandle _handle, const bx::Vec3& _normal, const bx::Vec3& _center, float _size)
 	{
-		BX_UNUSED(_handle, _normal, _center, _size);
+		if(!isValid(_handle))
+        {
+            drawQuad(_normal, _center, _size);
+            return;
+        }
+
+        flushQuad();
+
+        Attrib& attrib = m_attrib[m_stack];
+
+        // if((attrib.m_state & BGFX_STATE_WRITE_A) == 0 && attrib.m_alphaBlend)
+        //     attrib.m_state |= BGFX_STATE_BLEND_ALPHA;
+
+        bx::Vec3 udir(bx::InitNone);
+        bx::Vec3 vdir(bx::InitNone);
+        bx::calcTangentFrame(udir, vdir, _normal, attrib.m_spin);
+
+        const float us = 0.0f;
+        const float vs = 0.0f;
+        const float ue = 1.0f;
+        const float ve = 1.0f;
+
+        const float aspectRatio = 1.0f;
+        const float halfExtentU = aspectRatio * _size * 0.5f;
+        const float halfExtentV = 1.0f / aspectRatio * _size * 0.5f;
+
+        const bx::Vec3 umin = bx::mul(udir, -halfExtentU);
+        const bx::Vec3 umax = bx::mul(udir, halfExtentU);
+        const bx::Vec3 vmin = bx::mul(vdir, -halfExtentV);
+        const bx::Vec3 vmax = bx::mul(vdir, halfExtentV);
+        const bx::Vec3 center = _center;
+
+        DebugUvVertex* vertex = &m_cacheQuad[m_posQuad];
+        m_posQuad += 4;
+
+        bx::store(&vertex->m_x, bx::add(center, bx::add(umin, vmin)));
+        vertex->m_u = us;
+        vertex->m_v = vs;
+        vertex->m_abgr = attrib.m_abgr;
+        ++vertex;
+
+        bx::store(&vertex->m_x, bx::add(center, bx::add(umax, vmin)));
+        vertex->m_u = ue;
+        vertex->m_v = vs;
+        vertex->m_abgr = attrib.m_abgr;
+        ++vertex;
+
+        bx::store(&vertex->m_x, bx::add(center, bx::add(umin, vmax)));
+        vertex->m_u = us;
+        vertex->m_v = ve;
+        vertex->m_abgr = attrib.m_abgr;
+        ++vertex;
+
+        bx::store(&vertex->m_x, bx::add(center, bx::add(umax, vmax)));
+        vertex->m_u = ue;
+        vertex->m_v = ve;
+        vertex->m_abgr = attrib.m_abgr;
+        ++vertex;
+
+        auto original = s_dds.m_texture;
+        s_dds.m_texture = _handle;
+        flushQuad();
+
+        attrib.m_state &= ~BGFX_STATE_BLEND_ALPHA;
+
+        s_dds.m_texture = original;
 	}
 
 	void drawCone(const bx::Vec3& _from, const bx::Vec3& _to, float _radius)
@@ -1987,21 +2052,21 @@ struct DebugDrawEncoderImpl
 			bx::Vec3 to(bx::InitNone);
 
 			setColor(Axis::X == _highlight ? 0xff00ffff : 0xff0000ff);
-			mid = { _x + _len - _thickness, _y, _z };
+			mid = { _x + _len - _thickness*2, _y, _z };
 			to  = { _x + _len,              _y, _z };
-			drawCylinder(from, mid, _thickness, false);
+			drawCylinder(from, mid, _thickness*0.5, false);
 			drawCone(mid, to, _thickness);
 
 			setColor(Axis::Y == _highlight ? 0xff00ffff : 0xff00ff00);
-			mid = { _x, _y + _len - _thickness, _z };
+			mid = { _x, _y + _len - _thickness*2, _z };
 			to  = { _x, _y + _len,              _z };
-			drawCylinder(from, mid, _thickness, false);
+			drawCylinder(from, mid, _thickness*0.5, false);
 			drawCone(mid, to, _thickness);
 
 			setColor(Axis::Z == _highlight ? 0xff00ffff : 0xffff0000);
-			mid = { _x, _y, _z + _len - _thickness };
+			mid = { _x, _y, _z + _len - _thickness*2 };
 			to  = { _x, _y, _z + _len              };
-			drawCylinder(from, mid, _thickness, false);
+			drawCylinder(from, mid, _thickness*0.5, false);
 			drawCone(mid, to, _thickness);
 		}
 		else

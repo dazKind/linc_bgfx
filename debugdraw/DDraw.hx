@@ -150,9 +150,15 @@ extern class Native_DebugDrawEncoder {
     public function close():Void;
 
     // @:native('drawQuad')
-    inline public function drawQuad(_handle:cpp.Reference<Native_SpriteHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
+    inline public function drawQuadWithSprite(_handle:cpp.Reference<Native_SpriteHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
         var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
         untyped __cpp__('{0}.drawQuad((SpriteHandle){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
+            ref, _handle, cpp.NativeArray.address(_normal, 0), cpp.NativeArray.address(_center, 0), _size);
+    }
+
+    inline public function drawQuadWithTexture(_handle:cpp.Reference<Native_TextureHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.drawQuad((bgfx::TextureHandle&){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
             ref, _handle, cpp.NativeArray.address(_normal, 0), cpp.NativeArray.address(_center, 0), _size);
     }
 
@@ -263,8 +269,11 @@ extern class Native_DebugDrawEncoder {
         public function close():Void
             __inst.close();
 
-        public function drawQuad(_handle:DSpriteHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
-            __inst.drawQuad(_handle.__inst, _normal, _center, _size);
+        public function drawQuadWithSprite(_handle:DSpriteHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
+            __inst.drawQuadWithSprite(_handle.__inst, _normal, _center, _size);
+
+        public function drawQuadWithTexture(_handle:TextureHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
+            __inst.drawQuadWithTexture(_handle.__inst, _normal, _center, _size);
 
         public function drawAxis(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _length:cpp.Float32, _highlight:Axis, _thickness:cpp.Float32):Void
             __inst.drawAxis(_x, _y, _z, _length, cast _highlight, _thickness);
