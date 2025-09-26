@@ -1,4 +1,5 @@
 -lib linc_sdl
--cp ../
+-lib linc_bgfx
 -cpp cpp
 -main Test
+-D HXCPP_CPP17
