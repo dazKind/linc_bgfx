@@ -441,6 +441,7 @@
     </section> -->
     <section if="emscripten">
         <linker id="exe" exe="emcc">
+            <flag name="-s" value="MIN_WEBGL_VERSION=2" />
             <flag name="-s" value="MAX_WEBGL_VERSION=2" />
             <flag name="-s" value="USE_WEBGL2=1" />
             <flag name="-s" value="USE_SDL=2" />

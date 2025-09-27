@@ -428,7 +428,7 @@ extern class Native_Nvg {
     @:native("nvgBezierTo")
     public static function bezierTo(_ctx:cpp.Star<Native_NvgContext>, _c1x:cpp.Float32, _c1y:cpp.Float32, _c2x:cpp.Float32, _c2y:cpp.Float32, _x:cpp.Float32, _y:cpp.Float32):Void;
 
-    @:native("nvgQuadTo")//(NVGcontext* ctx, float cx, float cy, float x, float y);
+    @:native("nvgQuadTo")
     public static function quadTo(_ctx:cpp.Star<Native_NvgContext>, _cx:cpp.Float32, _cy:cpp.Float32, _x:cpp.Float32, _y:cpp.Float32):Void;
 
     @:native("nvgArcTo")
