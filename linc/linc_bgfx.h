@@ -36,7 +36,7 @@ typedef struct {
 #define STB_TEXTEDIT_STRINGLEN(obj) (_hx_utf8_length(obj->str))
 #define STB_TEXTEDIT_GETCHAR(obj, i) (_hx_utf8_char_code_at(obj->str, i))
 #define STB_TEXTEDIT_NEWLINE '\n'
-#define IM_ASSERT BX_ASSERT
+#define IM_ASSERT
 
 #define STB_TEXTEDIT_K_SHIFT ( 1 << 30 )
 #define STB_TEXTEDIT_K_LEFT 263

@@ -39,23 +39,17 @@
         <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/typetraits.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/uint32_t.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/bx/url.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/alloca.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/dirent.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/malloc.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/freebsd/signal.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/ios/malloc.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/linux/sal.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/alloca.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/dirent.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/sal.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/salieri.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/specstrings_strict.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/mingw/specstrings_undef.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/alloca.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/dirent.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/inttypes.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/stdbool.h" />
-        <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/msvc/pre1600/stdint.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/compat/osx/malloc.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/allocator.h" />
         <depend name="${LINC_BGFX_PATH}lib/bx/include/tinystl/buffer.h" />
@@ -200,6 +194,8 @@
         <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
+        <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN_MAX_DESCRIPTOR_SETS_PER_FRAME=10240" />
+        
 
         <section if="mac">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
@@ -375,6 +371,7 @@
         <compilerflag value="-DBX_CONFIG_DEBUG=1" if="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBX_CONFIG_DEBUG=0" unless="BGFX_CONFIG_DEBUG"/>
         <compilerflag value="-DBGFX_CONFIG_MAX_VIEWS=2048" />
+        <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN_MAX_DESCRIPTOR_SETS_PER_FRAME=10240" />
 
         <section if="mac">
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
