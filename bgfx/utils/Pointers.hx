@@ -11,6 +11,12 @@ class Pointers {
         return cast cpp.ConstPointer.fromRaw(cpp.NativeArray.getBase(_b.getData()).getBase());
     }
 
+    #if !(cppia || scriptable) inline #end
+    public static function bytesToConstCharPtr(_b:haxe.io.Bytes):cpp.ConstPointer<cpp.UInt8> {
+        var tmp:cpp.RawPointer<cpp.UInt8> = cast cpp.NativeArray.getBase(_b.getData()).getBase();
+        return cpp.ConstPointer.fromRaw(tmp);
+    }
+
     // #if (!cppia || !scriptable) inline #end
     // public static function fromRaw<T>(_p:cpp.RawPointer<T>):cpp.Pointer<T> {
     //     return cpp.Pointer.fromRaw(_p);

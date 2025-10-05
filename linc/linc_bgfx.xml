@@ -377,6 +377,10 @@
             <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
         </section>
 
+        <section if="mac">
+            <compilerflag value="-I${LINC_BGFX_PATH}lib/bx/include/compat/osx"/>
+        </section>
+
         <section if="linux">
             <compilerflag value="-DBGFX_CONFIG_RENDERER_VULKAN=1"/>
             <compilerflag value="-DBGFX_CONFIG_RENDERER_OPENGL=1"/>
@@ -389,17 +393,14 @@
             <compilerflag value="/Zc:__cplusplus"/>
             <compilerflag value="/Zc:preprocessor"/>
             <!-- <compilerflag value="/std:c++17"/> -->
+            <compilerflag value="-D__STDC_LIMIT_MACROS" />
+            <compilerflag value="-D__STDC_FORMAT_MACROS" />
+            <compilerflag value="-D__STDC_CONSTANT_MACROS" />
         </section>
 
-        <!--
         <section if="emscripten">
             <compilerflag value="-DBX_PLATFORM_EMSCRIPTEN=1"/>
         </section>
-
-        <section if="android">
-            <compilerflag value="-DBX_PLATFORM_ANDROID=1"/>
-        </section>
-        -->
 
 
         <file name='${LINC_BGFX_PATH}linc/Dynamic2.cpp'/>
