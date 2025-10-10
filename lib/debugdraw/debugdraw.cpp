@@ -1652,6 +1652,20 @@ struct DebugDrawEncoderImpl
 		}
 	}
 
+	void drawMesh(bgfx::VertexBufferHandle _vb, bgfx::IndexBufferHandle _ib) {
+		m_encoder->setVertexBuffer(0, _vb);
+
+		const Attrib& attrib = m_attrib[m_stack];
+		const bool wireframe = attrib.m_wireframe;
+		setUParams(attrib, wireframe);
+		
+		m_encoder->setIndexBuffer(_ib);
+
+		m_encoder->setTransform(m_mtxStack[m_mtxStackCurrent].mtx);
+		bgfx::ProgramHandle program = s_dds.m_program[wireframe ? Program::FillMesh : Program::FillLitMesh];
+		m_encoder->submit(m_viewId, program);
+	}
+
 	void drawFrustum(const float* _viewProj)
 	{
 		bx::Plane planes[6] = { bx::InitNone, bx::InitNone, bx::InitNone, bx::InitNone, bx::InitNone, bx::InitNone };
@@ -2540,6 +2554,11 @@ void DebugDrawEncoder::draw(const bx::Cone& _cone)
 void DebugDrawEncoder::draw(GeometryHandle _handle)
 {
 	DEBUG_DRAW_ENCODER(draw(_handle) );
+}
+
+void DebugDrawEncoder::drawMesh(bgfx::VertexBufferHandle _vb, bgfx::IndexBufferHandle _ib)
+{
+	DEBUG_DRAW_ENCODER(drawMesh(_vb, _ib) );
 }
 
 void DebugDrawEncoder::drawLineList(uint32_t _numVertices, const DdVertex* _vertices, uint32_t _numIndices, const uint16_t* _indices)

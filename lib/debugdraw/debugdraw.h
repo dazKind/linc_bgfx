@@ -209,6 +209,9 @@ struct DebugDrawEncoder
 	///
 	void drawOrb(float _x, float _y, float _z, float _radius, Axis::Enum _highlight = Axis::Count);
 
+	///
+	void drawMesh(bgfx::VertexBufferHandle _vb, bgfx::IndexBufferHandle _ib);
+
 	BX_ALIGN_DECL_CACHE_LINE(uint8_t) m_internal[50<<10];
 };
 

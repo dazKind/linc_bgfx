@@ -1,6 +1,8 @@
 package debugdraw;
 
 import bgfx.TextureHandle;
+import bgfx.VertexBufferHandle;
+import bgfx.IndexBufferHandle;
 
 @:unreflective
 @:notNull
@@ -203,6 +205,15 @@ extern class Native_DebugDrawEncoder {
             _radius
         );
     }
+
+    inline public function drawMesh(_vb:Native_VertexBufferHandle, _ib:Native_IndexBufferHandle):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('{0}.drawMesh((bgfx::VertexBufferHandle&){1}, (bgfx::IndexBufferHandle&){2});',
+            ref, 
+            _vb,
+            _ib
+        );
+    }
 }
 #if (scriptable || cppia)
     class CppiaDebugDrawEncoder {
@@ -292,6 +303,9 @@ extern class Native_DebugDrawEncoder {
 
         public function drawSphere(_pos:Array<cpp.Float32>, _radius:cpp.Float32):Void 
             __inst.drawSphere(_pos, _radius);
+
+        public function drawMesh(_vb:VertexBufferHandle, _ib:IndexBufferHandle):Void 
+            __inst.drawMesh(_vb.__inst, _ib.__inst);
     }
     typedef DDrawEncoder = CppiaDebugDrawEncoder;
     typedef DDrawEncoderRef = CppiaDebugDrawEncoder;

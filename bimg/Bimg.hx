@@ -469,34 +469,34 @@ extern class Native_ImageContainer {
 @:include("linc_bgfx.h")
 extern class Native_Bimg {
 
-	@:native("linc_bgfx::bimgImageParse")
+    @:native("linc_bgfx::bimgImageParse")
     private static function _imageParse(_src:cpp.ConstStar<cpp.Void>, _size:cpp.Int32, _format:cpp.UInt32):cpp.Star<Native_ImageContainer>;
     inline public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):cpp.Star<Native_ImageContainer> {
-    	var ab = cpp.NativeArray.getBase(_src);
+        var ab = cpp.NativeArray.getBase(_src);
         var ptr:cpp.RawPointer<cpp.Void> = untyped __cpp__('(unsigned char*){0}->getBase()', ab); // hxcpp tries to resolve through reflection?!? WHY? omg, just force it!
         return _imageParse(cast ptr, _size, (cast _format:cpp.UInt32));
     }
 
-	@:native("bimg::imageFree")
-	extern public static function imageFree(_imgCon:cpp.Star<Native_ImageContainer>):Void;
+    @:native("bimg::imageFree")
+    extern public static function imageFree(_imgCon:cpp.Star<Native_ImageContainer>):Void;
 
-	@:native("bimg::imageCheckerboard")
-	extern public static function imageCheckerboard(_dst:cpp.Star<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void;
+    @:native("bimg::imageCheckerboard")
+    extern public static function imageCheckerboard(_dst:cpp.Star<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void;
 }
 
 #if (scriptable || cppia)
     class CppiaBimg {
-    	public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainer {
+        public static function imageParse(_src:haxe.io.BytesData, _size:cpp.Int32, _format:TextureFormat):ImageContainer {
             var res = new ImageContainer();
             res.__ptr = cpp.Pointer.fromStar(Native_Bimg.imageParse(_src, _size, _format));
-    		return res;
+            return res;
         }
 
         public static function imageFree(_imgCon:ImageContainer):Void
-        	Native_Bimg.imageFree(cast _imgCon.__ptr);
+            Native_Bimg.imageFree(cast _imgCon.__ptr);
 
         public static function imageCheckerboard(_dst:cpp.Pointer<cpp.Void>, _w:cpp.Int32, _h:cpp.Int32, _step:cpp.Int32, _c0:cpp.Int32, _c1:cpp.Int32):Void
-        	Native_Bimg.imageCheckerboard(cast _dst, _w, _h, _step, _c0, _c1);
+            Native_Bimg.imageCheckerboard(cast _dst, _w, _h, _step, _c0, _c1);
     }
     typedef Bimg = CppiaBimg;
 #else
