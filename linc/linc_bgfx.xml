@@ -408,6 +408,25 @@
         <file name='${LINC_BGFX_PATH}lib/nanovg/nanovg.cpp'/>
         <file name='${LINC_BGFX_PATH}lib/nanovg/nanovg_bgfx.cpp'/>
         <file name='${LINC_BGFX_PATH}lib/debugdraw/debugdraw.cpp'/>
+        <!-- TODO: add this if you need meshoptimizer
+        <compilerflag value="-I${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer"/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/allocator.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/clusterizer.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/indexanalyzer.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/indexcodec.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/indexgenerator.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/overdrawoptimizer.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/partition.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/quantization.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/rasterizer.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/simplifier.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/spatialorder.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/stripifier.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/vcacheoptimizer.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/vertexcodec.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/vertexfilter.cpp'/>
+        <file name='${LINC_BGFX_PATH}lib/bgfx/3rdparty/meshoptimizer/src/vfetchoptimizer.cpp'/>
+        -->
     </files>
 
     <!-- <files id="__lib__">
