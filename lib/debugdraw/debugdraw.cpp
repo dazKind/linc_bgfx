@@ -1511,12 +1511,12 @@ struct DebugDrawEncoderImpl
 		{
 			static_assert(sizeof(DdVertex) == sizeof(bx::Vec3), "");
 
-			uint64_t old = attrib.m_state;
-			attrib.m_state &= ~BGFX_STATE_CULL_MASK;
+			// uint64_t old = attrib.m_state;
+			// attrib.m_state &= ~BGFX_STATE_CULL_MASK;
 
 			draw(false, 3, reinterpret_cast<const DdVertex*>(&_triangle.v0.x), 0, NULL);
 
-			attrib.m_state = old;
+			// attrib.m_state = old;
 		}
 	}
 
@@ -2370,7 +2370,7 @@ static_assert(sizeof(DebugDrawEncoderImpl) <= sizeof(DebugDrawEncoder), "Size mu
 void ddInit(bx::AllocatorI* _allocator)
 {
 	s_dds.init(_allocator);
-	s_dde.init(bgfx::begin() );
+	s_dde.init(bgfx::begin());
 }
 
 void ddShutdown()
@@ -2403,16 +2403,22 @@ void ddDestroy(GeometryHandle _handle)
 
 DebugDrawEncoder::DebugDrawEncoder()
 {
-	DEBUG_DRAW_ENCODER(init(s_dde.m_defaultEncoder) );
 }
 
 DebugDrawEncoder::~DebugDrawEncoder()
-{
+{	
+}
+
+void DebugDrawEncoder::init() {
+	DEBUG_DRAW_ENCODER(init(s_dde.m_defaultEncoder) );
+}
+
+void DebugDrawEncoder::shutdown() {
 	DEBUG_DRAW_ENCODER(shutdown() );
 }
 
 void DebugDrawEncoder::begin(uint16_t _viewId, bool _depthTestLess, bgfx::Encoder* _encoder)
-{
+{	
 	DEBUG_DRAW_ENCODER(begin(_viewId, _depthTestLess, _encoder) );
 }
 

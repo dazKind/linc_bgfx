@@ -84,9 +84,19 @@ extern class Native_GeometryHandle {
 @:native('DebugDrawEncoder')
 extern class Native_DebugDrawEncoder {
     public function new();
+
+    @:native('init')
+    public function init():Void;
+
+    @:native('shutdown')
+    public function shutdown():Void;
     
-    @:native('begin')
-    public function begin(_viewId:cpp.UInt16, _depthTestLess:Bool/* = true*/, _encoder:cpp.Star<bgfx.Encoder.Native_Encoder>/* = null*/):Void;
+    inline public function begin(_viewId:cpp.UInt16, _depthTestLess:Bool/* = true*/, _encoder:cpp.Star<bgfx.Encoder.Native_Encoder>/* = null*/):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        var enc:cpp.Star<bgfx.Encoder.Native_Encoder> = _encoder != null ? _encoder : untyped __cpp__('NULL');
+        untyped __cpp__('{0}.begin({1}, {2}, (bgfx::Encoder*){3})',
+            ref, _viewId, _depthTestLess, enc);
+    }
 
     @:native('end')
     public function end():Void;
@@ -151,7 +161,6 @@ extern class Native_DebugDrawEncoder {
     @:native('close')
     public function close():Void;
 
-    // @:native('drawQuad')
     inline public function drawQuadWithSprite(_handle:cpp.Reference<Native_SpriteHandle>, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void {
         var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
         untyped __cpp__('{0}.drawQuad((SpriteHandle){1}, *(bx::Vec3*)(float*){2}, *(bx::Vec3*)(float*){3}, {4})',
@@ -183,7 +192,52 @@ extern class Native_DebugDrawEncoder {
             memcpy(&__tmp.mtx, {1}, 16*sizeof(float)); 
             {0}.draw(__tmp);',  
             ref, 
-            cpp.NativeArray.address(_mat, 0)
+            _mat.getBase()
+        );
+    }
+
+    inline public function drawCapsule(_start:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Capsule __tmp = {
+                *(bx::Vec3*){1}, *(bx::Vec3*){2}, (float){3}
+            };
+            {0}.draw(__tmp);',  
+            ref, 
+            _start.getBase(),
+            _end.getBase(),
+            _radius
+            // cpp.NativeArray.address(_mat, 0)
+        );
+    }
+
+    inline public function drawCylinder(_start:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Cylinder __tmp = {
+                *(bx::Vec3*){1}, *(bx::Vec3*){2}, (float){3}
+            };
+            {0}.draw(__tmp);',  
+            ref, 
+            _start.getBase(),
+            _end.getBase(),
+            _radius
+            // cpp.NativeArray.address(_mat, 0)
+        );
+    }
+
+    inline public function drawCone(_pos:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Cone __tmp = {
+                *(bx::Vec3*){1}, *(bx::Vec3*){2}, (float){3}
+            };
+            {0}.draw(__tmp);',  
+            ref, 
+            _pos.getBase(),
+            _end.getBase(),
+            _radius
+            // cpp.NativeArray.address(_mat, 0)
         );
     }
 
@@ -195,10 +249,21 @@ extern class Native_DebugDrawEncoder {
         );
     }
 
+    inline public function drawTriangle(_verts:Array<cpp.Float32>):Void {
+        var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
+        untyped __cpp__('
+            bx::Triangle __tmp = {};
+            memcpy(&__tmp.v0.x, {1}, 9*sizeof(float)); 
+            {0}.draw(__tmp);',
+            ref,
+            cpp.NativeArray.address(_verts, 0)
+        );
+    }
+
     inline public function drawSphere(_pos:Array<cpp.Float32>, _radius:cpp.Float32):Void {
         var ref:cpp.Reference<Native_DebugDrawEncoder> = this;
         untyped __cpp__('
-            bx::Sphere __tmp = {*(bx::Vec3*)(float*){1}, {2}};
+            bx::Sphere __tmp = {*(bx::Vec3*)(float*){1}, (float){2}};
             {0}.draw(__tmp);',
             ref, 
             cpp.NativeArray.address(_pos, 0),
@@ -217,68 +282,122 @@ extern class Native_DebugDrawEncoder {
 }
 #if (scriptable || cppia)
     class CppiaDebugDrawEncoder {
-        public function new() {}
-        public var __inst:Native_DebugDrawEncoder = new Native_DebugDrawEncoder();
+        public var __inst:Native_DebugDrawEncoder;
 
-        public function begin(_viewId:cpp.UInt16, _depthTestLess:Bool/* = true*/, _encoder:bgfx.Encoder/* = null*/):Void
-            __inst.begin(_viewId, _depthTestLess, null);
+        public function getPtr():cpp.Pointer<Native_DebugDrawEncoder> {
+            return cast cpp.Pointer.addressOf(__inst);
+        }
+
+        public function new() {
+            __inst = new Native_DebugDrawEncoder();
+        }
+
+        public function init():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.init();
+        }
+
+        public function shutdown():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.shutdown();
+        }
+
+        public function begin(_viewId:cpp.UInt16, _depthTestLess:Bool/* = true*/, _encoder:cpp.Pointer<bgfx.Encoder>/* = null*/):Void {
+            __inst.begin(_viewId, _depthTestLess, cast _encoder);
+        }
         
-        public function end():Void
-            __inst.end();
+        public function end():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.end();
+        }
 
-        public function push():Void
-            __inst.push();
+        public function push():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.push();
+        }
 
-        public function pop():Void
-            __inst.pop();
+        public function pop():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.pop();
+        }
 
-        public function setDepthTestLess(_dtl:Bool):Void
-            __inst.setDepthTestLess(_dtl);
+        public function setDepthTestLess(_dtl:Bool):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setDepthTestLess(_dtl);
+        }
 
-        public function setState(_depthTest:Bool, _depthWrite:Bool, _clockwise:Bool):Void
-            __inst.setState(_depthTest, _depthWrite, _clockwise);
+        public function setState(_depthTest:Bool, _depthWrite:Bool, _clockwise:Bool):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setState(_depthTest, _depthWrite, _clockwise);
+        }
 
-        public function setColor(_color:cpp.UInt32):Void
-            __inst.setColor(_color);
+        public function setColor(_color:cpp.UInt32):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setColor(_color);
+        }
 
-        public function setLod(_lod:cpp.UInt8):Void
-            __inst.setLod(_lod);
+        public function setLod(_lod:cpp.UInt8):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setLod(_lod);
+        }
 
-        public function setWireframe(_wireframe:Bool):Void
-            __inst.setWireframe(_wireframe);
+        public function setWireframe(_wireframe:Bool):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setWireframe(_wireframe);
+        }
 
-        public function setStipple(_stipple:Bool, _scale:cpp.Float32/* = 1.0*/, _offset:cpp.Float32/* = 0.0*/):Void
-            __inst.setStipple(_stipple, _scale, _offset);
+        public function setStipple(_stipple:Bool, _scale:cpp.Float32/* = 1.0*/, _offset:cpp.Float32/* = 0.0*/):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setStipple(_stipple, _scale, _offset);
+        }
 
-        public function setSpin(_spin:cpp.Float32):Void
-            __inst.setSpin(_spin);
+        public function setSpin(_spin:cpp.Float32):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setSpin(_spin);
+        }
 
-        public function setTransform(_mtx:cpp.ConstPointer<cpp.Void>):Void
-            __inst.setTransform(cast _mtx);
+        public function setTransform(_mtx:cpp.ConstPointer<cpp.Void>):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setTransform(cast _mtx);
+        }
 
-        public function setTranslate(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32):Void
-            __inst.setTranslate(_x, _y, _z);
+        public function setTranslate(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.setTranslate(_x, _y, _z);
+        }
 
-        public function pushTransform(_mtx:cpp.ConstPointer<cpp.Void>):Void
-            __inst.pushTransform(cast _mtx);
+        public function pushTransform(_mtx:cpp.ConstPointer<cpp.Void>):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.pushTransform(cast _mtx);
+        }
 
-        public function popTransform():Void
-            __inst.popTransform();
+        public function popTransform():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.popTransform();
+        }
 
-        public function moveToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
-            __inst.moveToXYZ(_x, _y, _z);
+        public function moveToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.moveToXYZ(_x, _y, _z);
+        }
 
-        public function moveTo(_pos:Array<cpp.Float32>):Void
+        public function moveTo(_pos:Array<cpp.Float32>):Void {
             __inst.moveTo(_pos);
+        }
 
-        public function lineToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void
-            __inst.lineToXYZ(_x, _y, _z);
+        public function lineToXYZ(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32/* = 0.0*/):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.lineToXYZ(_x, _y, _z);
+        }
 
-        public function lineTo(_pos:Array<cpp.Float32>):Void
+        public function lineTo(_pos:Array<cpp.Float32>):Void {
             __inst.lineTo(_pos);
+        }
 
-        public function close():Void
-            __inst.close();
+        public function close():Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.close();
+        }
 
         public function drawQuadWithSprite(_handle:DSpriteHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
             __inst.drawQuadWithSprite(_handle.__inst, _normal, _center, _size);
@@ -286,20 +405,36 @@ extern class Native_DebugDrawEncoder {
         public function drawQuadWithTexture(_handle:TextureHandle, _normal:Array<cpp.Float32>, _center:Array<cpp.Float32>, _size:cpp.Float32):Void
             __inst.drawQuadWithTexture(_handle.__inst, _normal, _center, _size);
 
-        public function drawAxis(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _length:cpp.Float32, _highlight:Axis, _thickness:cpp.Float32):Void
-            __inst.drawAxis(_x, _y, _z, _length, cast _highlight, _thickness);
+        public function drawAxis(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _length:cpp.Float32, _highlight:Axis, _thickness:cpp.Float32):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.drawAxis(_x, _y, _z, _length, cast _highlight, _thickness);
+        }
 
         public function drawGrid(_axis:Axis, _pos:Array<cpp.Float32>, _size:cpp.Float32 = 128, _step:cpp.Float32 = 1.0):Void
             __inst.drawGrid(_axis, _pos, _size, _step);
 
-        public function drawOrb(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _radius:cpp.Float32, _highlight:Axis):Void
-            __inst.drawOrb(_x, _y, _z, _radius, cast _highlight);
+        public function drawOrb(_x:cpp.Float32, _y:cpp.Float32, _z:cpp.Float32, _radius:cpp.Float32, _highlight:Axis):Void {
+            var ref:cpp.Reference<Native_DebugDrawEncoder> = __inst;
+            ref.drawOrb(_x, _y, _z, _radius, cast _highlight);
+        }
+
+        public function drawCapsule(_start:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void
+            __inst.drawCapsule(_start, _end, _radius);
+
+        public function drawCylinder(_start:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void
+            __inst.drawCylinder(_start, _end, _radius);
+
+        public function drawCone(_pos:Array<cpp.Float32>, _end:Array<cpp.Float32>, _radius:cpp.Float32):Void
+            __inst.drawCone(_pos, _end, _radius);
 
         public function drawObb(_mat:Array<cpp.Float32>):Void
             __inst.drawObb(_mat);
 
         public function drawFrustum(_invProj:Array<cpp.Float32>):Void
             __inst.drawFrustum(_invProj);
+
+        public function drawTriangle(_verts:Array<cpp.Float32>):Void
+            __inst.drawTriangle(_verts);
 
         public function drawSphere(_pos:Array<cpp.Float32>, _radius:cpp.Float32):Void 
             __inst.drawSphere(_pos, _radius);
@@ -309,9 +444,13 @@ extern class Native_DebugDrawEncoder {
     }
     typedef DDrawEncoder = CppiaDebugDrawEncoder;
     typedef DDrawEncoderRef = CppiaDebugDrawEncoder;
+    typedef DDrawEncoderStruct = CppiaDebugDrawEncoder;
+    typedef DDrawEncoderPtr = CppiaDebugDrawEncoder;
 #else
     typedef DDrawEncoder = Native_DebugDrawEncoder;
     typedef DDrawEncoderRef = cpp.Reference<Native_DebugDrawEncoder>;
+    typedef DDrawEncoderStruct = cpp.Struct<Native_DebugDrawEncoder>;
+    typedef DDrawEncoderPtr = cpp.Star<Native_DebugDrawEncoder>;
 #end
 
 

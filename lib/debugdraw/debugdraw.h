@@ -74,6 +74,9 @@ struct DebugDrawEncoder
 	///
 	~DebugDrawEncoder();
 
+	void init();
+	void shutdown();
+
 	///
 	void begin(uint16_t _viewId, bool _depthTestLess = true, bgfx::Encoder* _encoder = NULL);
 

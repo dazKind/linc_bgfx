@@ -3533,10 +3533,8 @@ extern class Native_Bgfx {
         Begin submitting draw calls from thread.
         @param: _forThread : Bool - Explicitly request an encoder for a worker thread.
         **/
-        public static function encoderBegin(_forThread:Bool):Encoder {
-            final res = Type.createEmptyInstance(Encoder);
-            res.__ptr = cast Native_Bgfx.encoderBegin(_forThread);
-            return res;
+        public static function encoderBegin(_forThread:Bool):cpp.Pointer<Encoder> {
+            return cast Native_Bgfx.encoderBegin(_forThread);
         }
         
         
@@ -3544,8 +3542,8 @@ extern class Native_Bgfx {
         End submitting draw calls from thread.
         @param: _encoder : cpp.Star<bgfx.Encoder.Native_Encoder> - Encoder.
         **/
-        public static function encoderEnd(_encoder:Encoder):Void {
-             Native_Bgfx.encoderEnd(_encoder.__ptr != null ? cast _encoder.__ptr : _encoder.__inst);
+        public static function encoderEnd(_encoder:cpp.Pointer<Encoder>):Void {
+             Native_Bgfx.encoderEnd(cast _encoder);
         }
         
         

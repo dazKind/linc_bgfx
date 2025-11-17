@@ -15,8 +15,6 @@ extern class Native_Encoder {
         public var __ptr:cpp.Pointer<Native_Encoder> = null;
         public var __inst:Native_Encoder = new Native_Encoder();
         public function new() {}
-        
-        
     }
     typedef Encoder = CppiaEncoder;
 #else

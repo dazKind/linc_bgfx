@@ -7,6 +7,11 @@ import cpp.Stdlib;
 
 class Pointers {
     #if !(cppia || scriptable) inline #end
+    public static function addressOf<T>(_a:T) {
+        return cpp.Pointer.addressOf(_a);
+    }
+
+    #if !(cppia || scriptable) inline #end
     public static function bytesToConstVoidPtr(_b:haxe.io.Bytes):cpp.ConstPointer<cpp.Void> {
         return cast cpp.ConstPointer.fromRaw(cpp.NativeArray.getBase(_b.getData()).getBase());
     }
