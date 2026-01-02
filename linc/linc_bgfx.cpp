@@ -194,6 +194,7 @@ namespace linc_nanovg {
             case '\\':
             case '(':
             case ')':
+            case '"':
             case '\'':
             case '-':
             case ':':
